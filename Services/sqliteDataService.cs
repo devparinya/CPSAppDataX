@@ -2223,7 +2223,7 @@ namespace CPSAppData.Services
                             }
                             customerid_befor = customerid;
 
-                            //param_ListNo.Value = listno;
+                            param_ListNo.Value = listno;
                             param_CustomerName.Value = security_.EncryptString(customername);
                             param_CustomerID.Value = security_.EncryptString(customerid);
                             param_CustomerTel.Value = security_.EncryptString(customertel);
@@ -2236,7 +2236,7 @@ namespace CPSAppData.Services
                             param_CollectorName.Value = dataraw.Rows[i][cmbcolctrl[14].Text];
                             param_CollectorTeam.Value = dataraw.Rows[i][cmbcolctrl[15].Text];
                             param_CollectorTel.Value = dataraw.Rows[i][cmbcolctrl[16].Text];
-                            //param_LegalExecRemark.Value = dataraw.Rows[i][cmbcolctrl[18].Text];
+                            param_LegalExecRemark.Value = dataraw.Rows[i][cmbcolctrl[18].Text];
 
                             string str_lastpay = datehelper.ConverDateTODBStr(dataraw.Rows[i], cmbcolctrl[5].Text);
                             string str_judedate = datehelper.ConverDateTODBStr(dataraw.Rows[i], cmbcolctrl[12].Text);

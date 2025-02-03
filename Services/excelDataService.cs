@@ -41,8 +41,36 @@ namespace CPSAppData.Services
             }
             return headers;
         }
-        
+
         //Convert Excel Data to Datatable 
+        public DataTable ReadExcelToDataTable(string filePath)
+        {
+            var dataTable = new DataTable();
+
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+
+                // เพิ่มคอลัมน์ใน DataTable
+                foreach (var firstRowCell in worksheet.Cells[1, 1, 1, worksheet.Dimension.End.Column])
+                {
+                    dataTable.Columns.Add(firstRowCell.Text);
+                }
+
+                // เพิ่มแถวใน DataTable
+                for (int rowNum = 2; rowNum <= worksheet.Dimension.End.Row; rowNum++)
+                {
+                    var row = dataTable.NewRow();
+                    foreach (var cell in worksheet.Cells[rowNum, 1, rowNum, worksheet.Dimension.End.Column])
+                    {
+                        row[cell.Start.Column - 1] = cell.Text;
+                    }
+                    dataTable.Rows.Add(row);
+                }
+            }
+
+            return dataTable;
+        }
         public DataTable excelToDataTable(string filePath, bool hasHeader = true)
         {
             var dt = new DataTable();
@@ -213,3 +241,4 @@ namespace CPSAppData.Services
 
     }
 }
+    

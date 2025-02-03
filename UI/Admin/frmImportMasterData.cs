@@ -4,7 +4,6 @@ using CPSAppData.UI.BaseForm;
 using CpsDataApp.Models;
 using CpsDataApp.Services;
 using System.Data;
-using System.Numerics;
 
 namespace CPSAppData.UI.Setting
 {
@@ -696,7 +695,7 @@ namespace CPSAppData.UI.Setting
                 if (File.Exists(pathfile))
                 {
                     Cursor = Cursors.WaitCursor;
-                    DataTable dtraw = excelService.excelToDataTable(pathfile);
+                    DataTable dtraw = excelService.ReadExcelToDataTable(pathfile);
                     doSortDataTable(ref dtraw, "CustomerID ASC, CaseID ASC");
                     sqlitesrv.doInsertDataCPSMaster(dtraw, CPSMasterCtrl, chk_clear_master.Checked, this.progressBarMaster);
                     excelService.ExportExcelResult(sqlitesrv.getResultData(), Path.GetDirectoryName(pathfile) ?? "", "Master");

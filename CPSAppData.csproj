@@ -8,6 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject></StartupObject>
     <ApplicationIcon>Asset\icon\cpsappdata.ico</ApplicationIcon>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,7 +32,7 @@
 
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="7.5.3" />
-    <PackageReference Include="PDFsharp" Version="6.2.0-preview-2" />
+    <PackageReference Include="PDFsharp" Version="6.1.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
     <PackageReference Include="ZXing.Net" Version="0.16.10" />
