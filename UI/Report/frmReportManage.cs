@@ -19,7 +19,6 @@ namespace CPSAppData.UI.Report
         List<FestCustom> customData = new List<FestCustom>();
         dateTimeHelper dateHelper = new dateTimeHelper();
         DataTable datatableshow;
-        DataTable datatabledetailshow;
         DataTable? datatablexls;
 
         string typerange = string.Empty;
@@ -32,7 +31,6 @@ namespace CPSAppData.UI.Report
             datatableshow = dtService.doCreateDataShowTable();
             dataGridShow.DataSource = datatableshow;
             doSettingGridData();
-            datatabledetailshow = dtService.doCreateDataDatailShowTable();
         }
         #endregion
         #region Inittail 
@@ -44,6 +42,7 @@ namespace CPSAppData.UI.Report
             dataGridShow.Columns["CustomerID"].HeaderText = "เลขที่บัตรประชาชน";
             dataGridShow.Columns["CustomerName"].HeaderText = "ชื่อ-นามสกุล";
             dataGridShow.Columns["CardStatus"].HeaderText = "สถานะ(หลัก/เสริม)";
+            dataGridShow.Columns["LegalStatus"].HeaderText = "สถานะทางคดี";
             dataGridShow.Columns["LegalExecRemark"].HeaderText = "หมายเหตุบังคับคดี";
             dataGridShow.Columns["CaseID"].HeaderText = "CaseID";
 
@@ -52,7 +51,8 @@ namespace CPSAppData.UI.Report
             dataGridShow.Columns["LedNumber"].Width = 90;
             dataGridShow.Columns["CustomerID"].Width = 130;
             dataGridShow.Columns["CustomerName"].Width = 180;
-            dataGridShow.Columns["CardStatus"].Width = 110;
+            dataGridShow.Columns["LegalStatus"].Width = 110;
+            dataGridShow.Columns["CardStatus"].Width = 110;            
             dataGridShow.Columns["LegalExecRemark"].Width = 230;
             dataGridShow.Columns["CaseID"].Width = 90;
 
@@ -61,6 +61,7 @@ namespace CPSAppData.UI.Report
             dataGridShow.Columns["LedNumber"].ReadOnly = true;
             dataGridShow.Columns["CustomerID"].ReadOnly = true;
             dataGridShow.Columns["CustomerName"].ReadOnly = true;
+            dataGridShow.Columns["LegalStatus"].ReadOnly = true;            
             dataGridShow.Columns["CardStatus"].ReadOnly = true;
             dataGridShow.Columns["LegalExecRemark"].ReadOnly = true;
             dataGridShow.Columns["CaseID"].ReadOnly = true;
@@ -1228,6 +1229,7 @@ namespace CPSAppData.UI.Report
                 datarow["WorkNo"] = datapersonist[i].WorkNo;
                 datarow["CustomerID"] = datapersonist[i].CustomerID;
                 datarow["CustomerName"] = datapersonist[i].CustomerName;
+                datarow["LegalStatus"] = datapersonist[i].LegalStatus;
                 datarow["CardStatus"] = datapersonist[i].CardStatus;
                 datarow["LegalExecRemark"] = datapersonist[i].LegalExecRemark;
                 datarow["CaseID"] = datapersonist[i].CaseID;

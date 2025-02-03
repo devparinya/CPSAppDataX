@@ -61,7 +61,7 @@ namespace CPSAppData.UI.Setting
                 cmb_PrincipleAmnt,
                 cmb_PayAfterJudgAmt,
                 cmb_DeptAmnt,
-                cmb_LastPayDate,                
+                cmb_LastPayDate,
                 cmb_CustomerName,
                 cmb_CustomerID,
                 cmb_CustomerTel,
@@ -212,7 +212,7 @@ namespace CPSAppData.UI.Setting
                 cmb_CaseID.Items.Clear();
                 cmb_CaseID.Items.AddRange(dicHeader.Keys.ToArray());
 
-                cmb_CardStatus.Items.Clear(); 
+                cmb_CardStatus.Items.Clear();
                 cmb_CardStatus.Items.AddRange(dicHeader.Keys.ToArray());
             }
         }
@@ -406,7 +406,7 @@ namespace CPSAppData.UI.Setting
                 {
                     Cursor = Cursors.WaitCursor;
                     datatablecustom = excelService.excelToDataTable(pathfile);
-                    sqlitesrv.doInsertCustomData(datatablecustom, CPSCustomCtrl, this.progressBarCustom,chk_clear_custom.Checked);
+                    sqlitesrv.doInsertCustomData(datatablecustom, CPSCustomCtrl, this.progressBarCustom, chk_clear_custom.Checked);
                     excelService.ExportExcelResult(sqlitesrv.getResultData(), Path.GetDirectoryName(pathfile) ?? "", "ExecuteCPS");
                     MessageBox.Show("นำเข้าข้อมูลเรียบร้อย", "นำเข้าข้อมูล", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Cursor = Cursors.Default;
@@ -422,7 +422,7 @@ namespace CPSAppData.UI.Setting
             if (datatablefest.Rows.Count > 0)
             {
                 Cursor = Cursors.WaitCursor;
-                sqlitesrv.doInsertFestData(datatablefest, CPSFestCtrl, this.progressBarFest,chk_clear_cpsdata.Checked);
+                sqlitesrv.doInsertFestData(datatablefest, CPSFestCtrl, this.progressBarFest, chk_clear_cpsdata.Checked);
                 excelService.ExportExcelResult(sqlitesrv.getResultData(), Path.GetDirectoryName(txt_pathName_fest.Text) ?? "", "CSPData");
                 Cursor = Cursors.Default;
                 MessageBox.Show("นำเข้าข้อมูลเรียบร้อย", "นำเข้าข้อมูล", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -647,6 +647,34 @@ namespace CPSAppData.UI.Setting
                 MessageBox.Show("ไม่พบข้อมูลผิดปกติ", "ตรวจสอบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+        private void doSelectedFileMaster(TextBox txtpath)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "Excel Files|*.xls;*.xlsx;";
+            if (openFile.ShowDialog(this) == DialogResult.OK)
+            {
+                txtpath.Text = openFile.FileName;
+            }
+            else
+            {
+                txtpath.Text = string.Empty;
+            }
+        }
+        private Dictionary<string, string>? doGetHeaderFileExcel(TextBox txtpath)
+        {
+            Dictionary<string, string>? dicHeader = null;
+            if (File.Exists(txtpath.Text))
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                dicHeader = excelService.doGetColumnHDFromExcel(txtpath.Text, true);
+                Cursor.Current = Cursors.Default;
+            }
+            else
+            {
+                MessageBox.Show(string.Format("{0} \r\n ไม่มีอยู่จริง", txtpath.Text), "File Not Exist", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            return dicHeader;
+        }
         private Dictionary<string, string>? doSelectFileExcel(TextBox txtpath, bool ismaster)
         {
             Dictionary<string, string>? dicHeader = null;
@@ -655,7 +683,7 @@ namespace CPSAppData.UI.Setting
             if (openFile.ShowDialog(this) == DialogResult.OK)
             {
                 txtpath.Text = openFile.FileName;
-                Cursor.Current = Cursors.WaitCursor;                
+                Cursor.Current = Cursors.WaitCursor;
                 dicHeader = excelService.doGetColumnHDFromExcel(txtpath.Text, ismaster);
                 Cursor.Current = Cursors.Default;
             }
@@ -682,11 +710,16 @@ namespace CPSAppData.UI.Setting
         #region Event Control
         private void btn_brows_file_Click(object sender, EventArgs e)
         {
-            Dictionary<string, string>? dicHD = doSelectFileExcel(txt_path_excel, true);
-            if (dicHD != null) doAddHeaderDataFileMap(dicHD);
-        
+            doSelectedFileMaster(txt_path_excel);
+           
+
         }
-      
+        private void btn_header_get_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, string>? dicHD = doGetHeaderFileExcel(txt_path_excel);
+            if (dicHD != null) doAddHeaderDataFileMap(dicHD);
+        }
+
         private void btn_loaddata_excel_Click(object sender, EventArgs e)
         {
             string pathfile = txt_path_excel.Text;
@@ -700,9 +733,8 @@ namespace CPSAppData.UI.Setting
                     sqlitesrv.doInsertDataCPSMaster(dtraw, CPSMasterCtrl, chk_clear_master.Checked, this.progressBarMaster);
                     excelService.ExportExcelResult(sqlitesrv.getResultData(), Path.GetDirectoryName(pathfile) ?? "", "Master");
                     Cursor = Cursors.Default;
-                   
+
                     MessageBox.Show("นำเข้าข้อมูลเรียบร้อย", "นำเข้าข้อมูล", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //excelService.ExportToExcelAll(dtraw, @"D:\PARINYA\Develop\Template_20250127\1234.xlsx");
                 }
                 else
                 {
@@ -710,7 +742,7 @@ namespace CPSAppData.UI.Setting
                 }
             }
         }
-        private void doSortDataTable(ref DataTable datasoure,string sort_str)
+        private void doSortDataTable(ref DataTable datasoure, string sort_str)
         {
             DataView view = datasoure.DefaultView;
             view.Sort = sort_str;
@@ -757,8 +789,8 @@ namespace CPSAppData.UI.Setting
         {
             string folderpath = browFolder();
             string filename = "";
-            string[] captionth = new string[] {"CaseID","สถานะบัตร","หมายเลขบัตร","ยอดพิพากษา","ต้นเงิน","ชำระหลังพิพากษา","ภาระหนี้ปัจจุบัน","LastPayDate","ชื่อ-สกุล (ใหม่)","เบอร์ติดต่อ(ลูกค้า)","ID","Legal Status","คดีดำ","คดีแดง","วันพิพากษา","ชื่อศาล","หมายเหตุบังคับคดี","วันที่ยึดอายัติ(ล่าสุด)","Collector","Team","เบอร์ติดต่อ" };
-            string[] captioneng = new string[] {"CaseID","CardStatus","CardNo","JudgmentAmnt","PrincipleAmnt","PayAfterJudgAmt","DeptAmnt","LastPayDate","CustomerName","CustomerTel","CustomerID","LegalStatus","BlackNo","RedNo","JudgeDate","CourtName","LegalExecRemark","LegalExecDate","CollectorName","CollectorTeam","CollectorTel",};
+            string[] captionth = new string[] { "CaseID", "สถานะบัตร", "หมายเลขบัตร", "ยอดพิพากษา", "ต้นเงิน", "ชำระหลังพิพากษา", "ภาระหนี้ปัจจุบัน", "LastPayDate", "ชื่อ-สกุล (ใหม่)", "เบอร์ติดต่อ(ลูกค้า)", "ID", "Legal Status", "คดีดำ", "คดีแดง", "วันพิพากษา", "ชื่อศาล", "หมายเหตุบังคับคดี", "วันที่ยึดอายัติ(ล่าสุด)", "Collector", "Team", "เบอร์ติดต่อ" };
+            string[] captioneng = new string[] { "CaseID", "CardStatus", "CardNo", "JudgmentAmnt", "PrincipleAmnt", "PayAfterJudgAmt", "DeptAmnt", "LastPayDate", "CustomerName", "CustomerTel", "CustomerID", "LegalStatus", "BlackNo", "RedNo", "JudgeDate", "CourtName", "LegalExecRemark", "LegalExecDate", "CollectorName", "CollectorTeam", "CollectorTel", };
 
             if (!string.IsNullOrEmpty(folderpath))
             {
@@ -830,7 +862,7 @@ namespace CPSAppData.UI.Setting
             doLoadDefaultDataMasterCPS();
         }
 
-       
+
         private void btn_custom_loaddefault_Click(object sender, EventArgs e)
         {
             doLoadDefaultCPSCustom();
@@ -861,5 +893,7 @@ namespace CPSAppData.UI.Setting
             doExportCPSDataDuplicateID();
             Cursor = Cursors.Default;
         }
+
+        
     }
 }

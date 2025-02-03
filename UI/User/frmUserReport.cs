@@ -42,6 +42,7 @@ namespace CPSAppData.UI.Report
             dataGridDetailCard.Columns["CustomerID"].HeaderText = "เลขที่บัตรประชาชน";
             dataGridDetailCard.Columns["CustomerName"].HeaderText = "ชื่อ-นามสกุล";
             dataGridDetailCard.Columns["CardStatus"].HeaderText = "สถานะ(หลัก/เสริม)";
+            dataGridDetailCard.Columns["LegalStatus"].HeaderText = "สถานะทางคดี";
             dataGridDetailCard.Columns["LegalExecDate"].HeaderText = "วันที่ยึด";
             dataGridDetailCard.Columns["LegalExecRemark"].HeaderText = "หมายเหตุบังคับคดี";
 
@@ -49,6 +50,7 @@ namespace CPSAppData.UI.Report
             dataGridDetailCard.Columns["CustomerID"].Width = 180;
             dataGridDetailCard.Columns["CustomerName"].Width = 200;
             dataGridDetailCard.Columns["CardStatus"].Width = 120;
+            dataGridDetailCard.Columns["LegalStatus"].Width = 100;
             dataGridDetailCard.Columns["LegalExecDate"].Width = 90;
             dataGridDetailCard.Columns["LegalExecRemark"].Width = 180;
 
@@ -56,6 +58,7 @@ namespace CPSAppData.UI.Report
             dataGridDetailCard.Columns["CustomerID"].ReadOnly = true;
             dataGridDetailCard.Columns["CustomerName"].ReadOnly = true;
             dataGridDetailCard.Columns["CardStatus"].ReadOnly = true;
+            dataGridDetailCard.Columns["LegalStatus"].ReadOnly = true;
             dataGridDetailCard.Columns["LegalExecDate"].ReadOnly = true;
             dataGridDetailCard.Columns["LegalExecRemark"].ReadOnly = true;
             dataGridDetailCard.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -90,89 +93,6 @@ namespace CPSAppData.UI.Report
 
             }
         }
-        /*private List<DataCPSPerson> doMergeDataMultiRow(List<DataCPSPerson> datamasterlist)
-        {
-            List<DataCPSPerson> masertDatagroupList = new List<DataCPSPerson>();
-            for (int i = 0; i < datamasterlist.Count; i++)
-            {
-                string? customerid = Convert.ToString(datamasterlist[i].CustomerID??"");
-                string? caseid = Convert.ToString(datamasterlist[i].CaseID??"");
-
-                int indexrow = masertDatagroupList.FindIndex(item => item.CustomerID == customerid && item.CaseID == caseid);
-                if (indexrow <  0) 
-                {
-                    masertDatagroupList.Add(datamasterlist[i]);
-                }
-                else
-                {
-                    int rowindex = findIndexCardNoEmpty(masertDatagroupList[indexrow]);
-                    switch (rowindex) 
-                    {
-                        case 1:
-                            masertDatagroupList[indexrow].CardNo1 = datamasterlist[i].CardNo1;
-                            masertDatagroupList[indexrow].JudgmentAmnt1 = datamasterlist[i].JudgmentAmnt1;//ยอดพิพากษา
-                            masertDatagroupList[indexrow].PrincipleAmnt1 = datamasterlist[i].PrincipleAmnt1;//ต้นเงิน
-                            masertDatagroupList[indexrow].PayAfterJudgAmt1 = datamasterlist[i].PayAfterJudgAmt1;//ชำระหลังพิพากษา
-                            masertDatagroupList[indexrow].DeptAmnt1 = datamasterlist[i].DeptAmnt1;//ภาระหนี้ปัจจุบัน
-                            masertDatagroupList[indexrow].LastPayDate1 = datamasterlist[i].LastPayDate1;//ชำระครั้งล่าสุด
-                            break;
-                        case 2:
-                            masertDatagroupList[indexrow].CardNo2 = datamasterlist[i].CardNo1;
-                            masertDatagroupList[indexrow].JudgmentAmnt2 = datamasterlist[i].JudgmentAmnt1;//ยอดพิพากษา
-                            masertDatagroupList[indexrow].PrincipleAmnt2 = datamasterlist[i].PrincipleAmnt1;//ต้นเงิน
-                            masertDatagroupList[indexrow].PayAfterJudgAmt2 = datamasterlist[i].PayAfterJudgAmt1;//ชำระหลังพิพากษา
-                            masertDatagroupList[indexrow].DeptAmnt2 = datamasterlist[i].DeptAmnt1;//ภาระหนี้ปัจจุบัน
-                            masertDatagroupList[indexrow].LastPayDate2 = datamasterlist[i].LastPayDate1;//ชำระครั้งล่าสุด
-                            break;
-                        case 3:
-                            masertDatagroupList[indexrow].CardNo3 = datamasterlist[i].CardNo1;
-                            masertDatagroupList[indexrow].JudgmentAmnt3 = datamasterlist[i].JudgmentAmnt1;//ยอดพิพากษา
-                            masertDatagroupList[indexrow].PrincipleAmnt3 = datamasterlist[i].PrincipleAmnt1;//ต้นเงิน
-                            masertDatagroupList[indexrow].PayAfterJudgAmt3 = datamasterlist[i].PayAfterJudgAmt1;//ชำระหลังพิพากษา
-                            masertDatagroupList[indexrow].DeptAmnt3 = datamasterlist[i].DeptAmnt1;//ภาระหนี้ปัจจุบัน
-                            masertDatagroupList[indexrow].LastPayDate3 = datamasterlist[i].LastPayDate1;//ชำระครั้งล่าสุด
-                            break;
-                        case 4:
-                            masertDatagroupList[indexrow].CardNo4 = datamasterlist[i].CardNo1;
-                            masertDatagroupList[indexrow].JudgmentAmnt4 = datamasterlist[i].JudgmentAmnt1;//ยอดพิพากษา
-                            masertDatagroupList[indexrow].PrincipleAmnt4 = datamasterlist[i].PrincipleAmnt1;//ต้นเงิน
-                            masertDatagroupList[indexrow].PayAfterJudgAmt4 = datamasterlist[i].PayAfterJudgAmt1;//ชำระหลังพิพากษา
-                            masertDatagroupList[indexrow].DeptAmnt4 = datamasterlist[i].DeptAmnt1;//ภาระหนี้ปัจจุบัน
-                            masertDatagroupList[indexrow].LastPayDate4 = datamasterlist[i].LastPayDate1;//ชำระครั้งล่าสุด
-                            break;
-                        case 5:
-                            masertDatagroupList[indexrow].CardNo5 = datamasterlist[i].CardNo1;
-                            masertDatagroupList[indexrow].JudgmentAmnt5 = datamasterlist[i].JudgmentAmnt1;//ยอดพิพากษา
-                            masertDatagroupList[indexrow].PrincipleAmnt5 = datamasterlist[i].PrincipleAmnt1;//ต้นเงิน
-                            masertDatagroupList[indexrow].PayAfterJudgAmt5 = datamasterlist[i].PayAfterJudgAmt1;//ชำระหลังพิพากษา
-                            masertDatagroupList[indexrow].DeptAmnt5 = datamasterlist[i].DeptAmnt1;//ภาระหนี้ปัจจุบัน
-                            masertDatagroupList[indexrow].LastPayDate5 = datamasterlist[i].LastPayDate1;//ชำระครั้งล่าสุด
-                            break;
-                        case 6:
-                            masertDatagroupList[indexrow].CardNo6 = datamasterlist[i].CardNo1;
-                            masertDatagroupList[indexrow].JudgmentAmnt6 = datamasterlist[i].JudgmentAmnt1;//ยอดพิพากษา
-                            masertDatagroupList[indexrow].PrincipleAmnt6 = datamasterlist[i].PrincipleAmnt1;//ต้นเงิน
-                            masertDatagroupList[indexrow].PayAfterJudgAmt6 = datamasterlist[i].PayAfterJudgAmt1;//ชำระหลังพิพากษา
-                            masertDatagroupList[indexrow].DeptAmnt6 = datamasterlist[i].DeptAmnt1;//ภาระหนี้ปัจจุบัน
-                            masertDatagroupList[indexrow].LastPayDate6 = datamasterlist[i].LastPayDate1;//ชำระครั้งล่าสุด
-                            break;
-                    }
-                }
-            }
-           return masertDatagroupList;
-        }*/
-
-        private int findIndexCardNoEmpty(DataCPSPerson masertDatagroupList)
-        {
-            if (string.IsNullOrEmpty(masertDatagroupList.CardNo1)) return 1;
-            if (string.IsNullOrEmpty(masertDatagroupList.CardNo2)) return 2;
-            if (string.IsNullOrEmpty(masertDatagroupList.CardNo3)) return 3;
-            if (string.IsNullOrEmpty(masertDatagroupList.CardNo4)) return 4;
-            if (string.IsNullOrEmpty(masertDatagroupList.CardNo5)) return 5;
-            if (string.IsNullOrEmpty(masertDatagroupList.CardNo6)) return 6;
-            return 0;
-        }
-
         private void doLoadSettingData()
         {
             setdata = sqlitedsrv.doLoadSettingData();
@@ -788,6 +708,7 @@ namespace CPSAppData.UI.Report
                             datadt["CustomerID"] = dataMasterIDList[i].CustomerID;
                             datadt["CustomerName"] = dataMasterIDList[i].CustomerName;
                             datadt["CardStatus"] = dataMasterIDList[i].CardStatus;
+                            datadt["LegalStatus"] = dataMasterIDList[i].LegalStatus;
                             datadt["LegalExecDate"] = dataMasterIDList[i].LegalExecDate;
                             datadt["LegalExecRemark"] = dataMasterIDList[i].LegalExecRemark;
                             datadt["CaseID"] = dataMasterIDList[i].CaseID;

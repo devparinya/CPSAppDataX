@@ -2204,8 +2204,7 @@ namespace CPSAppData.Services
 
                             string? customerid = Convert.ToString(dataraw.Rows[i][cmbcolctrl[7].Text] is null ? string.Empty : dataraw.Rows[i][cmbcolctrl[7].Text]);                            
                             string? customername = Convert.ToString(dataraw.Rows[i][cmbcolctrl[6].Text] is null ? string.Empty : dataraw.Rows[i][cmbcolctrl[6].Text]);
-                            string? customertel = Convert.ToString(dataraw.Rows[i][cmbcolctrl[8].Text] is null ? string.Empty : dataraw.Rows[i][cmbcolctrl[8].Text]);
-
+                            string? customertel = Convert.ToString(dataraw.Rows[i][cmbcolctrl[8].Text] is null ? string.Empty : dataraw.Rows[i][cmbcolctrl[8].Text]);                           
                             if (string.IsNullOrEmpty(customerid_befor))
                             {
                                 listno = 1;

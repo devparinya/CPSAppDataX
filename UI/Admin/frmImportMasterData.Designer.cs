@@ -84,6 +84,7 @@
             label23 = new Label();
             groupBox1 = new GroupBox();
             label1 = new Label();
+            btn_header_get = new Button();
             btn_brows_file = new Button();
             txt_path_excel = new TextBox();
             tabPage2 = new TabPage();
@@ -722,6 +723,7 @@
             // groupBox1
             // 
             groupBox1.Controls.Add(label1);
+            groupBox1.Controls.Add(btn_header_get);
             groupBox1.Controls.Add(btn_brows_file);
             groupBox1.Controls.Add(txt_path_excel);
             groupBox1.Location = new Point(8, 6);
@@ -739,9 +741,19 @@
             label1.TabIndex = 2;
             label1.Text = "Path ข้อมูล (excel)";
             // 
+            // btn_header_get
+            // 
+            btn_header_get.Image = (Image)resources.GetObject("btn_header_get.Image");
+            btn_header_get.Location = new Point(890, 39);
+            btn_header_get.Name = "btn_header_get";
+            btn_header_get.Size = new Size(37, 25);
+            btn_header_get.TabIndex = 1;
+            btn_header_get.UseVisualStyleBackColor = true;
+            btn_header_get.Click += btn_header_get_Click;
+            // 
             // btn_brows_file
             // 
-            btn_brows_file.Location = new Point(907, 41);
+            btn_brows_file.Location = new Point(847, 39);
             btn_brows_file.Name = "btn_brows_file";
             btn_brows_file.Size = new Size(37, 25);
             btn_brows_file.TabIndex = 1;
@@ -756,7 +768,7 @@
             txt_path_excel.Location = new Point(37, 41);
             txt_path_excel.Name = "txt_path_excel";
             txt_path_excel.ReadOnly = true;
-            txt_path_excel.Size = new Size(864, 25);
+            txt_path_excel.Size = new Size(804, 25);
             txt_path_excel.TabIndex = 0;
             // 
             // tabPage2
@@ -1861,5 +1873,6 @@
         private ComboBox cmb_CardStatus;
         private Label label53;
         private Label label52;
+        private Button btn_header_get;
     }
 }

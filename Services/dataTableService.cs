@@ -335,6 +335,7 @@ namespace CpsDataApp.Services
             dtDataShow.Columns.Add("LedNumber", typeof(string)); 
             dtDataShow.Columns.Add("CustomerID", typeof(string)); 
             dtDataShow.Columns.Add("CustomerName", typeof(string));
+            dtDataShow.Columns.Add("LegalStatus", typeof(string));
             dtDataShow.Columns.Add("LegalExecRemark", typeof(string));
             dtDataShow.Columns.Add("CardStatus", typeof(string));
             dtDataShow.Columns.Add("CaseID", typeof(string));
@@ -346,6 +347,7 @@ namespace CpsDataApp.Services
             dtDataShow.Columns.Add("IsSelect", typeof(bool));
             dtDataShow.Columns.Add("CustomerID", typeof(string));
             dtDataShow.Columns.Add("CustomerName", typeof(string));
+            dtDataShow.Columns.Add("LegalStatus", typeof(string));
             dtDataShow.Columns.Add("CardStatus", typeof(string));
             dtDataShow.Columns.Add("LegalExecDate", typeof(string));
             dtDataShow.Columns.Add("LegalExecRemark", typeof(string));
