@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <StartupObject></StartupObject>
+    <ApplicationIcon>Asset\icon\cpsappdata.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controller\**" />
+    <Compile Remove="Data\**" />
+    <Compile Remove="UI\NewFolder1\**" />
+    <Compile Remove="UI\Progress\**" />
+    <EmbeddedResource Remove="Controller\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="UI\NewFolder1\**" />
+    <EmbeddedResource Remove="UI\Progress\**" />
+    <None Remove="Controller\**" />
+    <None Remove="Data\**" />
+    <None Remove="UI\NewFolder1\**" />
+    <None Remove="UI\Progress\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Asset\icon\cpsappdata.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus" Version="7.5.3" />
+    <PackageReference Include="PDFsharp" Version="6.1.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
+    <PackageReference Include="ZXing.Net" Version="0.16.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="UI\User\frmUserReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
