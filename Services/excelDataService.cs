@@ -1,5 +1,4 @@
 ﻿using OfficeOpenXml;
-using PdfSharp.Charting;
 using System.Data;
 
 namespace CPSAppData.Services
@@ -42,6 +41,7 @@ namespace CPSAppData.Services
             }
             return headers;
         }
+        
         //Convert Excel Data to Datatable 
         public DataTable excelToDataTable(string filePath, bool hasHeader = true)
         {
@@ -63,7 +63,8 @@ namespace CPSAppData.Services
                     c.FirstRowIsColumnNames = true;
                     c.AlwaysAllowNull = true;
                 });
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 if (ex.Message.Contains("SkipNumberOfRowsStart"))
                 {
@@ -77,6 +78,7 @@ namespace CPSAppData.Services
 
             return dt;
         }
+       
         private List<string> getSheetNameEXCEL(string pathdata)
         {
             List<string> sheetName = new List<string>();

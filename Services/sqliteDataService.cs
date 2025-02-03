@@ -4,8 +4,6 @@ using CpsDataApp.Services;
 using QueueAppManager.Service;
 using System.Data;
 using System.Data.SQLite;
-using System.Data.SqlTypes;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace CPSAppData.Services
 {
@@ -2209,12 +2207,12 @@ namespace CPSAppData.Services
                             string? customertel = Convert.ToString(dataraw.Rows[i][cmbcolctrl[8].Text] is null ? string.Empty : dataraw.Rows[i][cmbcolctrl[8].Text]);
 
                             if (string.IsNullOrEmpty(customerid_befor))
-                            {                                
+                            {
                                 listno = 1;
                             }
                             else
                             {
-                                if(customerid_befor == customerid)
+                                if (customerid_befor == customerid)
                                 {
                                     listno = listno + 1;
                                 }
@@ -2225,7 +2223,7 @@ namespace CPSAppData.Services
                             }
                             customerid_befor = customerid;
 
-                            param_ListNo.Value = listno;
+                            //param_ListNo.Value = listno;
                             param_CustomerName.Value = security_.EncryptString(customername);
                             param_CustomerID.Value = security_.EncryptString(customerid);
                             param_CustomerTel.Value = security_.EncryptString(customertel);

@@ -39,11 +39,11 @@
             btn_loaddata_excel = new Button();
             btn_export_template = new Button();
             groupBox4 = new GroupBox();
-            cmb_CardNo1 = new ComboBox();
+            cmb_CardNo = new ComboBox();
             btn_save_map = new Button();
-            cmb_JudgmentAmnt1 = new ComboBox();
+            cmb_JudgmentAmnt = new ComboBox();
             cmb_LegalExecRemark = new ComboBox();
-            cmb_PrincipleAmnt1 = new ComboBox();
+            cmb_PrincipleAmnt = new ComboBox();
             cmb_LegalExecDate = new ComboBox();
             label21 = new Label();
             cmb_CollectorTel = new ComboBox();
@@ -55,13 +55,13 @@
             label8 = new Label();
             label10 = new Label();
             cmb_CardStatus = new ComboBox();
-            cmb_PayAfterJudgAmt1 = new ComboBox();
+            cmb_PayAfterJudgAmt = new ComboBox();
             cmb_CustomerTel = new ComboBox();
-            cmb_DeptAmnt1 = new ComboBox();
+            cmb_DeptAmnt = new ComboBox();
             cmb_CustomerName = new ComboBox();
             label9 = new Label();
             label7 = new Label();
-            cmb_LastPayDate1 = new ComboBox();
+            cmb_LastPayDate = new ComboBox();
             cmb_CollectorName = new ComboBox();
             label6 = new Label();
             cmb_CollectorTeam = new ComboBox();
@@ -295,11 +295,11 @@
             // 
             // groupBox4
             // 
-            groupBox4.Controls.Add(cmb_CardNo1);
+            groupBox4.Controls.Add(cmb_CardNo);
             groupBox4.Controls.Add(btn_save_map);
-            groupBox4.Controls.Add(cmb_JudgmentAmnt1);
+            groupBox4.Controls.Add(cmb_JudgmentAmnt);
             groupBox4.Controls.Add(cmb_LegalExecRemark);
-            groupBox4.Controls.Add(cmb_PrincipleAmnt1);
+            groupBox4.Controls.Add(cmb_PrincipleAmnt);
             groupBox4.Controls.Add(cmb_LegalExecDate);
             groupBox4.Controls.Add(label21);
             groupBox4.Controls.Add(cmb_CollectorTel);
@@ -311,13 +311,13 @@
             groupBox4.Controls.Add(label8);
             groupBox4.Controls.Add(label10);
             groupBox4.Controls.Add(cmb_CardStatus);
-            groupBox4.Controls.Add(cmb_PayAfterJudgAmt1);
+            groupBox4.Controls.Add(cmb_PayAfterJudgAmt);
             groupBox4.Controls.Add(cmb_CustomerTel);
-            groupBox4.Controls.Add(cmb_DeptAmnt1);
+            groupBox4.Controls.Add(cmb_DeptAmnt);
             groupBox4.Controls.Add(cmb_CustomerName);
             groupBox4.Controls.Add(label9);
             groupBox4.Controls.Add(label7);
-            groupBox4.Controls.Add(cmb_LastPayDate1);
+            groupBox4.Controls.Add(cmb_LastPayDate);
             groupBox4.Controls.Add(cmb_CollectorName);
             groupBox4.Controls.Add(label6);
             groupBox4.Controls.Add(cmb_CollectorTeam);
@@ -344,13 +344,13 @@
             groupBox4.TabIndex = 4;
             groupBox4.TabStop = false;
             // 
-            // cmb_CardNo1
+            // cmb_CardNo
             // 
-            cmb_CardNo1.FormattingEnabled = true;
-            cmb_CardNo1.Location = new Point(32, 192);
-            cmb_CardNo1.Name = "cmb_CardNo1";
-            cmb_CardNo1.Size = new Size(125, 25);
-            cmb_CardNo1.TabIndex = 0;
+            cmb_CardNo.FormattingEnabled = true;
+            cmb_CardNo.Location = new Point(32, 192);
+            cmb_CardNo.Name = "cmb_CardNo";
+            cmb_CardNo.Size = new Size(125, 25);
+            cmb_CardNo.TabIndex = 0;
             // 
             // btn_save_map
             // 
@@ -364,13 +364,13 @@
             btn_save_map.UseVisualStyleBackColor = true;
             btn_save_map.Click += btn_save_map_Click;
             // 
-            // cmb_JudgmentAmnt1
+            // cmb_JudgmentAmnt
             // 
-            cmb_JudgmentAmnt1.FormattingEnabled = true;
-            cmb_JudgmentAmnt1.Location = new Point(163, 192);
-            cmb_JudgmentAmnt1.Name = "cmb_JudgmentAmnt1";
-            cmb_JudgmentAmnt1.Size = new Size(125, 25);
-            cmb_JudgmentAmnt1.TabIndex = 0;
+            cmb_JudgmentAmnt.FormattingEnabled = true;
+            cmb_JudgmentAmnt.Location = new Point(163, 192);
+            cmb_JudgmentAmnt.Name = "cmb_JudgmentAmnt";
+            cmb_JudgmentAmnt.Size = new Size(125, 25);
+            cmb_JudgmentAmnt.TabIndex = 0;
             // 
             // cmb_LegalExecRemark
             // 
@@ -380,13 +380,13 @@
             cmb_LegalExecRemark.Size = new Size(125, 25);
             cmb_LegalExecRemark.TabIndex = 0;
             // 
-            // cmb_PrincipleAmnt1
+            // cmb_PrincipleAmnt
             // 
-            cmb_PrincipleAmnt1.FormattingEnabled = true;
-            cmb_PrincipleAmnt1.Location = new Point(297, 192);
-            cmb_PrincipleAmnt1.Name = "cmb_PrincipleAmnt1";
-            cmb_PrincipleAmnt1.Size = new Size(125, 25);
-            cmb_PrincipleAmnt1.TabIndex = 0;
+            cmb_PrincipleAmnt.FormattingEnabled = true;
+            cmb_PrincipleAmnt.Location = new Point(297, 192);
+            cmb_PrincipleAmnt.Name = "cmb_PrincipleAmnt";
+            cmb_PrincipleAmnt.Size = new Size(125, 25);
+            cmb_PrincipleAmnt.TabIndex = 0;
             // 
             // cmb_LegalExecDate
             // 
@@ -487,13 +487,13 @@
             cmb_CardStatus.Size = new Size(125, 25);
             cmb_CardStatus.TabIndex = 0;
             // 
-            // cmb_PayAfterJudgAmt1
+            // cmb_PayAfterJudgAmt
             // 
-            cmb_PayAfterJudgAmt1.FormattingEnabled = true;
-            cmb_PayAfterJudgAmt1.Location = new Point(428, 192);
-            cmb_PayAfterJudgAmt1.Name = "cmb_PayAfterJudgAmt1";
-            cmb_PayAfterJudgAmt1.Size = new Size(125, 25);
-            cmb_PayAfterJudgAmt1.TabIndex = 0;
+            cmb_PayAfterJudgAmt.FormattingEnabled = true;
+            cmb_PayAfterJudgAmt.Location = new Point(428, 192);
+            cmb_PayAfterJudgAmt.Name = "cmb_PayAfterJudgAmt";
+            cmb_PayAfterJudgAmt.Size = new Size(125, 25);
+            cmb_PayAfterJudgAmt.TabIndex = 0;
             // 
             // cmb_CustomerTel
             // 
@@ -503,13 +503,13 @@
             cmb_CustomerTel.Size = new Size(125, 25);
             cmb_CustomerTel.TabIndex = 0;
             // 
-            // cmb_DeptAmnt1
+            // cmb_DeptAmnt
             // 
-            cmb_DeptAmnt1.FormattingEnabled = true;
-            cmb_DeptAmnt1.Location = new Point(557, 192);
-            cmb_DeptAmnt1.Name = "cmb_DeptAmnt1";
-            cmb_DeptAmnt1.Size = new Size(125, 25);
-            cmb_DeptAmnt1.TabIndex = 0;
+            cmb_DeptAmnt.FormattingEnabled = true;
+            cmb_DeptAmnt.Location = new Point(557, 192);
+            cmb_DeptAmnt.Name = "cmb_DeptAmnt";
+            cmb_DeptAmnt.Size = new Size(125, 25);
+            cmb_DeptAmnt.TabIndex = 0;
             // 
             // cmb_CustomerName
             // 
@@ -538,13 +538,13 @@
             label7.TabIndex = 2;
             label7.Text = "ชื่อศาล";
             // 
-            // cmb_LastPayDate1
+            // cmb_LastPayDate
             // 
-            cmb_LastPayDate1.FormattingEnabled = true;
-            cmb_LastPayDate1.Location = new Point(690, 192);
-            cmb_LastPayDate1.Name = "cmb_LastPayDate1";
-            cmb_LastPayDate1.Size = new Size(125, 25);
-            cmb_LastPayDate1.TabIndex = 0;
+            cmb_LastPayDate.FormattingEnabled = true;
+            cmb_LastPayDate.Location = new Point(690, 192);
+            cmb_LastPayDate.Name = "cmb_LastPayDate";
+            cmb_LastPayDate.Size = new Size(125, 25);
+            cmb_LastPayDate.TabIndex = 0;
             // 
             // cmb_CollectorName
             // 
@@ -1737,16 +1737,16 @@
         private ComboBox cmb_LegalStatus;
         private Label label10;
         private Label label9;
-        private ComboBox cmb_JudgmentAmnt1;
-        private ComboBox cmb_CardNo1;
+        private ComboBox cmb_JudgmentAmnt;
+        private ComboBox cmb_CardNo;
         private Label label13;
         private Label label12;
         private Label label11;
-        private ComboBox cmb_DeptAmnt1;
-        private ComboBox cmb_PayAfterJudgAmt1;
-        private ComboBox cmb_PrincipleAmnt1;
+        private ComboBox cmb_DeptAmnt;
+        private ComboBox cmb_PayAfterJudgAmt;
+        private ComboBox cmb_PrincipleAmnt;
         private Label label21;
-        private ComboBox cmb_LastPayDate1;
+        private ComboBox cmb_LastPayDate;
         private Label label24;
         private Label label23;
         private Label label22;

@@ -12,12 +12,10 @@ namespace CPSAppData.UI.Report
     {
         #region Member
         SettingData setdata = new SettingData();
-
         dataTableService dtService = new dataTableService();
         reportService reportsrv = new reportService();
         calculateDataService calcsrv = new calculateDataService();
         sqliteDataService sqlitedsrv = new sqliteDataService();
-
         List<FestCustom> customData = new List<FestCustom>();
         dateTimeHelper dateHelper = new dateTimeHelper();
         DataTable datatableshow;
@@ -66,6 +64,8 @@ namespace CPSAppData.UI.Report
             dataGridShow.Columns["CardStatus"].ReadOnly = true;
             dataGridShow.Columns["LegalExecRemark"].ReadOnly = true;
             dataGridShow.Columns["CaseID"].ReadOnly = true;
+
+            dataGridShow.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }     
         private void doLoadSettingData()
         {
@@ -309,7 +309,6 @@ namespace CPSAppData.UI.Report
             }
             return dataCPSCardList;
         }
-
         private int findindexCardNo(DataCPSPerson dataCard, string cardno)
         {
             int indexrow = -1;
@@ -699,8 +698,7 @@ namespace CPSAppData.UI.Report
                 }
             }
             return result;
-        } // 1 person print
-       
+        } // 1 person print       
         private List<DataCPSCard> doConvertDataForReportCustIDCaseID(string customerid, string case_id) //new
         {
             List<DataCPSCard> dataCardList = new List<DataCPSCard>();   
@@ -1079,8 +1077,7 @@ namespace CPSAppData.UI.Report
                 path = saveFileDialog.FileName;
             }
             return path;
-        }
-        
+        }        
         private void btn_save_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
@@ -1190,8 +1187,7 @@ namespace CPSAppData.UI.Report
         }
 
         #endregion
-        #region Other Method
-       
+        #region Other Method       
         private string browFolder()
         {
             string ls_path = string.Empty;

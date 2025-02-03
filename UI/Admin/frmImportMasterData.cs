@@ -4,7 +4,7 @@ using CPSAppData.UI.BaseForm;
 using CpsDataApp.Models;
 using CpsDataApp.Services;
 using System.Data;
-using ZXing;
+using System.Numerics;
 
 namespace CPSAppData.UI.Setting
 {
@@ -29,10 +29,10 @@ namespace CPSAppData.UI.Setting
             sqlitesrv.doinitTableSettingData();
             sqlitesrv.initTableCPSPayData();
             sqlitesrv.doinitTableCPSFestData();
-            doInitCtrlMasterCPS();
+            doInitCtrlDataMasterCPS();
             doInitCtrlCPSFest();
             doInitCtrlCPSCustom();
-            sqlitesrv.doLoadMappingDate(CPSMasterCtrl, "MASTERMAP");
+            sqlitesrv.doLoadMappingDate(CPSMasterCtrl, "DATAMASTERMAP");
             sqlitesrv.doLoadMappingDate(CPSFestCtrl, "FESTMAP");
             sqlitesrv.doLoadMappingDate(CPSCustomCtrl, "FESTCUSTOMMAP");
         }
@@ -53,16 +53,16 @@ namespace CPSAppData.UI.Setting
             datagridfest.Columns[CPSFestCtrl[4].Text.Replace("cmb_fest_", "")].Width = 250;
             datagridfest.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
-        private void doInitCtrlMasterCPS()
+        private void doInitCtrlDataMasterCPS()
         {
             CPSMasterCtrl = new ComboBox[]
             {
-                cmb_CardNo1,
-                cmb_JudgmentAmnt1,
-                cmb_PrincipleAmnt1,
-                cmb_PayAfterJudgAmt1,
-                cmb_DeptAmnt1,
-                cmb_LastPayDate1,                
+                cmb_CardNo,
+                cmb_JudgmentAmnt,
+                cmb_PrincipleAmnt,
+                cmb_PayAfterJudgAmt,
+                cmb_DeptAmnt,
+                cmb_LastPayDate,                
                 cmb_CustomerName,
                 cmb_CustomerID,
                 cmb_CustomerTel,
@@ -139,7 +139,6 @@ namespace CPSAppData.UI.Setting
             Fld.SelectedPath = ls_path;
             Fld.ShowNewFolderButton = true;
 
-
             if (Fld.ShowDialog() == DialogResult.OK)
             {
                 ls_path = Fld.SelectedPath;
@@ -154,23 +153,23 @@ namespace CPSAppData.UI.Setting
             if (dicHeader != null)
             {
 
-                cmb_CardNo1.Items.Clear();
-                cmb_CardNo1.Items.AddRange(dicHeader.Keys.ToArray());
+                cmb_CardNo.Items.Clear();
+                cmb_CardNo.Items.AddRange(dicHeader.Keys.ToArray());
 
-                cmb_JudgmentAmnt1.Items.Clear(); //ยอดพิพากษา
-                cmb_JudgmentAmnt1.Items.AddRange(dicHeader.Keys.ToArray());
+                cmb_JudgmentAmnt.Items.Clear(); //ยอดพิพากษา
+                cmb_JudgmentAmnt.Items.AddRange(dicHeader.Keys.ToArray());
 
-                cmb_PrincipleAmnt1.Items.Clear(); //ต้นเงิน
-                cmb_PrincipleAmnt1.Items.AddRange(dicHeader.Keys.ToArray());
+                cmb_PrincipleAmnt.Items.Clear(); //ต้นเงิน
+                cmb_PrincipleAmnt.Items.AddRange(dicHeader.Keys.ToArray());
 
-                cmb_PayAfterJudgAmt1.Items.Clear();//ชำระหลังพิพากษา
-                cmb_PayAfterJudgAmt1.Items.AddRange(dicHeader.Keys.ToArray());
+                cmb_PayAfterJudgAmt.Items.Clear();//ชำระหลังพิพากษา
+                cmb_PayAfterJudgAmt.Items.AddRange(dicHeader.Keys.ToArray());
 
-                cmb_DeptAmnt1.Items.Clear();//ภาระหนี้ปัจจุบัน
-                cmb_DeptAmnt1.Items.AddRange(dicHeader.Keys.ToArray());
+                cmb_DeptAmnt.Items.Clear();//ภาระหนี้ปัจจุบัน
+                cmb_DeptAmnt.Items.AddRange(dicHeader.Keys.ToArray());
 
-                cmb_LastPayDate1.Items.Clear();//ชำระครั้งล่าสุด
-                cmb_LastPayDate1.Items.AddRange(dicHeader.Keys.ToArray());
+                cmb_LastPayDate.Items.Clear();//ชำระครั้งล่าสุด
+                cmb_LastPayDate.Items.AddRange(dicHeader.Keys.ToArray());
 
                 cmb_CustomerName.Items.Clear(); //ชื่อ สกุล
                 cmb_CustomerName.Items.AddRange(dicHeader.Keys.ToArray());
@@ -354,7 +353,7 @@ namespace CPSAppData.UI.Setting
         private void doSaveDataMapMaster()
         {
             Cursor = Cursors.WaitCursor;
-            bool result = sqlitesrv.doSaveMapMaterCPS("MASTERMAP", CPSMasterCtrl);
+            bool result = sqlitesrv.doSaveMapMaterCPS("DATAMASTERMAP", CPSMasterCtrl);
             if (result) MessageBox.Show("บันทึกสำเร็จ", "บันทึกสำเร็จ", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Cursor = Cursors.Default;
         }
@@ -657,7 +656,7 @@ namespace CPSAppData.UI.Setting
             if (openFile.ShowDialog(this) == DialogResult.OK)
             {
                 txtpath.Text = openFile.FileName;
-                Cursor.Current = Cursors.WaitCursor;
+                Cursor.Current = Cursors.WaitCursor;                
                 dicHeader = excelService.doGetColumnHDFromExcel(txtpath.Text, ismaster);
                 Cursor.Current = Cursors.Default;
             }
@@ -686,7 +685,9 @@ namespace CPSAppData.UI.Setting
         {
             Dictionary<string, string>? dicHD = doSelectFileExcel(txt_path_excel, true);
             if (dicHD != null) doAddHeaderDataFileMap(dicHD);
+        
         }
+      
         private void btn_loaddata_excel_Click(object sender, EventArgs e)
         {
             string pathfile = txt_path_excel.Text;
@@ -806,7 +807,7 @@ namespace CPSAppData.UI.Setting
         }
         #endregion
         #region Default Map
-        private void doLoadDefaultCPSMaster()
+        private void doLoadDefaultDataMasterCPS()
         {
             for (int i = 0; i < CPSMasterCtrl.Length; i++)
             {
@@ -827,85 +828,10 @@ namespace CPSAppData.UI.Setting
 
         private void btn_load_default_Click(object sender, EventArgs e)
         {
-            List<DataCPSPerson> datCustomerGroup = datCustomerGroup = sqlitesrv.doGetDataCPSMasterGroupID();
-            List<DataCPSMaster> dataCPSMasters = sqlitesrv.doGetDataCPSMasterAll();
-            //DataTable dataTableTemplate = dtService.doCreateMasterCPSDataTemplate();
-            //progressBarMaster.Maximum = datCustomerGroup.Count;
-            //progressBarMaster.Minimum = 0;
-            //progressBarMaster.Step = 1;
-            //progressBarMaster.Visible = true;
-            //progressBarMaster.Value = 0;           
-            //for (int i = 0;i < datCustomerGroup.Count; i++)
-            //{
-            //    string cus_id = datCustomerGroup[i].CustomerID??"";
-            //    if (!string.IsNullOrEmpty(cus_id)) 
-            //    {
-            //       // List<DataCPSPerson> data =  sqlitesrv.doGetDataCPSMaterWithCustomerID(cus_id);
-            //        //doConvertDataToDTTemplate(dr,ref dataTableTemplate);
-            //    }
-            //    progressBarMaster.Value = i + 1;
-            //}
-            //progressBarMaster.Visible = false;
-            //doLoadDefaultCPSMaster();
+            doLoadDefaultDataMasterCPS();
         }
 
-       // private void doConvertData
-        private void doConvertDataToDTTemplate(DataRow datacpsmaster,ref DataTable dtTemplate)
-        {
-            DataRow dtrow = dtTemplate.NewRow();
-            dtrow["CaseID"] = datacpsmaster["CaseID"];
-            dtrow["CardStatus"] = datacpsmaster["CardStatus"];
-            dtrow["CardNo1"] = datacpsmaster["CardNo1"];
-            dtrow["JudgmentAmnt1"] = datacpsmaster["JudgmentAmnt1"];
-            dtrow["PrincipleAmnt1"] = datacpsmaster["PrincipleAmnt1"];
-            dtrow["PayAfterJudgAmt1"] = datacpsmaster["PayAfterJudgAmt1"];
-            dtrow["DeptAmnt1"] = datacpsmaster["DeptAmnt1"];
-            dtrow["LastPayDate1"] = datacpsmaster["LastPayDate1"];
-            dtrow["CardNo2"] = datacpsmaster["CardNo2"];
-            dtrow["JudgmentAmnt2"] = datacpsmaster["JudgmentAmnt2"];
-            dtrow["PrincipleAmnt2"] = datacpsmaster["PrincipleAmnt2"];
-            dtrow["PayAfterJudgAmt2"] = datacpsmaster["PayAfterJudgAmt2"];
-            dtrow["DeptAmnt2"] = datacpsmaster["DeptAmnt2"];
-            dtrow["LastPayDate2"] = datacpsmaster["LastPayDate2"];
-            dtrow["CardNo3"] = datacpsmaster["CardNo3"];
-            dtrow["JudgmentAmnt3"] = datacpsmaster["JudgmentAmnt3"];
-            dtrow["PrincipleAmnt3"] = datacpsmaster["PrincipleAmnt3"];
-            dtrow["PayAfterJudgAmt3"] = datacpsmaster["PayAfterJudgAmt3"];
-            dtrow["DeptAmnt3"] = datacpsmaster["DeptAmnt3"];
-            dtrow["LastPayDate3"] = datacpsmaster["LastPayDate3"];
-            dtrow["CardNo4"] = datacpsmaster["CardNo4"];
-            dtrow["JudgmentAmnt4"] = datacpsmaster["JudgmentAmnt4"];
-            dtrow["PrincipleAmnt4"] = datacpsmaster["PrincipleAmnt4"];
-            dtrow["PayAfterJudgAmt4"] = datacpsmaster["PayAfterJudgAmt4"];
-            dtrow["DeptAmnt4"] = datacpsmaster["DeptAmnt4"];
-            dtrow["LastPayDate4"] = datacpsmaster["LastPayDate4"];
-            dtrow["CardNo5"] = datacpsmaster["CardNo5"];
-            dtrow["JudgmentAmnt5"] = datacpsmaster["JudgmentAmnt5"];
-            dtrow["PrincipleAmnt5"] = datacpsmaster["PrincipleAmnt5"];
-            dtrow["PayAfterJudgAmt5"] = datacpsmaster["PayAfterJudgAmt5"];
-            dtrow["DeptAmnt5"] = datacpsmaster["DeptAmnt5"];
-            dtrow["LastPayDate5"] = datacpsmaster["LastPayDate5"];
-            dtrow["CardNo6"] = datacpsmaster["CardNo6"];
-            dtrow["JudgmentAmnt6"] = datacpsmaster["JudgmentAmnt6"];
-            dtrow["PrincipleAmnt6"] = datacpsmaster["PrincipleAmnt6"];
-            dtrow["PayAfterJudgAmt6"] = datacpsmaster["PayAfterJudgAmt6"];
-            dtrow["DeptAmnt6"] = datacpsmaster["DeptAmnt6"];
-            dtrow["LastPayDate6"] = datacpsmaster["LastPayDate6"];
-            dtrow["CustomerName"] = datacpsmaster["CustomerName"];
-            dtrow["CustomerTel"] = datacpsmaster["CustomerTel"];
-            dtrow["CustomerID"] = datacpsmaster["CustomerID"];
-            dtrow["LegalStatus"] = datacpsmaster["LegalStatus"];
-            dtrow["BlackNo"] = datacpsmaster["BlackNo"];
-            dtrow["RedNo"] = datacpsmaster["RedNo"];
-            dtrow["JudgeDate"] = datacpsmaster["JudgeDate"];
-            dtrow["CourtName"] = datacpsmaster["CourtName"];
-            dtrow["LegalExecRemark"] = datacpsmaster["LegalExecRemark"];
-            dtrow["LegalExecDate"] = datacpsmaster["LegalExecDate"];
-            dtrow["CollectorName"] = datacpsmaster["CollectorName"];
-            dtrow["CollectorTeam"] = datacpsmaster["CollectorTeam"];
-            dtrow["CollectorTel"] = datacpsmaster["CollectorTel"];
-            dtTemplate.Rows.Add(dtrow);
-        }
+       
         private void btn_custom_loaddefault_Click(object sender, EventArgs e)
         {
             doLoadDefaultCPSCustom();
