@@ -16,6 +16,7 @@ namespace QueueAppManager.Service
         dateTimeHelper datehelper = new dateTimeHelper();
         string documentno = string.Empty;
         string workno = string.Empty;
+        //ติดต่อพนักงานผู้รับผิดชอบ บริษัท วินเพอร์ฟอร์มานซ์ จำกัด   โทร. 02-123-6399 
 
         #region Print PDF
         public bool doCreateC2PDFReport(List<DataCPSCard> dataCPS, SettingData setdata)
@@ -84,7 +85,15 @@ namespace QueueAppManager.Service
                 DrawJustifiedText(gfx, text2, font_normal, rect2);
 
                 string courtname = string.Format("{0}", dataCPS[i].CourtName);
-                gfx.DrawString(courtname, font_normalbold, XBrushes.Black, new XRect(2.5, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+                if (string.IsNullOrEmpty(courtname))
+                {
+                    courtname = "ศาล      -       ";
+                    gfx.DrawString(courtname, font_normal, XBrushes.Black, new XRect(2.5, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+                }
+                else
+                {
+                    gfx.DrawString(courtname, font_normalbold, XBrushes.Black, new XRect(2.5, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+                }
 
                 string textredno = "หมายเลขคดีแดงที่";
                 gfx.DrawString(textredno, font_normal, XBrushes.Black, new XRect(gfx.MeasureString(courtname, font_normalbold).Width + 2.8, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
@@ -92,6 +101,7 @@ namespace QueueAppManager.Service
 
                 double widthdata = gfx.MeasureString(textredno, font_normal).Width + gfx.MeasureString(courtname, font_normalbold).Width;
                 string rednumber = string.Format("{0}", dataCPS[i].RedNo);
+                if (string.IsNullOrEmpty(rednumber)) rednumber = "     -     ";
                 gfx.DrawString(rednumber, font_normalbold, XBrushes.Black, new XRect(widthdata + 3, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
 
                 string textktc = "ระหว่าง บริษัท บัตรกรุงไทย จำกัด ( มหาชน ) โจทก์ กับ";
@@ -782,7 +792,15 @@ namespace QueueAppManager.Service
                         DrawJustifiedText(gfx, text2, font_normal, rect2);
 
                         string courtname = string.Format("{0}", dataCPS[i].CourtName);
-                        gfx.DrawString(courtname, font_normalbold, XBrushes.Black, new XRect(2.5, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+                        if (string.IsNullOrEmpty(courtname))
+                        {
+                            courtname = "ศาล      -       ";
+                            gfx.DrawString(courtname, font_normal, XBrushes.Black, new XRect(2.5, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+                        }
+                        else
+                        {
+                            gfx.DrawString(courtname, font_normalbold, XBrushes.Black, new XRect(2.5, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+                        }
 
                         string textredno = "หมายเลขคดีแดงที่";
                         gfx.DrawString(textredno, font_normal, XBrushes.Black, new XRect(gfx.MeasureString(courtname, font_normalbold).Width + 2.8, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
@@ -790,6 +808,7 @@ namespace QueueAppManager.Service
 
                         double widthdata = gfx.MeasureString(textredno, font_normal).Width + gfx.MeasureString(courtname, font_normalbold).Width;
                         string rednumber = string.Format("{0}", dataCPS[i].RedNo);
+                        if (string.IsNullOrEmpty(rednumber)) rednumber = "     -     ";
                         gfx.DrawString(rednumber, font_normalbold, XBrushes.Black, new XRect(widthdata + 3, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
 
                         string textktc = "ระหว่าง บริษัท บัตรกรุงไทย จำกัด ( มหาชน ) โจทก์ กับ";
@@ -1413,7 +1432,6 @@ namespace QueueAppManager.Service
             }           
             return false;
         }
-
         public bool doUserCreateC2PDFReport(List<DataCPSCard> dataCPS, SettingData setdata,string queueno)
         {
             GlobalFontSettings.FontResolver = new FileFontResolver();
@@ -1481,8 +1499,16 @@ namespace QueueAppManager.Service
                     XRect rect2 = new XRect(2.5, 8.11 + spaceH, 16, 10);
                     DrawJustifiedText(gfx, text2, font_normal, rect2);
 
-                    string courtname = string.Format("{0}", dataCPS[i].CourtName);
-                    gfx.DrawString(courtname, font_normalbold, XBrushes.Black, new XRect(2.5, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+                    string courtname = string.Format("{0}", dataCPS[i].CourtName); 
+                    if (string.IsNullOrEmpty(courtname))
+                    {
+                        courtname = "ศาล      -       ";
+                        gfx.DrawString(courtname, font_normal, XBrushes.Black, new XRect(2.5, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+                    }
+                    else
+                    {
+                        gfx.DrawString(courtname, font_normalbold, XBrushes.Black, new XRect(2.5, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+                    }
 
                     string textredno = "หมายเลขคดีแดงที่";
                     gfx.DrawString(textredno, font_normal, XBrushes.Black, new XRect(gfx.MeasureString(courtname, font_normalbold).Width + 2.8, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
@@ -1490,6 +1516,7 @@ namespace QueueAppManager.Service
 
                     double widthdata = gfx.MeasureString(textredno, font_normal).Width + gfx.MeasureString(courtname, font_normalbold).Width;
                     string rednumber = string.Format("{0}", dataCPS[i].RedNo);
+                    if (string.IsNullOrEmpty(rednumber)) rednumber = "     -     ";
                     gfx.DrawString(rednumber, font_normalbold, XBrushes.Black, new XRect(widthdata + 3, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
 
                     string textktc = "ระหว่าง บริษัท บัตรกรุงไทย จำกัด ( มหาชน ) โจทก์ กับ";
@@ -2165,8 +2192,16 @@ namespace QueueAppManager.Service
                     XRect rect2 = new XRect(2.5, 8.11 + spaceH, 16, 10);
                     DrawJustifiedText(gfx, text2, font_normal, rect2);
 
-                    string courtname = string.Format("{0}", dataCPS[i].CourtName);
-                    gfx.DrawString(courtname, font_normalbold, XBrushes.Black, new XRect(2.5, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+                    string courtname = string.Format("{0}", dataCPS[i].CourtName); 
+                    if (string.IsNullOrEmpty(courtname))
+                    {
+                        courtname = "ศาล      -       ";
+                        gfx.DrawString(courtname, font_normal, XBrushes.Black, new XRect(2.5, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+                    }
+                    else
+                    {
+                        gfx.DrawString(courtname, font_normalbold, XBrushes.Black, new XRect(2.5, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+                    }
 
                     string textredno = "หมายเลขคดีแดงที่";
                     gfx.DrawString(textredno, font_normal, XBrushes.Black, new XRect(gfx.MeasureString(courtname, font_normalbold).Width + 2.8, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
@@ -2174,6 +2209,7 @@ namespace QueueAppManager.Service
 
                     double widthdata = gfx.MeasureString(textredno, font_normal).Width + gfx.MeasureString(courtname, font_normalbold).Width;
                     string rednumber = string.Format("{0}", dataCPS[i].RedNo);
+                    if(string.IsNullOrEmpty(rednumber)) rednumber = "     -     "; 
                     gfx.DrawString(rednumber, font_normalbold, XBrushes.Black, new XRect(widthdata + 3, 8.9, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
 
                     string textktc = "ระหว่าง บริษัท บัตรกรุงไทย จำกัด ( มหาชน ) โจทก์ กับ";

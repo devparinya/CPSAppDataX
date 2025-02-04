@@ -728,7 +728,7 @@ namespace CPSAppData.UI.Setting
                 if (File.Exists(pathfile))
                 {
                     Cursor = Cursors.WaitCursor;
-                    DataTable dtraw = excelService.ReadExcelToDataTable(pathfile);
+                    DataTable dtraw = excelService.excelToDataTable(pathfile);
                     doSortDataTable(ref dtraw, "CustomerID ASC, CaseID ASC");
                     sqlitesrv.doInsertDataCPSMaster(dtraw, CPSMasterCtrl, chk_clear_master.Checked, this.progressBarMaster);
                     excelService.ExportExcelResult(sqlitesrv.getResultData(), Path.GetDirectoryName(pathfile) ?? "", "Master");
@@ -892,8 +892,6 @@ namespace CPSAppData.UI.Setting
             Cursor = Cursors.WaitCursor;
             doExportCPSDataDuplicateID();
             Cursor = Cursors.Default;
-        }
-
-        
+        }        
     }
 }
