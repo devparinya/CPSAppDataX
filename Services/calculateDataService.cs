@@ -74,7 +74,119 @@ namespace QueueAppManager.Service
             }
             else
             {
-                double CheckValue = Round(((DeptAmnt - CapitalAmntBalance) * 0.3)+ CapitalAmntBalance, decamnt);
+                double CheckValue = Round(((DeptAmnt - CapitalAmntBalance) * 0.4)+ CapitalAmntBalance, decamnt);
+                if (CheckValue < AccCloseAmnt)
+                {
+                    AccClose12Amnt = Round(DeptAmnt * 0.4, decamnt);
+                }
+                else
+                {
+                    AccClose12Amnt = CheckValue;
+                }
+            }
+            double Installment12Amnt = Round(AccClose12Amnt / 12, decamnt); //ผ่อนชำระ 12 งวด งวดละ **AI**
+
+            cardCPS.AccClose12Amnt = AccClose12Amnt;
+            cardCPS.Installment12Amnt = Installment12Amnt;
+
+
+
+            double AccClose24Amnt = 0; //*ผ่อนชำระ 24 งวด IF(AE2 = 1000, 0, IF(($AD2 - $AC2) * 0.4 + $AC2 < AE2, $AD2 * 0.4, ($AD2 - $AC2) * 0.4 + $AC2)) **AJ**
+            if (AccCloseAmnt == 1000)
+            {
+                AccClose24Amnt = 0;
+            }
+            else
+            {
+                double CheckValue = Round(((DeptAmnt - CapitalAmntBalance) * 0.6) + CapitalAmntBalance, decamnt);
+                if (CheckValue < AccCloseAmnt)
+                {
+                    AccClose24Amnt = Round(DeptAmnt * 0.6, decamnt);
+                }
+                else
+                {
+                    AccClose24Amnt = CheckValue;
+                }
+            }
+            double Installment24Amnt = Round(AccClose24Amnt / 24, decamnt); //ผ่อนชำระ 24 งวด งวดละ **AK**
+
+            cardCPS.AccClose24Amnt = AccClose24Amnt;
+            cardCPS.Installment24Amnt = Installment24Amnt;
+            cardCPS.Maxmonth = maxmonth;
+        }
+        public void CaluLateData6CardNew(ref DataCPSCard cardCPS, SettingData setdata)
+        {
+            int decamnt = 2;
+            int maxmonth = 24;
+            double PrincipleAmnt = cardCPS.PrincipleAmnt; //ต้นเงิน
+            double PayAfterJudgeAmnt = cardCPS.PayAfterJudgAmt; //จ่ายหลังพิพากษา
+            double DeptAmnt = cardCPS.DeptAmnt; //ภาระหนี้ปัจจุบัน
+
+            if (!string.IsNullOrEmpty(cardCPS.JudgeDate))
+            {
+                maxmonth = CaculateMaxmonth(setdata.MaxMonth, cardCPS.JudgeDate, setdata.FistDateInstall ?? string.Empty);
+            }
+            double PrincipleAmntBalance = 0;// ต้นเงินปัจจุบัน - จ่ายหลังพิพากษา
+            PrincipleAmntBalance = Round(PrincipleAmnt - PayAfterJudgeAmnt, decamnt);
+            if (PrincipleAmntBalance < 0) PrincipleAmntBalance = 0; 
+
+            double AccCloseAmnt = 0; //*ปิดบัญชีงวดเดียว IF(AND(AC2=0, AD2=0), 0, IF(AC2<1000, MAX(AD2*10%, 1000), AC2)) **AE**
+            if ((PrincipleAmntBalance == 0) && (DeptAmnt == 0))
+            {
+                AccCloseAmnt = 0;
+            }
+            else if((PrincipleAmntBalance == 0)&&(DeptAmnt>0)) //จ่ายเกินเงินต้น
+            {
+                AccCloseAmnt = Round(DeptAmnt * 0.10, decamnt); // 10% ของภาระหนี้
+            }
+            else
+            {
+                double DeptAmnt0Per = Round(DeptAmnt * 0.10, decamnt); // 10% ของภาระหนี้ 
+                if (PrincipleAmntBalance < 1000) //
+                {
+                    AccCloseAmnt = 1000;
+                    if (DeptAmnt0Per > AccCloseAmnt) AccCloseAmnt = PrincipleAmntBalance + DeptAmnt0Per;
+                }
+                else
+                {
+
+                    AccCloseAmnt = PrincipleAmntBalance;
+                }
+            }
+            cardCPS.CapitalAmnt = PrincipleAmntBalance;
+            cardCPS.AccCloseAmnt = AccCloseAmnt;
+
+
+            double AccClose6Amnt = 0;//*ผ่อนชำระ 6 งวด IF(AE2 = 1000, 0, IF(($AD2 - $AC2) * 0.2 + $AC2 < AE2, $AD2 * 0.2, ($AD2 - $AC2) * 0.2 + $AC2)) **AF**
+            if (AccCloseAmnt == 1000)
+            {
+                AccClose6Amnt = 0;
+            }
+            else
+            {
+                double CheckValue = Round(((DeptAmnt - PrincipleAmntBalance) * 0.2) + PrincipleAmntBalance, decamnt);
+                if (CheckValue < AccCloseAmnt)
+                {
+                    AccClose6Amnt = Round(DeptAmnt * 0.2, decamnt);
+                }
+                else
+                {
+                    AccClose6Amnt = CheckValue;
+                }
+            }
+            double Installment6Amnt = Round(AccClose6Amnt / 6, decamnt); //ผ่อนชำระ 6 งวด งวดละ **AG**
+
+            cardCPS.AccClose6Amnt = AccClose6Amnt;
+            cardCPS.Installment6Amnt = Installment6Amnt;
+
+            double AccClose12Amnt = 0;//*ผ่อนชำระ 12 งวด IF(AE2 = 1000, 0, IF(($AD2 - $AC2) * 0.3 + $AC2 < AE2, $AD2 * 0.3, ($AD2 - $AC2) * 0.3 + $AC2)) **AH**
+            if (AccCloseAmnt == 1000)
+            {
+                AccClose12Amnt = 0;
+            }
+            else
+            {
+                double CheckValue = Round(((DeptAmnt - PrincipleAmntBalance) * 0.3) + PrincipleAmntBalance, decamnt);
                 if (CheckValue < AccCloseAmnt)
                 {
                     AccClose12Amnt = Round(DeptAmnt * 0.3, decamnt);
@@ -98,7 +210,7 @@ namespace QueueAppManager.Service
             }
             else
             {
-                double CheckValue = Round(((DeptAmnt - CapitalAmntBalance) * 0.4) + CapitalAmntBalance, decamnt);
+                double CheckValue = Round(((DeptAmnt - PrincipleAmntBalance) * 0.4) + PrincipleAmntBalance, decamnt);
                 if (CheckValue < AccCloseAmnt)
                 {
                     AccClose24Amnt = Round(DeptAmnt * 0.4, decamnt);
@@ -148,13 +260,9 @@ namespace QueueAppManager.Service
             {
                 SetCustomData6Card(ref cardCPS, customData[0], indexrow + 1);
             }
-          }
-       
+          }       
         public void SetCustomData6Card(ref DataCPSCard cardCPS, FestCustom CustomData, int cadrno)
         {
-            //int decamnt = 2;
-            //cardCPS.WorkNo = CustomData.WorkNo;
-            //cardCPS.LedNumber = CustomData.LedNumber;
             switch (cadrno)
             {
                 case 1:                   

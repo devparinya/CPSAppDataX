@@ -1488,7 +1488,9 @@ namespace CPSAppData.Services
                                 ,ifnull(CardStatus,'') as CardStatus
                                 ,ifnull(CustomerName,'') as CustomerName
                                 ,ifnull(CustomerID,'') as CustomerID
-                                ,ifnull(LegalStatus,'') as LegalStatus                                 
+                                ,ifnull(LegalStatus,'') as LegalStatus
+                                ,ifnull(LegalExecDate,'') as LegalExecDate
+                                ,ifnull(LegalExecRemark,'') as LegalExecRemark
                                FROM DataCPSMaster
                                WHERE (CustomerID = '{0}');", customerid_where);
                 using var command = new SQLiteCommand(sqlcmd, connection);
@@ -1510,6 +1512,8 @@ namespace CPSAppData.Services
                             masterdata.CustomerName = security_.DecryptString(reader.GetString("CustomerName") ?? "");
                             masterdata.CustomerID = custID;
                             masterdata.LegalStatus = reader.GetString("LegalStatus") ?? "";
+                            masterdata.LegalExecRemark = reader.GetString("LegalExecRemark") ?? "";
+                            masterdata.LegalExecDate = datehelper.doGetShortDateTHFromDBToPDF(reader.GetString("LegalExecDate") ?? "");
                             dataMasterall.Add(masterdata);
                         }
                           
@@ -1532,7 +1536,9 @@ namespace CPSAppData.Services
                                 ,ifnull(CardStatus,'') as CardStatus
                                 ,ifnull(CustomerName,'') as CustomerName
                                 ,ifnull(CustomerID,'') as CustomerID
-                                ,ifnull(LegalStatus,'') as LegalStatus                                 
+                                ,ifnull(LegalStatus,'') as LegalStatus
+                                ,ifnull(LegalExecDate,'') as LegalExecDate
+                                ,ifnull(LegalExecRemark,'') as LegalExecRemark
                                FROM DataCPSMaster
                                WHERE (CaseID = '{0}')
                                AND (CustoMerID <> '{1}') ;", caseid,customerid);
@@ -1554,6 +1560,8 @@ namespace CPSAppData.Services
                             masterdata.CustomerName = security_.DecryptString(reader.GetString("CustomerName") ?? "");
                             masterdata.CustomerID = custID;
                             masterdata.LegalStatus = reader.GetString("LegalStatus") ?? "";
+                            masterdata.LegalExecRemark = reader.GetString("LegalExecRemark") ?? "";
+                            masterdata.LegalExecDate = datehelper.doGetShortDateTHFromDBToPDF(reader.GetString("LegalExecDate") ?? "");
                             datamasterlist.Add(masterdata);                           
                         }
                     }
@@ -2204,14 +2212,15 @@ namespace CPSAppData.Services
 
                             string? customerid = Convert.ToString(dataraw.Rows[i][cmbcolctrl[7].Text] is null ? string.Empty : dataraw.Rows[i][cmbcolctrl[7].Text]);                            
                             string? customername = Convert.ToString(dataraw.Rows[i][cmbcolctrl[6].Text] is null ? string.Empty : dataraw.Rows[i][cmbcolctrl[6].Text]);
-                            string? customertel = Convert.ToString(dataraw.Rows[i][cmbcolctrl[8].Text] is null ? string.Empty : dataraw.Rows[i][cmbcolctrl[8].Text]);                           
+                            string? customertel = Convert.ToString(dataraw.Rows[i][cmbcolctrl[8].Text] is null ? string.Empty : dataraw.Rows[i][cmbcolctrl[8].Text]);
+                            string? caseid = Convert.ToString(dataraw.Rows[i][cmbcolctrl[19].Text] is null ? string.Empty : dataraw.Rows[i][cmbcolctrl[19].Text]);
                             if (string.IsNullOrEmpty(customerid_befor))
                             {
                                 listno = 1;
                             }
                             else
                             {
-                                if (customerid_befor == customerid)
+                                if (customerid_befor == customerid && case_id_brfore == caseid)
                                 {
                                     listno = listno + 1;
                                 }
@@ -2221,6 +2230,7 @@ namespace CPSAppData.Services
                                 }
                             }
                             customerid_befor = customerid;
+                            case_id_brfore = caseid;
 
                             param_ListNo.Value = listno;
                             param_CustomerName.Value = security_.EncryptString(customername);
@@ -2244,7 +2254,7 @@ namespace CPSAppData.Services
                             param_JudgeDate.Value = str_judedate;
                             param_LegalExecDate.Value = str_execdate;
 
-                            param_CaseID.Value = Convert.ToString(dataraw.Rows[i][cmbcolctrl[19].Text]);
+                            param_CaseID.Value = caseid;
                             param_CardStatus.Value = dataraw.Rows[i][cmbcolctrl[20].Text];
 
                             int result_i = cmd.ExecuteNonQuery();

@@ -46,7 +46,7 @@ namespace CPSAppData.Services
         public DataTable ReadExcelToDataTable(string filePath)
         {
             var dataTable = new DataTable();
-
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (var package = new ExcelPackage(new FileInfo(filePath)))
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
