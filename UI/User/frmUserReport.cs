@@ -119,9 +119,10 @@ namespace CPSAppData.UI.Report
                 if (dataperson.CustomFlag == "Y")
                 {
                     string customid = dataperson.CustomerID??"";
+                    string caseid = dataperson.CaseID ?? "";
                     if (!string.IsNullOrEmpty(customid))
                     {
-                        List<FestCustom> datacustom = sqlitedsrv.doGetDataCustomWithID(customid);
+                        List<FestCustom> datacustom = sqlitedsrv.doGetDataCustomWithID(customid, caseid);
                         if(datacustom.Count > 0)
                         {
                             
@@ -372,16 +373,16 @@ namespace CPSAppData.UI.Report
             if (customstatus == "Y")
             {
                 #region Set Data 1 Account
-                string customerid = data6CardList[0].CustomerID ?? "";
-                {
+                    string customerid = data6CardList[0].CustomerID ?? "";
+                    string caseid = data6CardList[0].CaseID ?? "";
 
-                    doSetDispalyCustom(customstatus);
+                doSetDispalyCustom(customstatus);
                     txt_custid_shdt.Text = data6CardList[0].CustomerID;
                     txt_custname_shdt.Text = data6CardList[0].CustomerName;
 
                     string? lednumber = Convert.ToString(data6CardList[0].LedNumber is null ? "" : data6CardList[0].LedNumber);
 
-                    List<FestCustom> data6CardListCustom = sqlitedsrv.doGetDataCustomWithID(customerid);
+                    List<FestCustom> data6CardListCustom = sqlitedsrv.doGetDataCustomWithID(customerid, caseid);
                     if (data6CardListCustom == null) return;
                     if (data6CardListCustom.Count > 0) 
                     {
@@ -479,8 +480,7 @@ namespace CPSAppData.UI.Report
                                 txt_deptamntshdt_6.Text = datartn.DeptAmnt1 == 0 ? "-" : datartn.DeptAmnt1.ToString("N");
                                 txt_lastpaydateshdt_6.Text = dateHelper.doGetShortDateTHFromDBToPDF(datartn.LastPayDate1 ?? "-");
                             }
-                        }
-                    }
+                        }                    
                     #endregion
                 }
             }
@@ -900,7 +900,7 @@ namespace CPSAppData.UI.Report
                                     if (string.IsNullOrEmpty(CPSCall.LedNumber)) CPSCall.LedNumber = txt_queueno_shdt.Text;
                                     if (CPSCall.CustomFlag == "Y")
                                     {
-                                        if (m == 0) customDataList = sqlitedsrv.doGetDataCustomWithID(CPSCall.CustomerID ?? "");
+                                        if (m == 0) customDataList = sqlitedsrv.doGetDataCustomWithID(CPSCall.CustomerID ?? "", CPSCall.CaseID??"");
                                         if (customDataList.Count > 0) calcsrv.CaluLateData6CardCustom(ref CPSCall, customDataList, m);
                                     }
                                     else

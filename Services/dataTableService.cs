@@ -262,6 +262,7 @@ namespace CpsDataApp.Services
         public DataTable doCreateFestCustomTemplate()
         {
             DataTable dataTemplate = new DataTable();
+            dataTemplate.Columns.Add("CaseID", typeof(string));
             dataTemplate.Columns.Add("CustomerID", typeof(string));
             dataTemplate.Columns.Add("CustomerName", typeof(string));
             dataTemplate.Columns.Add("LedNumber", typeof(string));

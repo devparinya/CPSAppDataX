@@ -20,6 +20,7 @@ namespace CPSAppData.UI.Report
         dateTimeHelper dateHelper = new dateTimeHelper();
         DataTable datatableshow;
         DataTable? datatablexls;
+        ArrayList ARRdataForPrint = new ArrayList();
 
         string typerange = string.Empty;
         #endregion
@@ -94,9 +95,10 @@ namespace CPSAppData.UI.Report
                 if (dataperson.CustomFlag == "Y")
                 {
                     string customid = dataperson.CustomerID ?? "";
+                    string caseid = dataperson.CustomerID ?? "";
                     if (!string.IsNullOrEmpty(customid))
                     {
-                        List<FestCustom> datacustom = sqlitedsrv.doGetDataCustomWithID(customid);
+                        List<FestCustom> datacustom = sqlitedsrv.doGetDataCustomWithID(customid, caseid);
                         if (datacustom.Count > 0)
                         {
 
@@ -643,7 +645,7 @@ namespace CPSAppData.UI.Report
                             DataCPSCard cardCPS = cpscarddatalist[n];
                             if (cpscarddatalist[n].CustomFlag == "Y")
                             {
-                                if (i == 0) customData = sqlitedsrv.doGetDataCustomWithID(cardCPS.CustomerID ?? "");
+                                if (i == 0) customData = sqlitedsrv.doGetDataCustomWithID(cardCPS.CustomerID ?? "", cardCPS.CaseID ?? "");
                                 if (customData.Count > 0) calcsrv.CaluLateData6CardCustom(ref cardCPS, customData, i);
                             }
                             else
@@ -678,7 +680,7 @@ namespace CPSAppData.UI.Report
                     DataCPSCard cpscarddata = datacpscard[i];
                     if (cpscarddata.CustomFlag == "Y")
                     {
-                        if (i == 0) customData = sqlitedsrv.doGetDataCustomWithID(cpscarddata.CustomerID ?? "");
+                        if (i == 0) customData = sqlitedsrv.doGetDataCustomWithID(cpscarddata.CustomerID ?? "", cpscarddata.CaseID ?? "");
                         if (customData.Count > 0) calcsrv.CaluLateData6CardCustom(ref cpscarddata, customData, i);
                     }
                     else
@@ -713,6 +715,7 @@ namespace CPSAppData.UI.Report
         }
         private ArrayList doConvertDataForReportMerge(DataRow[] dataselected)
         {
+            if(ARRdataForPrint.Count > 0) return ARRdataForPrint;
             ArrayList datacardarrlist = new ArrayList();
             if (dataselected == null) return datacardarrlist;            
             for (int i = 0; i < dataselected.Length; i++)
@@ -731,7 +734,8 @@ namespace CPSAppData.UI.Report
                     }
                 }
             }
-            return datacardarrlist;
+            ARRdataForPrint = datacardarrlist;
+            return ARRdataForPrint;
         }
         #endregion
         #region Export Excel
@@ -879,7 +883,7 @@ namespace CPSAppData.UI.Report
                             DataCPSCard cardCPS = CPSCardList[n];
                             if (CPSCardList[n].CustomFlag == "Y")
                             {
-                                if (i == 0) customData = sqlitedsrv.doGetDataCustomWithID(cardCPS.CustomerID ?? "");
+                                if (i == 0) customData = sqlitedsrv.doGetDataCustomWithID(cardCPS.CustomerID ?? "", cardCPS.CaseID ?? "");
                                 if (customData.Count > 0) calcsrv.CaluLateData6CardCustom(ref cardCPS, customData, i);
                             }
                             else
@@ -1092,7 +1096,7 @@ namespace CPSAppData.UI.Report
             string end_workno = txt_endworkno.Text;
             string start_ledno = txt_startlednumber.Text;
             string end_Ledno = txt_endlednumber.Text;
-
+            ARRdataForPrint = new ArrayList();
             Cursor = Cursors.Default;
             if (!(string.IsNullOrEmpty(start_workno) || string.IsNullOrEmpty(end_workno)))
             {

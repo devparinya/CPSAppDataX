@@ -128,7 +128,26 @@ namespace CPSAppData.UI.Setting
                 cmb_custom_AccClose24Amnt4,
                 cmb_custom_AccClose24Amnt5,
                 cmb_custom_AccClose24Amnt6,
-                cmb_custom_LegalExecRemark
+                cmb_custom_LegalExecRemark,
+                cmb_custom_Installment6Amnt1,
+                cmb_custom_Installment6Amnt2,
+                cmb_custom_Installment6Amnt3,
+                cmb_custom_Installment6Amnt4,
+                cmb_custom_Installment6Amnt5,
+                cmb_custom_Installment6Amnt6,
+                cmb_custom_Installment12Amnt1,
+                cmb_custom_Installment12Amnt2,
+                cmb_custom_Installment12Amnt3,
+                cmb_custom_Installment12Amnt4,
+                cmb_custom_Installment12Amnt5,
+                cmb_custom_Installment12Amnt6,
+                cmb_custom_Installment24Amnt1,
+                cmb_custom_Installment24Amnt2,
+                cmb_custom_Installment24Amnt3,
+                cmb_custom_Installment24Amnt4,
+                cmb_custom_Installment24Amnt5,
+                cmb_custom_Installment24Amnt6,
+                cmb_custom_CaseID
             };
         }
         private string browFolder()
@@ -711,7 +730,7 @@ namespace CPSAppData.UI.Setting
         private void btn_brows_file_Click(object sender, EventArgs e)
         {
             doSelectedFileMaster(txt_path_excel);
-           
+
 
         }
         private void btn_header_get_Click(object sender, EventArgs e)
@@ -818,11 +837,13 @@ namespace CPSAppData.UI.Setting
         {
             string folderpath = browFolder();
             string filename = "";
-            string[] captionth = new string[] {"ID","ชื่อ-สกุล","เลขที่ชุดงาน","ลำดับกรม","หมายเลขบัตร1","ปิดงวดเดียวบัตร1","ผ่อน 6 เดือนบัตร1","ผ่อน 12 เดือนบัตร1","ผ่อน 24 เดือนบัตร1","หมายเลขบัตร2","ปิดงวดเดียวบัตร2","ผ่อน 6 เดือนบัตร2","ผ่อน 12 เดือนบัตร2","ผ่อน 24 เดือนบัตร2","หมายเลขบัตร3","ปิดงวดเดียวบัตร3","ผ่อน 6 เดือนบัตร3",
-                                                "ผ่อน 12 เดือนบัตร3","ผ่อน 24 เดือนบัตร3","หมายเลขบัตร4","ปิดงวดเดียวบัตร4","ผ่อน 6 เดือนบัตร4","ผ่อน 12 เดือนบัตร4","ผ่อน 24 เดือนบัตร4","หมายเลขบัตร5","ปิดงวดเดียวบัตร5","ผ่อน 6 เดือนบัตร5","ผ่อน 12 เดือนบัตร5","ผ่อน 24 เดือนบัตร5","หมายเลขบัตร6","ปิดงวดเดียวบัตร6","ผ่อน 6 เดือนบัตร6","ผ่อน 12 เดือนบัตร6","ผ่อน 24 เดือนบัตร6","หมายเหตุบังคับคดี" };
+            string[] captionth = new string[] {"CaseID","ID","ชื่อ-สกุล","เลขที่ชุดงาน","ลำดับกรม","หมายเลขบัตร1","ปิดงวดเดียวบัตร1","ผ่อน 6 เดือนบัตร1","งวดละ(6เดือน บัตร1)","ผ่อน 12 เดือนบัตร1","งวดละ(12เดือน บัตร1)","ผ่อน 24 เดือนบัตร1","งวดละ(24เดือน บัตร1)","หมายเลขบัตร2","ปิดงวดเดียวบัตร2","ผ่อน 6 เดือนบัตร2","งวดละ(6เดือน บัตร2)","ผ่อน 12 เดือนบัตร2","งวดละงวดละ(12เดือน บัตร2)","ผ่อน 24 เดือนบัตร2","งวดละงวดละ(24เดือน บัตร2)"
+                                               ,"หมายเลขบัตร3","ปิดงวดเดียวบัตร3","ผ่อน 6 เดือนบัตร3","งวดละ(6เดือน บัตร3)","ผ่อน 12 เดือนบัตร3","งวดละ(12เดือน บัตร3)","ผ่อน 24 เดือนบัตร3","งวดละ(24เดือน บัตร3)","หมายเลขบัตร4","ปิดงวดเดียวบัตร4","ผ่อน 6 เดือนบัตร4","งวดละ(6เดือน บัตร4)","ผ่อน 12 เดือนบัตร4","งวดละ(12เดือน บัตร4)","ผ่อน 24 เดือนบัตร4","งวดละ(24เดือน บัตร4)","หมายเลขบัตร5","ปิดงวดเดียวบัตร5"
+                                               ,"ผ่อน 6 เดือนบัตร5","งวดละ(6เดือน บัตร5)","ผ่อน 12 เดือนบัตร5","งวดละ(12เดือน บัตร5)","ผ่อน 24 เดือนบัตร5","งวดละ(24เดือน บัตร5)","หมายเลขบัตร6","ปิดงวดเดียวบัตร6","ผ่อน 6 เดือนบัตร6","งวดละ(6เดือน บัตร6)","ผ่อน 12 เดือนบัตร6","งวดละ(12เดือน บัตร6)","ผ่อน 24 เดือนบัตร6","งวดละ(24เดือน บัตร6)","หมายเหตุบังคับคดี" };
 
-            string[] captioneng = new string[] {"CustomerID","CustomerName","WorkNo","LedNumber","CardNo1","AccCloseAmnt1","AccClose6Amnt1","AccClose12Amnt1","AccClose24Amnt1","CardNo2","AccCloseAmnt2","AccClose6Amnt2","AccClose12Amnt2","AccClose24Amnt2","CardNo3","AccCloseAmnt3","AccClose6Amnt3",
-                                                "AccClose12Amnt3","AccClose24Amnt3","CardNo4","AccCloseAmnt4","AccClose6Amnt4","AccClose12Amnt4","AccClose24Amnt4","CardNo5","AccCloseAmnt5","AccClose6Amnt5","AccClose12Amnt5","AccClose24Amnt5","CardNo6","AccCloseAmnt6","AccClose6Amnt6","AccClose12Amnt6","AccClose24Amnt6", "LegalExecRemark"};
+            string[] captioneng = new string[] {"CaseID","CustomerID","CustomerName","WorkNo","LedNumber","CardNo1","AccCloseAmnt1","AccClose6Amnt1","Installment6Amnt1","AccClose12Amnt1","Installment12Amnt1","AccClose24Amnt1","Installment24Amnt1","CardNo2","AccCloseAmnt2","AccClose6Amnt2","Installment6Amnt2","AccClose12Amnt2","Installment12Amnt2"
+                                                ,"AccClose24Amnt2","Installment24Amnt2","CardNo3","AccCloseAmnt3","AccClose6Amnt3","Installment6Amnt3","AccClose12Amnt3","Installment12Amnt3","AccClose24Amnt3","Installment24Amnt3","CardNo4","AccCloseAmnt4","AccClose6Amnt4","Installment6Amnt4","AccClose12Amnt4","Installment12Amnt4","AccClose24Amnt4","Installment24Amnt4"
+                                                ,"CardNo5","AccCloseAmnt5","AccClose6Amnt5","Installment6Amnt5","AccClose12Amnt5","Installment12Amnt5","AccClose24Amnt5","Installment24Amnt5","CardNo6","AccCloseAmnt6","AccClose6Amnt6","Installment6Amnt6","AccClose12Amnt6","Installment12Amnt6","AccClose24Amnt6","Installment24Amnt6", "LegalExecRemark"};
 
             if (!string.IsNullOrEmpty(folderpath))
             {
@@ -892,6 +913,11 @@ namespace CPSAppData.UI.Setting
             Cursor = Cursors.WaitCursor;
             doExportCPSDataDuplicateID();
             Cursor = Cursors.Default;
-        }        
+        }
+
+        private void btn_fest_custom_save_Click_1(object sender, EventArgs e)
+        {
+            doSaveDataMapFestCustom();
+        }
     }
 }

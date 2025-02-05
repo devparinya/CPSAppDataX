@@ -4,6 +4,7 @@ using CpsDataApp.Services;
 using QueueAppManager.Service;
 using System.Data;
 using System.Data.SQLite;
+using ZXing;
 
 namespace CPSAppData.Services
 {
@@ -181,6 +182,7 @@ namespace CPSAppData.Services
             string str_cmd = @"CREATE TABLE IF NOT EXISTS CPSPayAmnt (
                             Id INTEGER NOT NULL UNIQUE,
                             CustomerID  TEXT,
+                            CaseID  TEXT,
                             CustomerName  TEXT,
                             WorkNo  TEXT,
                             LedNumber  TEXT,
@@ -855,7 +857,7 @@ namespace CPSAppData.Services
             string cmd_update = @"UPDATE DataCPSMaster
                                 SET WorkNo = CPSPayAmnt.WorkNo,LedNumber = CPSPayAmnt.LedNumber,CustomFlag = 'Y',LegalExecRemark = CPSPayAmnt.LegalExecRemark
                                 FROM CPSPayAmnt
-                                WHERE (DataCPSMaster.CustomerID = CPSPayAmnt.CustomerID)";
+                                WHERE (DataCPSMaster.CustomerID = CPSPayAmnt.CustomerID AND DataCPSMaster.CaseID = CPSPayAmnt.CaseID)";
             if (connection != null)
             {
                 if (connection.State == ConnectionState.Open)
@@ -2533,15 +2535,16 @@ namespace CPSAppData.Services
                         doDeleteCPSCustomData();
                     }
                     connection.Open();
+                    dtResult = dtService.doCreateResultDataTable();
                     using (var transaction = connection.BeginTransaction())
                     using (var cmd = connection.CreateCommand())
                     {
-                        cmd.CommandText = @"INSERT INTO CPSPayAmnt (CustomerID,CustomerName,WorkNo,LedNumber,CardNo1,AccCloseAmnt1,AccClose6Amnt1,AccClose12Amnt1,AccClose24Amnt1
+                        cmd.CommandText = @"INSERT INTO CPSPayAmnt (CaseID,CustomerID,CustomerName,WorkNo,LedNumber,CardNo1,AccCloseAmnt1,AccClose6Amnt1,AccClose12Amnt1,AccClose24Amnt1
                                            ,CardNo2,AccCloseAmnt2,AccClose6Amnt2,AccClose12Amnt2,AccClose24Amnt2,CardNo3,AccCloseAmnt3,AccClose6Amnt3,AccClose12Amnt3,AccClose24Amnt3,CardNo4,AccCloseAmnt4
                                            ,AccClose6Amnt4,AccClose12Amnt4,AccClose24Amnt4,CardNo5,AccCloseAmnt5,AccClose6Amnt5,AccClose12Amnt5,AccClose24Amnt5,CardNo6,AccCloseAmnt6,AccClose6Amnt6,AccClose12Amnt6
                                            ,Installment6Amnt1,Installment6Amnt2,Installment6Amnt3,Installment6Amnt4,Installment6Amnt5,Installment6Amnt6,Installment12Amnt1,Installment12Amnt2,Installment12Amnt3
                                            ,Installment12Amnt4,Installment12Amnt5,Installment12Amnt6,Installment24Amnt1,Installment24Amnt2,Installment24Amnt3,Installment24Amnt4,Installment24Amnt5,Installment24Amnt6
-                                           ,AccClose24Amnt6,LegalExecRemark) VALUES($CustomerID,$CustomerName,$WorkNo,$LedNumber,$CardNo1,$AccCloseAmnt1,$AccClose6Amnt1,$AccClose12Amnt1,$AccClose24Amnt1,$CardNo2,$AccCloseAmnt2
+                                           ,AccClose24Amnt6,LegalExecRemark) VALUES($CaseID,$CustomerID,$CustomerName,$WorkNo,$LedNumber,$CardNo1,$AccCloseAmnt1,$AccClose6Amnt1,$AccClose12Amnt1,$AccClose24Amnt1,$CardNo2,$AccCloseAmnt2
                                            ,$AccClose6Amnt2,$AccClose12Amnt2,$AccClose24Amnt2,$CardNo3,$AccCloseAmnt3,$AccClose6Amnt3,$AccClose12Amnt3,$AccClose24Amnt3,$CardNo4,$AccCloseAmnt4,$AccClose6Amnt4
                                            ,$AccClose12Amnt4,$AccClose24Amnt4,$CardNo5,$AccCloseAmnt5,$AccClose6Amnt5,$AccClose12Amnt5,$AccClose24Amnt5,$CardNo6,$AccCloseAmnt6,$AccClose6Amnt6,$AccClose12Amnt6
                                            ,$Installment6Amnt1,$Installment6Amnt2,$Installment6Amnt3,$Installment6Amnt4,$Installment6Amnt5,$Installment6Amnt6,$Installment12Amnt1,$Installment12Amnt2,$Installment12Amnt3
@@ -2549,6 +2552,10 @@ namespace CPSAppData.Services
                                            ,$AccClose24Amnt6,$LegalExecRemark);";
 
                         #region Parameter SET
+                        var param_CaseID = cmd.CreateParameter();
+                        param_CaseID.ParameterName = "$CaseID";
+                        cmd.Parameters.Add(param_CaseID);
+
                         var param_CustomerID = cmd.CreateParameter();
                         param_CustomerID.ParameterName = "$CustomerID";
                         cmd.Parameters.Add(param_CustomerID);
@@ -2767,12 +2774,11 @@ namespace CPSAppData.Services
                         {
                             string? customerid = Convert.ToString(dataraw.Rows[i][cmbcolctrl[0].Text] is null?string.Empty: dataraw.Rows[i][cmbcolctrl[0].Text]);
                             string? customertel = Convert.ToString(dataraw.Rows[i][cmbcolctrl[1].Text] is null ? string.Empty : dataraw.Rows[i][cmbcolctrl[1].Text]);
-
                             param_CustomerID.Value = security_.EncryptString(customerid);
                             param_CustomerName.Value = security_.EncryptString(customertel);
-
-                            param_LedNumber.Value = dataraw.Rows[i][cmbcolctrl[2].Text];
-                            param_WorkNo.Value = dataraw.Rows[i][cmbcolctrl[3].Text];                           
+                            param_CaseID.Value = Convert.ToString(dataraw.Rows[i][cmbcolctrl[53].Text]); 
+                            param_LedNumber.Value = Convert.ToString(dataraw.Rows[i][cmbcolctrl[2].Text]);
+                            param_WorkNo.Value = Convert.ToString(dataraw.Rows[i][cmbcolctrl[3].Text]);                           
 
                             param_CardNo1.Value = dataraw.Rows[i][cmbcolctrl[4].Text];
                             param_CardNo2.Value = dataraw.Rows[i][cmbcolctrl[5].Text];
@@ -2833,10 +2839,15 @@ namespace CPSAppData.Services
                             if(result >= 0)
                             {
                                 string? customerid_ = Convert.ToString(param_CustomerID.Value??"");
-                                string? workno_ = Convert.ToString(param_WorkNo.Value ?? "");
-                                string? lednumber_ = Convert.ToString(param_LedNumber.Value ?? "");
-                                string? legalexecremark_ = Convert.ToString(param_LegalExecRemark.Value ?? "");
-                                //if (!string.IsNullOrEmpty(customerid))doUpdateCustomFlag(customerid,lednumber_,workno_, legalexecremark_);
+                                if (result > 0)
+                                {
+
+                                    if (!string.IsNullOrEmpty(customerid)) doSetResultData(ref dtResult, customerid, "Y", "");
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrEmpty(customerid)) doSetResultData(ref dtResult, customerid, "N", "");
+                                }
                             }
                             progressLodedata.Value = i + 1;
                         }
@@ -2849,7 +2860,7 @@ namespace CPSAppData.Services
                 progressLodedata.Visible = false;
             }
         }
-        public List<FestCustom> doGetDataCustomWithID(string customerid)
+        public List<FestCustom> doGetDataCustomWithID(string customerid,string caseid)
         {
             List<FestCustom> customdataall = new List<FestCustom>();
             if (string.IsNullOrEmpty(customerid)) return customdataall;
@@ -2858,40 +2869,59 @@ namespace CPSAppData.Services
                 string customerwhere = security_.EncryptString(customerid);
                 connection.Open();
                 var sqlcmd = string.Format(@" SELECT
-                                               ifnull(WorkNo,'') as WorkNo
-                                              ,ifnull(LedNumber,'') as LedNumber
-                                              ,ifnull(CustomerID,'') as CustomerID
-                                              ,ifnull(CustomerName,'') as CustomerName
-                                              ,ifnull(CardNo1,'') as CardNo1
-                                              ,ifnull(AccCloseAmnt1,0) as AccCloseAmnt1
-                                              ,ifnull(AccClose6Amnt1,0) as AccClose6Amnt1
-                                              ,ifnull(AccClose12Amnt1,0) as AccClose12Amnt1
-                                              ,ifnull(AccClose24Amnt1,0) as AccClose24Amnt1
-                                              ,ifnull(CardNo2,'') as CardNo2
-                                              ,ifnull(AccCloseAmnt2,0) as AccCloseAmnt2
-                                              ,ifnull(AccClose6Amnt2,0) as AccClose6Amnt2
-                                              ,ifnull(AccClose12Amnt2,0) as AccClose12Amnt2
-                                              ,ifnull(AccClose24Amnt2,0) as AccClose24Amnt2
-                                              ,ifnull(CardNo3,'') as CardNo3
-                                              ,ifnull(AccCloseAmnt3,0) as AccCloseAmnt3
-                                              ,ifnull(AccClose6Amnt3,0) as AccClose6Amnt3
-                                              ,ifnull(AccClose12Amnt3,0) as AccClose12Amnt3
-                                              ,ifnull(AccClose24Amnt3,0) as AccClose24Amnt3
-                                              ,ifnull(CardNo4,'') as CardNo4
-                                              ,ifnull(AccCloseAmnt4,0) as AccCloseAmnt4
-                                              ,ifnull(AccClose6Amnt4,0) as AccClose6Amnt4
-                                              ,ifnull(AccClose12Amnt4,0) as AccClose12Amnt4
-                                              ,ifnull(AccClose24Amnt4,0) as AccClose24Amnt4
-                                              ,ifnull(CardNo5,'') as CardNo5
-                                              ,ifnull(AccCloseAmnt5,0) as AccCloseAmnt5
-                                              ,ifnull(AccClose6Amnt5,0) as AccClose6Amnt5
-                                              ,ifnull(AccClose12Amnt5,0) as AccClose12Amnt5
-                                              ,ifnull(AccClose24Amnt5,0) as AccClose24Amnt5
-                                              ,ifnull(CardNo6,'') as CardNo6
-                                              ,ifnull(AccCloseAmnt6,0) as AccCloseAmnt6
-                                              ,ifnull(AccClose6Amnt6,0) as AccClose6Amnt6
-                                              ,ifnull(AccClose12Amnt6,0) as AccClose12Amnt6
-                                              ,ifnull(AccClose24Amnt6,0) as AccClose24Amnt6
+                                             ifnull(WorkNo,'') as WorkNo
+                                            ,ifnull(LedNumber,'') as LedNumber
+                                            ,ifnull(CustomerID,'') as CustomerID
+                                            ,ifnull(CaseID,'') as CaseID
+                                            ,ifnull(CustomerName,'') as CustomerName
+                                            ,ifnull(CardNo1,'') as CardNo1
+                                            ,ifnull(AccCloseAmnt1,0) as AccCloseAmnt1
+                                            ,ifnull(AccClose6Amnt1,0) as AccClose6Amnt1
+                                            ,ifnull(AccClose12Amnt1,0) as AccClose12Amnt1
+                                            ,ifnull(AccClose24Amnt1,0) as AccClose24Amnt1
+                                            ,ifnull(CardNo2,'') as CardNo2
+                                            ,ifnull(AccCloseAmnt2,0) as AccCloseAmnt2
+                                            ,ifnull(AccClose6Amnt2,0) as AccClose6Amnt2
+                                            ,ifnull(AccClose12Amnt2,0) as AccClose12Amnt2
+                                            ,ifnull(AccClose24Amnt2,0) as AccClose24Amnt2
+                                            ,ifnull(CardNo3,'') as CardNo3
+                                            ,ifnull(AccCloseAmnt3,0) as AccCloseAmnt3
+                                            ,ifnull(AccClose6Amnt3,0) as AccClose6Amnt3
+                                            ,ifnull(AccClose12Amnt3,0) as AccClose12Amnt3
+                                            ,ifnull(AccClose24Amnt3,0) as AccClose24Amnt3
+                                            ,ifnull(CardNo4,'') as CardNo4
+                                            ,ifnull(AccCloseAmnt4,0) as AccCloseAmnt4
+                                            ,ifnull(AccClose6Amnt4,0) as AccClose6Amnt4
+                                            ,ifnull(AccClose12Amnt4,0) as AccClose12Amnt4
+                                            ,ifnull(AccClose24Amnt4,0) as AccClose24Amnt4
+                                            ,ifnull(CardNo5,'') as CardNo5
+                                            ,ifnull(AccCloseAmnt5,0) as AccCloseAmnt5
+                                            ,ifnull(AccClose6Amnt5,0) as AccClose6Amnt5
+                                            ,ifnull(AccClose12Amnt5,0) as AccClose12Amnt5
+                                            ,ifnull(AccClose24Amnt5,0) as AccClose24Amnt5
+                                            ,ifnull(CardNo6,'') as CardNo6
+                                            ,ifnull(AccCloseAmnt6,0) as AccCloseAmnt6
+                                            ,ifnull(AccClose6Amnt6,0) as AccClose6Amnt6
+                                            ,ifnull(AccClose12Amnt6,0) as AccClose12Amnt6
+                                            ,ifnull(AccClose24Amnt6,0) as AccClose24Amnt6
+                                            ,ifnull(Installment6Amnt1,0) as Installment6Amnt1 
+                                            ,ifnull(Installment6Amnt2,0) as Installment6Amnt2 
+                                            ,ifnull(Installment6Amnt3,0) as Installment6Amnt3 
+                                            ,ifnull(Installment6Amnt4,0) as Installment6Amnt4 
+                                            ,ifnull(Installment6Amnt5,0) as Installment6Amnt5 
+                                            ,ifnull(Installment6Amnt6,0) as Installment6Amnt6 
+                                            ,ifnull(Installment12Amnt1,0) as Installment12Amnt1
+                                            ,ifnull(Installment12Amnt2,0) as Installment12Amnt2
+                                            ,ifnull(Installment12Amnt3,0) as Installment12Amnt3
+                                            ,ifnull(Installment12Amnt4,0) as Installment12Amnt4
+                                            ,ifnull(Installment12Amnt5,0) as Installment12Amnt5
+                                            ,ifnull(Installment12Amnt6,0) as Installment12Amnt6
+                                            ,ifnull(Installment24Amnt1,0) as Installment24Amnt1
+                                            ,ifnull(Installment24Amnt2,0) as Installment24Amnt2
+                                            ,ifnull(Installment24Amnt3,0) as Installment24Amnt3
+                                            ,ifnull(Installment24Amnt4,0) as Installment24Amnt4
+                                            ,ifnull(Installment24Amnt5,0) as Installment24Amnt5
+                                            ,ifnull(Installment24Amnt6,0) as Installment24Amnt6
                                             FROM CPSPayAmnt
                                             WHERE CustomerID = '{0}' ", customerwhere);
                 using var command = new SQLiteCommand(sqlcmd, connection);
@@ -2903,7 +2933,7 @@ namespace CPSAppData.Services
                         FestCustom customdata = new FestCustom();
                         customdata.CustomerID = security_.DecryptString(reader.GetString("CustomerID") ?? "");
                         customdata.CustomerName = security_.DecryptString(reader.GetString("CustomerName") ?? "");
-
+                        customdata.CaseID = reader.GetString("CaseID") ?? "";
                         customdata.WorkNo = reader.GetString("WorkNo") ?? "";
                         customdata.LedNumber = reader.GetString("LedNumber") ?? "";
                         customdata.CardNo1 = reader.GetString("CardNo1") ?? "";
@@ -2936,6 +2966,24 @@ namespace CPSAppData.Services
                         customdata.AccClose6Amnt6 = reader.GetDouble("AccClose6Amnt6");
                         customdata.AccClose12Amnt6 = reader.GetDouble("AccClose12Amnt6");
                         customdata.AccClose24Amnt6 = reader.GetDouble("AccClose24Amnt6");
+                        customdata.Installment6Amnt1   = reader.GetDouble("Installment6Amnt1");
+                        customdata.Installment6Amnt2   = reader.GetDouble("Installment6Amnt2");
+                        customdata.Installment6Amnt3   = reader.GetDouble("Installment6Amnt3");
+                        customdata.Installment6Amnt4   = reader.GetDouble("Installment6Amnt4");
+                        customdata.Installment6Amnt5   = reader.GetDouble("Installment6Amnt5");
+                        customdata.Installment6Amnt6   = reader.GetDouble("Installment6Amnt6");
+                        customdata.Installment12Amnt1  = reader.GetDouble("Installment12Amnt1");
+                        customdata.Installment12Amnt2  = reader.GetDouble("Installment12Amnt2");
+                        customdata.Installment12Amnt3  = reader.GetDouble("Installment12Amnt3");
+                        customdata.Installment12Amnt4  = reader.GetDouble("Installment12Amnt4");
+                        customdata.Installment12Amnt5  = reader.GetDouble("Installment12Amnt5");
+                        customdata.Installment12Amnt6  = reader.GetDouble("Installment12Amnt6");
+                        customdata.Installment24Amnt1  = reader.GetDouble("Installment24Amnt1");
+                        customdata.Installment24Amnt2  = reader.GetDouble("Installment24Amnt2");
+                        customdata.Installment24Amnt3  = reader.GetDouble("Installment24Amnt3");
+                        customdata.Installment24Amnt4  = reader.GetDouble("Installment24Amnt4");
+                        customdata.Installment24Amnt5  = reader.GetDouble("Installment24Amnt5");
+                        customdata.Installment24Amnt6 = reader.GetDouble("Installment24Amnt6");
                         customdataall.Add(customdata);
                     }
                 }

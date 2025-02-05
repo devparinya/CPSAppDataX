@@ -8,6 +8,7 @@ namespace CPSAppData.Models
 {
     public class FestCustom
     {
+        public string? CaseID { get; set; }
         public string?  CustomerID   { get; set; }
         public string? CustomerName { get; set; }
         public string? WorkNo { get; set; }

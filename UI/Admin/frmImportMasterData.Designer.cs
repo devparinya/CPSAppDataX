@@ -113,12 +113,6 @@
             btn_festpath = new Button();
             txt_pathName_fest = new TextBox();
             tabPage3 = new TabPage();
-            chk_clear_custom = new CheckBox();
-            btn_check_customnomater = new Button();
-            btn_checkdata_custom = new Button();
-            btn_custom_loaddefault = new Button();
-            progressBarCustom = new ProgressBar();
-            btn_fest_csutomtemplate = new Button();
             groupBox9 = new GroupBox();
             cmb_custom_LegalExecRemark = new ComboBox();
             label51 = new Label();
@@ -127,31 +121,49 @@
             cmb_custom_LedNumber = new ComboBox();
             cmb_custom_WorkNo = new ComboBox();
             btn_fest_custom_save = new Button();
+            cmb_custom_Installment24Amnt1 = new ComboBox();
             cmb_custom_AccClose24Amnt1 = new ComboBox();
+            cmb_custom_Installment12Amnt1 = new ComboBox();
             cmb_custom_AccClose12Amnt1 = new ComboBox();
+            cmb_custom_Installment6Amnt1 = new ComboBox();
             cmb_custom_AccClose6Amnt1 = new ComboBox();
+            cmb_custom_Installment24Amnt2 = new ComboBox();
             cmb_custom_AccClose24Amnt2 = new ComboBox();
+            cmb_custom_Installment12Amnt2 = new ComboBox();
             cmb_custom_AccClose12Amnt2 = new ComboBox();
+            cmb_custom_Installment6Amnt2 = new ComboBox();
             cmb_custom_AccClose6Amnt2 = new ComboBox();
             cmb_custom_AccCloseAmnt1 = new ComboBox();
             cmb_custom_AccCloseAmnt2 = new ComboBox();
+            cmb_custom_Installment24Amnt3 = new ComboBox();
             cmb_custom_AccClose24Amnt3 = new ComboBox();
+            cmb_custom_Installment12Amnt3 = new ComboBox();
             cmb_custom_AccClose12Amnt3 = new ComboBox();
+            cmb_custom_Installment6Amnt3 = new ComboBox();
             cmb_custom_AccClose6Amnt3 = new ComboBox();
             cmb_custom_CardNo1 = new ComboBox();
             cmb_custom_AccCloseAmnt3 = new ComboBox();
+            cmb_custom_Installment24Amnt4 = new ComboBox();
             cmb_custom_AccClose24Amnt4 = new ComboBox();
+            cmb_custom_Installment12Amnt4 = new ComboBox();
             cmb_custom_AccClose12Amnt4 = new ComboBox();
+            cmb_custom_Installment6Amnt4 = new ComboBox();
             cmb_custom_AccClose6Amnt4 = new ComboBox();
             cmb_custom_CardNo2 = new ComboBox();
             cmb_custom_AccCloseAmnt4 = new ComboBox();
+            cmb_custom_Installment24Amnt5 = new ComboBox();
             cmb_custom_AccClose24Amnt5 = new ComboBox();
+            cmb_custom_Installment12Amnt5 = new ComboBox();
             cmb_custom_AccClose12Amnt5 = new ComboBox();
+            cmb_custom_Installment6Amnt5 = new ComboBox();
             cmb_custom_AccClose6Amnt5 = new ComboBox();
             cmb_custom_CardNo3 = new ComboBox();
             cmb_custom_AccCloseAmnt5 = new ComboBox();
+            cmb_custom_Installment24Amnt6 = new ComboBox();
             cmb_custom_AccClose24Amnt6 = new ComboBox();
+            cmb_custom_Installment12Amnt6 = new ComboBox();
             cmb_custom_AccClose12Amnt6 = new ComboBox();
+            cmb_custom_Installment6Amnt6 = new ComboBox();
             cmb_custom_AccClose6Amnt6 = new ComboBox();
             cmb_custom_CardNo4 = new ComboBox();
             cmb_custom_AccCloseAmnt6 = new ComboBox();
@@ -163,8 +175,11 @@
             label39 = new Label();
             label40 = new Label();
             label41 = new Label();
+            label56 = new Label();
             label47 = new Label();
+            label55 = new Label();
             label46 = new Label();
+            label54 = new Label();
             label45 = new Label();
             label42 = new Label();
             label44 = new Label();
@@ -173,11 +188,19 @@
             cmb_custom_CustomerID = new ComboBox();
             cmb_custom_CustomerName = new ComboBox();
             label35 = new Label();
+            chk_clear_custom = new CheckBox();
+            btn_check_customnomater = new Button();
+            btn_checkdata_custom = new Button();
+            btn_custom_loaddefault = new Button();
+            progressBarCustom = new ProgressBar();
+            btn_fest_csutomtemplate = new Button();
             groupBox8 = new GroupBox();
             label37 = new Label();
             btn_festcustom_path = new Button();
             txt_festcustom_path = new TextBox();
             btn_fest_custom_process = new Button();
+            cmb_custom_CaseID = new ComboBox();
+            label14 = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -1036,13 +1059,13 @@
             // 
             // tabPage3
             // 
+            tabPage3.Controls.Add(groupBox9);
             tabPage3.Controls.Add(chk_clear_custom);
             tabPage3.Controls.Add(btn_check_customnomater);
             tabPage3.Controls.Add(btn_checkdata_custom);
             tabPage3.Controls.Add(btn_custom_loaddefault);
             tabPage3.Controls.Add(progressBarCustom);
             tabPage3.Controls.Add(btn_fest_csutomtemplate);
-            tabPage3.Controls.Add(groupBox9);
             tabPage3.Controls.Add(groupBox8);
             tabPage3.Controls.Add(btn_fest_custom_process);
             tabPage3.Location = new Point(4, 26);
@@ -1053,12 +1076,733 @@
             tabPage3.Text = "นำเข้าข้อมูลมหกรรม (ไม่คำนวน)";
             tabPage3.UseVisualStyleBackColor = true;
             // 
+            // groupBox9
+            // 
+            groupBox9.Controls.Add(cmb_custom_LegalExecRemark);
+            groupBox9.Controls.Add(label51);
+            groupBox9.Controls.Add(label48);
+            groupBox9.Controls.Add(label49);
+            groupBox9.Controls.Add(cmb_custom_LedNumber);
+            groupBox9.Controls.Add(cmb_custom_WorkNo);
+            groupBox9.Controls.Add(btn_fest_custom_save);
+            groupBox9.Controls.Add(cmb_custom_Installment24Amnt1);
+            groupBox9.Controls.Add(cmb_custom_AccClose24Amnt1);
+            groupBox9.Controls.Add(cmb_custom_Installment12Amnt1);
+            groupBox9.Controls.Add(cmb_custom_AccClose12Amnt1);
+            groupBox9.Controls.Add(cmb_custom_Installment6Amnt1);
+            groupBox9.Controls.Add(cmb_custom_AccClose6Amnt1);
+            groupBox9.Controls.Add(cmb_custom_Installment24Amnt2);
+            groupBox9.Controls.Add(cmb_custom_AccClose24Amnt2);
+            groupBox9.Controls.Add(cmb_custom_Installment12Amnt2);
+            groupBox9.Controls.Add(cmb_custom_AccClose12Amnt2);
+            groupBox9.Controls.Add(cmb_custom_Installment6Amnt2);
+            groupBox9.Controls.Add(cmb_custom_AccClose6Amnt2);
+            groupBox9.Controls.Add(cmb_custom_AccCloseAmnt1);
+            groupBox9.Controls.Add(cmb_custom_AccCloseAmnt2);
+            groupBox9.Controls.Add(cmb_custom_Installment24Amnt3);
+            groupBox9.Controls.Add(cmb_custom_AccClose24Amnt3);
+            groupBox9.Controls.Add(cmb_custom_Installment12Amnt3);
+            groupBox9.Controls.Add(cmb_custom_AccClose12Amnt3);
+            groupBox9.Controls.Add(cmb_custom_Installment6Amnt3);
+            groupBox9.Controls.Add(cmb_custom_AccClose6Amnt3);
+            groupBox9.Controls.Add(cmb_custom_CardNo1);
+            groupBox9.Controls.Add(cmb_custom_AccCloseAmnt3);
+            groupBox9.Controls.Add(cmb_custom_Installment24Amnt4);
+            groupBox9.Controls.Add(cmb_custom_AccClose24Amnt4);
+            groupBox9.Controls.Add(cmb_custom_Installment12Amnt4);
+            groupBox9.Controls.Add(cmb_custom_AccClose12Amnt4);
+            groupBox9.Controls.Add(cmb_custom_Installment6Amnt4);
+            groupBox9.Controls.Add(cmb_custom_AccClose6Amnt4);
+            groupBox9.Controls.Add(cmb_custom_CardNo2);
+            groupBox9.Controls.Add(cmb_custom_AccCloseAmnt4);
+            groupBox9.Controls.Add(cmb_custom_Installment24Amnt5);
+            groupBox9.Controls.Add(cmb_custom_AccClose24Amnt5);
+            groupBox9.Controls.Add(cmb_custom_Installment12Amnt5);
+            groupBox9.Controls.Add(cmb_custom_AccClose12Amnt5);
+            groupBox9.Controls.Add(cmb_custom_Installment6Amnt5);
+            groupBox9.Controls.Add(cmb_custom_AccClose6Amnt5);
+            groupBox9.Controls.Add(cmb_custom_CardNo3);
+            groupBox9.Controls.Add(cmb_custom_AccCloseAmnt5);
+            groupBox9.Controls.Add(cmb_custom_Installment24Amnt6);
+            groupBox9.Controls.Add(cmb_custom_AccClose24Amnt6);
+            groupBox9.Controls.Add(cmb_custom_Installment12Amnt6);
+            groupBox9.Controls.Add(cmb_custom_AccClose12Amnt6);
+            groupBox9.Controls.Add(cmb_custom_Installment6Amnt6);
+            groupBox9.Controls.Add(cmb_custom_AccClose6Amnt6);
+            groupBox9.Controls.Add(cmb_custom_CardNo4);
+            groupBox9.Controls.Add(cmb_custom_AccCloseAmnt6);
+            groupBox9.Controls.Add(cmb_custom_CardNo5);
+            groupBox9.Controls.Add(cmb_custom_CardNo6);
+            groupBox9.Controls.Add(label33);
+            groupBox9.Controls.Add(label34);
+            groupBox9.Controls.Add(label38);
+            groupBox9.Controls.Add(label39);
+            groupBox9.Controls.Add(label40);
+            groupBox9.Controls.Add(label41);
+            groupBox9.Controls.Add(label56);
+            groupBox9.Controls.Add(label47);
+            groupBox9.Controls.Add(label55);
+            groupBox9.Controls.Add(label46);
+            groupBox9.Controls.Add(label54);
+            groupBox9.Controls.Add(label45);
+            groupBox9.Controls.Add(label42);
+            groupBox9.Controls.Add(label44);
+            groupBox9.Controls.Add(label43);
+            groupBox9.Controls.Add(label14);
+            groupBox9.Controls.Add(label36);
+            groupBox9.Controls.Add(cmb_custom_CaseID);
+            groupBox9.Controls.Add(cmb_custom_CustomerID);
+            groupBox9.Controls.Add(cmb_custom_CustomerName);
+            groupBox9.Controls.Add(label35);
+            groupBox9.Location = new Point(22, 137);
+            groupBox9.Name = "groupBox9";
+            groupBox9.Size = new Size(957, 347);
+            groupBox9.TabIndex = 13;
+            groupBox9.TabStop = false;
+            // 
+            // cmb_custom_LegalExecRemark
+            // 
+            cmb_custom_LegalExecRemark.FormattingEnabled = true;
+            cmb_custom_LegalExecRemark.Location = new Point(664, 48);
+            cmb_custom_LegalExecRemark.Name = "cmb_custom_LegalExecRemark";
+            cmb_custom_LegalExecRemark.Size = new Size(125, 25);
+            cmb_custom_LegalExecRemark.TabIndex = 24;
+            // 
+            // label51
+            // 
+            label51.AutoSize = true;
+            label51.Location = new Point(664, 28);
+            label51.Name = "label51";
+            label51.Size = new Size(94, 17);
+            label51.TabIndex = 25;
+            label51.Text = "หมายเหตุบังคับคดี";
+            // 
+            // label48
+            // 
+            label48.AutoSize = true;
+            label48.Location = new Point(535, 28);
+            label48.Name = "label48";
+            label48.Size = new Size(55, 17);
+            label48.TabIndex = 22;
+            label48.Text = "ลำดับกรม";
+            // 
+            // label49
+            // 
+            label49.AutoSize = true;
+            label49.Location = new Point(408, 28);
+            label49.Name = "label49";
+            label49.Size = new Size(60, 17);
+            label49.TabIndex = 23;
+            label49.Text = "เลขชุดงาน";
+            // 
+            // cmb_custom_LedNumber
+            // 
+            cmb_custom_LedNumber.FormattingEnabled = true;
+            cmb_custom_LedNumber.Location = new Point(535, 48);
+            cmb_custom_LedNumber.Name = "cmb_custom_LedNumber";
+            cmb_custom_LedNumber.Size = new Size(121, 25);
+            cmb_custom_LedNumber.TabIndex = 20;
+            // 
+            // cmb_custom_WorkNo
+            // 
+            cmb_custom_WorkNo.FormattingEnabled = true;
+            cmb_custom_WorkNo.Location = new Point(408, 48);
+            cmb_custom_WorkNo.Name = "cmb_custom_WorkNo";
+            cmb_custom_WorkNo.Size = new Size(121, 25);
+            cmb_custom_WorkNo.TabIndex = 21;
+            // 
+            // btn_fest_custom_save
+            // 
+            btn_fest_custom_save.Image = (Image)resources.GetObject("btn_fest_custom_save.Image");
+            btn_fest_custom_save.Location = new Point(861, 43);
+            btn_fest_custom_save.Name = "btn_fest_custom_save";
+            btn_fest_custom_save.Size = new Size(75, 32);
+            btn_fest_custom_save.TabIndex = 3;
+            btn_fest_custom_save.Text = "บันทึก";
+            btn_fest_custom_save.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btn_fest_custom_save.UseVisualStyleBackColor = true;
+            btn_fest_custom_save.Click += btn_fest_custom_save_Click_1;
+            // 
+            // cmb_custom_Installment24Amnt1
+            // 
+            cmb_custom_Installment24Amnt1.FormattingEnabled = true;
+            cmb_custom_Installment24Amnt1.Location = new Point(832, 116);
+            cmb_custom_Installment24Amnt1.Name = "cmb_custom_Installment24Amnt1";
+            cmb_custom_Installment24Amnt1.Size = new Size(111, 25);
+            cmb_custom_Installment24Amnt1.TabIndex = 14;
+            // 
+            // cmb_custom_AccClose24Amnt1
+            // 
+            cmb_custom_AccClose24Amnt1.FormattingEnabled = true;
+            cmb_custom_AccClose24Amnt1.Location = new Point(719, 116);
+            cmb_custom_AccClose24Amnt1.Name = "cmb_custom_AccClose24Amnt1";
+            cmb_custom_AccClose24Amnt1.Size = new Size(111, 25);
+            cmb_custom_AccClose24Amnt1.TabIndex = 14;
+            // 
+            // cmb_custom_Installment12Amnt1
+            // 
+            cmb_custom_Installment12Amnt1.FormattingEnabled = true;
+            cmb_custom_Installment12Amnt1.Location = new Point(606, 116);
+            cmb_custom_Installment12Amnt1.Name = "cmb_custom_Installment12Amnt1";
+            cmb_custom_Installment12Amnt1.Size = new Size(111, 25);
+            cmb_custom_Installment12Amnt1.TabIndex = 14;
+            // 
+            // cmb_custom_AccClose12Amnt1
+            // 
+            cmb_custom_AccClose12Amnt1.FormattingEnabled = true;
+            cmb_custom_AccClose12Amnt1.Location = new Point(493, 116);
+            cmb_custom_AccClose12Amnt1.Name = "cmb_custom_AccClose12Amnt1";
+            cmb_custom_AccClose12Amnt1.Size = new Size(111, 25);
+            cmb_custom_AccClose12Amnt1.TabIndex = 14;
+            // 
+            // cmb_custom_Installment6Amnt1
+            // 
+            cmb_custom_Installment6Amnt1.FormattingEnabled = true;
+            cmb_custom_Installment6Amnt1.Location = new Point(380, 116);
+            cmb_custom_Installment6Amnt1.Name = "cmb_custom_Installment6Amnt1";
+            cmb_custom_Installment6Amnt1.Size = new Size(111, 25);
+            cmb_custom_Installment6Amnt1.TabIndex = 14;
+            // 
+            // cmb_custom_AccClose6Amnt1
+            // 
+            cmb_custom_AccClose6Amnt1.FormattingEnabled = true;
+            cmb_custom_AccClose6Amnt1.Location = new Point(267, 116);
+            cmb_custom_AccClose6Amnt1.Name = "cmb_custom_AccClose6Amnt1";
+            cmb_custom_AccClose6Amnt1.Size = new Size(111, 25);
+            cmb_custom_AccClose6Amnt1.TabIndex = 14;
+            // 
+            // cmb_custom_Installment24Amnt2
+            // 
+            cmb_custom_Installment24Amnt2.FormattingEnabled = true;
+            cmb_custom_Installment24Amnt2.Location = new Point(832, 147);
+            cmb_custom_Installment24Amnt2.Name = "cmb_custom_Installment24Amnt2";
+            cmb_custom_Installment24Amnt2.Size = new Size(111, 25);
+            cmb_custom_Installment24Amnt2.TabIndex = 15;
+            // 
+            // cmb_custom_AccClose24Amnt2
+            // 
+            cmb_custom_AccClose24Amnt2.FormattingEnabled = true;
+            cmb_custom_AccClose24Amnt2.Location = new Point(719, 147);
+            cmb_custom_AccClose24Amnt2.Name = "cmb_custom_AccClose24Amnt2";
+            cmb_custom_AccClose24Amnt2.Size = new Size(111, 25);
+            cmb_custom_AccClose24Amnt2.TabIndex = 15;
+            // 
+            // cmb_custom_Installment12Amnt2
+            // 
+            cmb_custom_Installment12Amnt2.FormattingEnabled = true;
+            cmb_custom_Installment12Amnt2.Location = new Point(606, 147);
+            cmb_custom_Installment12Amnt2.Name = "cmb_custom_Installment12Amnt2";
+            cmb_custom_Installment12Amnt2.Size = new Size(111, 25);
+            cmb_custom_Installment12Amnt2.TabIndex = 15;
+            // 
+            // cmb_custom_AccClose12Amnt2
+            // 
+            cmb_custom_AccClose12Amnt2.FormattingEnabled = true;
+            cmb_custom_AccClose12Amnt2.Location = new Point(493, 147);
+            cmb_custom_AccClose12Amnt2.Name = "cmb_custom_AccClose12Amnt2";
+            cmb_custom_AccClose12Amnt2.Size = new Size(111, 25);
+            cmb_custom_AccClose12Amnt2.TabIndex = 15;
+            // 
+            // cmb_custom_Installment6Amnt2
+            // 
+            cmb_custom_Installment6Amnt2.FormattingEnabled = true;
+            cmb_custom_Installment6Amnt2.Location = new Point(380, 147);
+            cmb_custom_Installment6Amnt2.Name = "cmb_custom_Installment6Amnt2";
+            cmb_custom_Installment6Amnt2.Size = new Size(111, 25);
+            cmb_custom_Installment6Amnt2.TabIndex = 15;
+            // 
+            // cmb_custom_AccClose6Amnt2
+            // 
+            cmb_custom_AccClose6Amnt2.FormattingEnabled = true;
+            cmb_custom_AccClose6Amnt2.Location = new Point(267, 147);
+            cmb_custom_AccClose6Amnt2.Name = "cmb_custom_AccClose6Amnt2";
+            cmb_custom_AccClose6Amnt2.Size = new Size(111, 25);
+            cmb_custom_AccClose6Amnt2.TabIndex = 15;
+            // 
+            // cmb_custom_AccCloseAmnt1
+            // 
+            cmb_custom_AccCloseAmnt1.FormattingEnabled = true;
+            cmb_custom_AccCloseAmnt1.Location = new Point(154, 116);
+            cmb_custom_AccCloseAmnt1.Name = "cmb_custom_AccCloseAmnt1";
+            cmb_custom_AccCloseAmnt1.Size = new Size(111, 25);
+            cmb_custom_AccCloseAmnt1.TabIndex = 14;
+            // 
+            // cmb_custom_AccCloseAmnt2
+            // 
+            cmb_custom_AccCloseAmnt2.FormattingEnabled = true;
+            cmb_custom_AccCloseAmnt2.Location = new Point(154, 147);
+            cmb_custom_AccCloseAmnt2.Name = "cmb_custom_AccCloseAmnt2";
+            cmb_custom_AccCloseAmnt2.Size = new Size(111, 25);
+            cmb_custom_AccCloseAmnt2.TabIndex = 15;
+            // 
+            // cmb_custom_Installment24Amnt3
+            // 
+            cmb_custom_Installment24Amnt3.FormattingEnabled = true;
+            cmb_custom_Installment24Amnt3.Location = new Point(832, 178);
+            cmb_custom_Installment24Amnt3.Name = "cmb_custom_Installment24Amnt3";
+            cmb_custom_Installment24Amnt3.Size = new Size(111, 25);
+            cmb_custom_Installment24Amnt3.TabIndex = 16;
+            // 
+            // cmb_custom_AccClose24Amnt3
+            // 
+            cmb_custom_AccClose24Amnt3.FormattingEnabled = true;
+            cmb_custom_AccClose24Amnt3.Location = new Point(719, 178);
+            cmb_custom_AccClose24Amnt3.Name = "cmb_custom_AccClose24Amnt3";
+            cmb_custom_AccClose24Amnt3.Size = new Size(111, 25);
+            cmb_custom_AccClose24Amnt3.TabIndex = 16;
+            // 
+            // cmb_custom_Installment12Amnt3
+            // 
+            cmb_custom_Installment12Amnt3.FormattingEnabled = true;
+            cmb_custom_Installment12Amnt3.Location = new Point(606, 178);
+            cmb_custom_Installment12Amnt3.Name = "cmb_custom_Installment12Amnt3";
+            cmb_custom_Installment12Amnt3.Size = new Size(111, 25);
+            cmb_custom_Installment12Amnt3.TabIndex = 16;
+            // 
+            // cmb_custom_AccClose12Amnt3
+            // 
+            cmb_custom_AccClose12Amnt3.FormattingEnabled = true;
+            cmb_custom_AccClose12Amnt3.Location = new Point(493, 178);
+            cmb_custom_AccClose12Amnt3.Name = "cmb_custom_AccClose12Amnt3";
+            cmb_custom_AccClose12Amnt3.Size = new Size(111, 25);
+            cmb_custom_AccClose12Amnt3.TabIndex = 16;
+            // 
+            // cmb_custom_Installment6Amnt3
+            // 
+            cmb_custom_Installment6Amnt3.FormattingEnabled = true;
+            cmb_custom_Installment6Amnt3.Location = new Point(380, 178);
+            cmb_custom_Installment6Amnt3.Name = "cmb_custom_Installment6Amnt3";
+            cmb_custom_Installment6Amnt3.Size = new Size(111, 25);
+            cmb_custom_Installment6Amnt3.TabIndex = 16;
+            // 
+            // cmb_custom_AccClose6Amnt3
+            // 
+            cmb_custom_AccClose6Amnt3.FormattingEnabled = true;
+            cmb_custom_AccClose6Amnt3.Location = new Point(267, 178);
+            cmb_custom_AccClose6Amnt3.Name = "cmb_custom_AccClose6Amnt3";
+            cmb_custom_AccClose6Amnt3.Size = new Size(111, 25);
+            cmb_custom_AccClose6Amnt3.TabIndex = 16;
+            // 
+            // cmb_custom_CardNo1
+            // 
+            cmb_custom_CardNo1.FormattingEnabled = true;
+            cmb_custom_CardNo1.Location = new Point(55, 116);
+            cmb_custom_CardNo1.Name = "cmb_custom_CardNo1";
+            cmb_custom_CardNo1.Size = new Size(97, 25);
+            cmb_custom_CardNo1.TabIndex = 14;
+            // 
+            // cmb_custom_AccCloseAmnt3
+            // 
+            cmb_custom_AccCloseAmnt3.FormattingEnabled = true;
+            cmb_custom_AccCloseAmnt3.Location = new Point(154, 178);
+            cmb_custom_AccCloseAmnt3.Name = "cmb_custom_AccCloseAmnt3";
+            cmb_custom_AccCloseAmnt3.Size = new Size(111, 25);
+            cmb_custom_AccCloseAmnt3.TabIndex = 16;
+            // 
+            // cmb_custom_Installment24Amnt4
+            // 
+            cmb_custom_Installment24Amnt4.FormattingEnabled = true;
+            cmb_custom_Installment24Amnt4.Location = new Point(832, 209);
+            cmb_custom_Installment24Amnt4.Name = "cmb_custom_Installment24Amnt4";
+            cmb_custom_Installment24Amnt4.Size = new Size(111, 25);
+            cmb_custom_Installment24Amnt4.TabIndex = 17;
+            // 
+            // cmb_custom_AccClose24Amnt4
+            // 
+            cmb_custom_AccClose24Amnt4.FormattingEnabled = true;
+            cmb_custom_AccClose24Amnt4.Location = new Point(719, 209);
+            cmb_custom_AccClose24Amnt4.Name = "cmb_custom_AccClose24Amnt4";
+            cmb_custom_AccClose24Amnt4.Size = new Size(111, 25);
+            cmb_custom_AccClose24Amnt4.TabIndex = 17;
+            // 
+            // cmb_custom_Installment12Amnt4
+            // 
+            cmb_custom_Installment12Amnt4.FormattingEnabled = true;
+            cmb_custom_Installment12Amnt4.Location = new Point(606, 209);
+            cmb_custom_Installment12Amnt4.Name = "cmb_custom_Installment12Amnt4";
+            cmb_custom_Installment12Amnt4.Size = new Size(111, 25);
+            cmb_custom_Installment12Amnt4.TabIndex = 17;
+            // 
+            // cmb_custom_AccClose12Amnt4
+            // 
+            cmb_custom_AccClose12Amnt4.FormattingEnabled = true;
+            cmb_custom_AccClose12Amnt4.Location = new Point(493, 209);
+            cmb_custom_AccClose12Amnt4.Name = "cmb_custom_AccClose12Amnt4";
+            cmb_custom_AccClose12Amnt4.Size = new Size(111, 25);
+            cmb_custom_AccClose12Amnt4.TabIndex = 17;
+            // 
+            // cmb_custom_Installment6Amnt4
+            // 
+            cmb_custom_Installment6Amnt4.FormattingEnabled = true;
+            cmb_custom_Installment6Amnt4.Location = new Point(380, 209);
+            cmb_custom_Installment6Amnt4.Name = "cmb_custom_Installment6Amnt4";
+            cmb_custom_Installment6Amnt4.Size = new Size(111, 25);
+            cmb_custom_Installment6Amnt4.TabIndex = 17;
+            // 
+            // cmb_custom_AccClose6Amnt4
+            // 
+            cmb_custom_AccClose6Amnt4.FormattingEnabled = true;
+            cmb_custom_AccClose6Amnt4.Location = new Point(267, 209);
+            cmb_custom_AccClose6Amnt4.Name = "cmb_custom_AccClose6Amnt4";
+            cmb_custom_AccClose6Amnt4.Size = new Size(111, 25);
+            cmb_custom_AccClose6Amnt4.TabIndex = 17;
+            // 
+            // cmb_custom_CardNo2
+            // 
+            cmb_custom_CardNo2.FormattingEnabled = true;
+            cmb_custom_CardNo2.Location = new Point(55, 147);
+            cmb_custom_CardNo2.Name = "cmb_custom_CardNo2";
+            cmb_custom_CardNo2.Size = new Size(97, 25);
+            cmb_custom_CardNo2.TabIndex = 15;
+            // 
+            // cmb_custom_AccCloseAmnt4
+            // 
+            cmb_custom_AccCloseAmnt4.FormattingEnabled = true;
+            cmb_custom_AccCloseAmnt4.Location = new Point(154, 209);
+            cmb_custom_AccCloseAmnt4.Name = "cmb_custom_AccCloseAmnt4";
+            cmb_custom_AccCloseAmnt4.Size = new Size(111, 25);
+            cmb_custom_AccCloseAmnt4.TabIndex = 17;
+            // 
+            // cmb_custom_Installment24Amnt5
+            // 
+            cmb_custom_Installment24Amnt5.FormattingEnabled = true;
+            cmb_custom_Installment24Amnt5.Location = new Point(832, 240);
+            cmb_custom_Installment24Amnt5.Name = "cmb_custom_Installment24Amnt5";
+            cmb_custom_Installment24Amnt5.Size = new Size(111, 25);
+            cmb_custom_Installment24Amnt5.TabIndex = 18;
+            // 
+            // cmb_custom_AccClose24Amnt5
+            // 
+            cmb_custom_AccClose24Amnt5.FormattingEnabled = true;
+            cmb_custom_AccClose24Amnt5.Location = new Point(719, 240);
+            cmb_custom_AccClose24Amnt5.Name = "cmb_custom_AccClose24Amnt5";
+            cmb_custom_AccClose24Amnt5.Size = new Size(111, 25);
+            cmb_custom_AccClose24Amnt5.TabIndex = 18;
+            // 
+            // cmb_custom_Installment12Amnt5
+            // 
+            cmb_custom_Installment12Amnt5.FormattingEnabled = true;
+            cmb_custom_Installment12Amnt5.Location = new Point(606, 240);
+            cmb_custom_Installment12Amnt5.Name = "cmb_custom_Installment12Amnt5";
+            cmb_custom_Installment12Amnt5.Size = new Size(111, 25);
+            cmb_custom_Installment12Amnt5.TabIndex = 18;
+            // 
+            // cmb_custom_AccClose12Amnt5
+            // 
+            cmb_custom_AccClose12Amnt5.FormattingEnabled = true;
+            cmb_custom_AccClose12Amnt5.Location = new Point(493, 240);
+            cmb_custom_AccClose12Amnt5.Name = "cmb_custom_AccClose12Amnt5";
+            cmb_custom_AccClose12Amnt5.Size = new Size(111, 25);
+            cmb_custom_AccClose12Amnt5.TabIndex = 18;
+            // 
+            // cmb_custom_Installment6Amnt5
+            // 
+            cmb_custom_Installment6Amnt5.FormattingEnabled = true;
+            cmb_custom_Installment6Amnt5.Location = new Point(380, 240);
+            cmb_custom_Installment6Amnt5.Name = "cmb_custom_Installment6Amnt5";
+            cmb_custom_Installment6Amnt5.Size = new Size(111, 25);
+            cmb_custom_Installment6Amnt5.TabIndex = 18;
+            // 
+            // cmb_custom_AccClose6Amnt5
+            // 
+            cmb_custom_AccClose6Amnt5.FormattingEnabled = true;
+            cmb_custom_AccClose6Amnt5.Location = new Point(267, 240);
+            cmb_custom_AccClose6Amnt5.Name = "cmb_custom_AccClose6Amnt5";
+            cmb_custom_AccClose6Amnt5.Size = new Size(111, 25);
+            cmb_custom_AccClose6Amnt5.TabIndex = 18;
+            // 
+            // cmb_custom_CardNo3
+            // 
+            cmb_custom_CardNo3.FormattingEnabled = true;
+            cmb_custom_CardNo3.Location = new Point(55, 178);
+            cmb_custom_CardNo3.Name = "cmb_custom_CardNo3";
+            cmb_custom_CardNo3.Size = new Size(97, 25);
+            cmb_custom_CardNo3.TabIndex = 16;
+            // 
+            // cmb_custom_AccCloseAmnt5
+            // 
+            cmb_custom_AccCloseAmnt5.FormattingEnabled = true;
+            cmb_custom_AccCloseAmnt5.Location = new Point(154, 240);
+            cmb_custom_AccCloseAmnt5.Name = "cmb_custom_AccCloseAmnt5";
+            cmb_custom_AccCloseAmnt5.Size = new Size(111, 25);
+            cmb_custom_AccCloseAmnt5.TabIndex = 18;
+            // 
+            // cmb_custom_Installment24Amnt6
+            // 
+            cmb_custom_Installment24Amnt6.FormattingEnabled = true;
+            cmb_custom_Installment24Amnt6.Location = new Point(832, 271);
+            cmb_custom_Installment24Amnt6.Name = "cmb_custom_Installment24Amnt6";
+            cmb_custom_Installment24Amnt6.Size = new Size(111, 25);
+            cmb_custom_Installment24Amnt6.TabIndex = 19;
+            // 
+            // cmb_custom_AccClose24Amnt6
+            // 
+            cmb_custom_AccClose24Amnt6.FormattingEnabled = true;
+            cmb_custom_AccClose24Amnt6.Location = new Point(719, 271);
+            cmb_custom_AccClose24Amnt6.Name = "cmb_custom_AccClose24Amnt6";
+            cmb_custom_AccClose24Amnt6.Size = new Size(111, 25);
+            cmb_custom_AccClose24Amnt6.TabIndex = 19;
+            // 
+            // cmb_custom_Installment12Amnt6
+            // 
+            cmb_custom_Installment12Amnt6.FormattingEnabled = true;
+            cmb_custom_Installment12Amnt6.Location = new Point(606, 271);
+            cmb_custom_Installment12Amnt6.Name = "cmb_custom_Installment12Amnt6";
+            cmb_custom_Installment12Amnt6.Size = new Size(111, 25);
+            cmb_custom_Installment12Amnt6.TabIndex = 19;
+            // 
+            // cmb_custom_AccClose12Amnt6
+            // 
+            cmb_custom_AccClose12Amnt6.FormattingEnabled = true;
+            cmb_custom_AccClose12Amnt6.Location = new Point(493, 271);
+            cmb_custom_AccClose12Amnt6.Name = "cmb_custom_AccClose12Amnt6";
+            cmb_custom_AccClose12Amnt6.Size = new Size(111, 25);
+            cmb_custom_AccClose12Amnt6.TabIndex = 19;
+            // 
+            // cmb_custom_Installment6Amnt6
+            // 
+            cmb_custom_Installment6Amnt6.FormattingEnabled = true;
+            cmb_custom_Installment6Amnt6.Location = new Point(380, 271);
+            cmb_custom_Installment6Amnt6.Name = "cmb_custom_Installment6Amnt6";
+            cmb_custom_Installment6Amnt6.Size = new Size(111, 25);
+            cmb_custom_Installment6Amnt6.TabIndex = 19;
+            // 
+            // cmb_custom_AccClose6Amnt6
+            // 
+            cmb_custom_AccClose6Amnt6.FormattingEnabled = true;
+            cmb_custom_AccClose6Amnt6.Location = new Point(267, 271);
+            cmb_custom_AccClose6Amnt6.Name = "cmb_custom_AccClose6Amnt6";
+            cmb_custom_AccClose6Amnt6.Size = new Size(111, 25);
+            cmb_custom_AccClose6Amnt6.TabIndex = 19;
+            // 
+            // cmb_custom_CardNo4
+            // 
+            cmb_custom_CardNo4.FormattingEnabled = true;
+            cmb_custom_CardNo4.Location = new Point(55, 209);
+            cmb_custom_CardNo4.Name = "cmb_custom_CardNo4";
+            cmb_custom_CardNo4.Size = new Size(97, 25);
+            cmb_custom_CardNo4.TabIndex = 17;
+            // 
+            // cmb_custom_AccCloseAmnt6
+            // 
+            cmb_custom_AccCloseAmnt6.FormattingEnabled = true;
+            cmb_custom_AccCloseAmnt6.Location = new Point(154, 271);
+            cmb_custom_AccCloseAmnt6.Name = "cmb_custom_AccCloseAmnt6";
+            cmb_custom_AccCloseAmnt6.Size = new Size(111, 25);
+            cmb_custom_AccCloseAmnt6.TabIndex = 19;
+            // 
+            // cmb_custom_CardNo5
+            // 
+            cmb_custom_CardNo5.FormattingEnabled = true;
+            cmb_custom_CardNo5.Location = new Point(55, 240);
+            cmb_custom_CardNo5.Name = "cmb_custom_CardNo5";
+            cmb_custom_CardNo5.Size = new Size(97, 25);
+            cmb_custom_CardNo5.TabIndex = 18;
+            // 
+            // cmb_custom_CardNo6
+            // 
+            cmb_custom_CardNo6.FormattingEnabled = true;
+            cmb_custom_CardNo6.Location = new Point(55, 271);
+            cmb_custom_CardNo6.Name = "cmb_custom_CardNo6";
+            cmb_custom_CardNo6.Size = new Size(97, 25);
+            cmb_custom_CardNo6.TabIndex = 19;
+            // 
+            // label33
+            // 
+            label33.AutoSize = true;
+            label33.BorderStyle = BorderStyle.FixedSingle;
+            label33.Location = new Point(17, 274);
+            label33.Name = "label33";
+            label33.Size = new Size(17, 19);
+            label33.TabIndex = 6;
+            label33.Text = "6";
+            label33.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // label34
+            // 
+            label34.AutoSize = true;
+            label34.BorderStyle = BorderStyle.FixedSingle;
+            label34.Location = new Point(17, 243);
+            label34.Name = "label34";
+            label34.Size = new Size(17, 19);
+            label34.TabIndex = 7;
+            label34.Text = "5";
+            label34.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // label38
+            // 
+            label38.AutoSize = true;
+            label38.BorderStyle = BorderStyle.FixedSingle;
+            label38.Location = new Point(17, 212);
+            label38.Name = "label38";
+            label38.Size = new Size(17, 19);
+            label38.TabIndex = 8;
+            label38.Text = "4";
+            label38.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.BorderStyle = BorderStyle.FixedSingle;
+            label39.Location = new Point(17, 181);
+            label39.Name = "label39";
+            label39.Size = new Size(17, 19);
+            label39.TabIndex = 9;
+            label39.Text = "3";
+            label39.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            label40.BorderStyle = BorderStyle.FixedSingle;
+            label40.Location = new Point(17, 150);
+            label40.Name = "label40";
+            label40.Size = new Size(17, 19);
+            label40.TabIndex = 10;
+            label40.Text = "2";
+            label40.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // label41
+            // 
+            label41.AutoSize = true;
+            label41.BorderStyle = BorderStyle.FixedSingle;
+            label41.Location = new Point(17, 119);
+            label41.Name = "label41";
+            label41.Size = new Size(17, 19);
+            label41.TabIndex = 11;
+            label41.Text = "1";
+            label41.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // label56
+            // 
+            label56.AutoSize = true;
+            label56.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
+            label56.Location = new Point(832, 93);
+            label56.Name = "label56";
+            label56.Size = new Size(37, 17);
+            label56.TabIndex = 13;
+            label56.Text = "งวดละ";
+            // 
+            // label47
+            // 
+            label47.AutoSize = true;
+            label47.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
+            label47.Location = new Point(719, 93);
+            label47.Name = "label47";
+            label47.Size = new Size(71, 17);
+            label47.TabIndex = 13;
+            label47.Text = "ผ่อน 24 งวด";
+            // 
+            // label55
+            // 
+            label55.AutoSize = true;
+            label55.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
+            label55.Location = new Point(606, 93);
+            label55.Name = "label55";
+            label55.Size = new Size(37, 17);
+            label55.TabIndex = 13;
+            label55.Text = "งวดละ";
+            // 
+            // label46
+            // 
+            label46.AutoSize = true;
+            label46.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
+            label46.Location = new Point(493, 93);
+            label46.Name = "label46";
+            label46.Size = new Size(71, 17);
+            label46.TabIndex = 13;
+            label46.Text = "ผ่อน 12 งวด";
+            // 
+            // label54
+            // 
+            label54.AutoSize = true;
+            label54.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
+            label54.Location = new Point(380, 93);
+            label54.Name = "label54";
+            label54.Size = new Size(37, 17);
+            label54.TabIndex = 13;
+            label54.Text = "งวดละ";
+            // 
+            // label45
+            // 
+            label45.AutoSize = true;
+            label45.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
+            label45.Location = new Point(267, 93);
+            label45.Name = "label45";
+            label45.Size = new Size(64, 17);
+            label45.TabIndex = 13;
+            label45.Text = "ผ่อน 6 งวด";
+            // 
+            // label42
+            // 
+            label42.AutoSize = true;
+            label42.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
+            label42.Location = new Point(8, 93);
+            label42.Name = "label42";
+            label42.Size = new Size(36, 17);
+            label42.TabIndex = 12;
+            label42.Text = "บัตรที่";
+            // 
+            // label44
+            // 
+            label44.AutoSize = true;
+            label44.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
+            label44.Location = new Point(154, 93);
+            label44.Name = "label44";
+            label44.Size = new Size(63, 17);
+            label44.TabIndex = 13;
+            label44.Text = "ปิดงวดเดียว";
+            // 
+            // label43
+            // 
+            label43.AutoSize = true;
+            label43.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
+            label43.Location = new Point(53, 93);
+            label43.Name = "label43";
+            label43.Size = new Size(74, 17);
+            label43.TabIndex = 13;
+            label43.Text = "หมายเลขบัตร";
+            // 
+            // label36
+            // 
+            label36.AutoSize = true;
+            label36.Location = new Point(154, 28);
+            label36.Name = "label36";
+            label36.Size = new Size(101, 17);
+            label36.TabIndex = 4;
+            label36.Text = "เลขที่บัตรประชาชน";
+            // 
+            // cmb_custom_CustomerID
+            // 
+            cmb_custom_CustomerID.FormattingEnabled = true;
+            cmb_custom_CustomerID.Location = new Point(154, 48);
+            cmb_custom_CustomerID.Name = "cmb_custom_CustomerID";
+            cmb_custom_CustomerID.Size = new Size(121, 25);
+            cmb_custom_CustomerID.TabIndex = 3;
+            // 
+            // cmb_custom_CustomerName
+            // 
+            cmb_custom_CustomerName.FormattingEnabled = true;
+            cmb_custom_CustomerName.Location = new Point(281, 48);
+            cmb_custom_CustomerName.Name = "cmb_custom_CustomerName";
+            cmb_custom_CustomerName.Size = new Size(121, 25);
+            cmb_custom_CustomerName.TabIndex = 3;
+            // 
+            // label35
+            // 
+            label35.AutoSize = true;
+            label35.Location = new Point(281, 28);
+            label35.Name = "label35";
+            label35.Size = new Size(49, 17);
+            label35.TabIndex = 5;
+            label35.Text = "ชื่อ-สกุล";
+            // 
             // chk_clear_custom
             // 
             chk_clear_custom.AutoSize = true;
             chk_clear_custom.Checked = true;
             chk_clear_custom.CheckState = CheckState.Checked;
-            chk_clear_custom.Location = new Point(727, 476);
+            chk_clear_custom.Location = new Point(790, 518);
             chk_clear_custom.Name = "chk_clear_custom";
             chk_clear_custom.Size = new Size(90, 21);
             chk_clear_custom.TabIndex = 12;
@@ -1097,16 +1841,16 @@
             // 
             // progressBarCustom
             // 
-            progressBarCustom.Location = new Point(181, 474);
+            progressBarCustom.Location = new Point(123, 517);
             progressBarCustom.Name = "progressBarCustom";
-            progressBarCustom.Size = new Size(539, 23);
+            progressBarCustom.Size = new Size(646, 23);
             progressBarCustom.TabIndex = 9;
             progressBarCustom.Visible = false;
             // 
             // btn_fest_csutomtemplate
             // 
             btn_fest_csutomtemplate.Image = (Image)resources.GetObject("btn_fest_csutomtemplate.Image");
-            btn_fest_csutomtemplate.Location = new Point(79, 468);
+            btn_fest_csutomtemplate.Location = new Point(22, 512);
             btn_fest_csutomtemplate.Name = "btn_fest_csutomtemplate";
             btn_fest_csutomtemplate.Size = new Size(95, 33);
             btn_fest_csutomtemplate.TabIndex = 8;
@@ -1115,538 +1859,14 @@
             btn_fest_csutomtemplate.UseVisualStyleBackColor = true;
             btn_fest_csutomtemplate.Click += btn_fest_csutomtemplate_Click;
             // 
-            // groupBox9
-            // 
-            groupBox9.Controls.Add(cmb_custom_LegalExecRemark);
-            groupBox9.Controls.Add(label51);
-            groupBox9.Controls.Add(label48);
-            groupBox9.Controls.Add(label49);
-            groupBox9.Controls.Add(cmb_custom_LedNumber);
-            groupBox9.Controls.Add(cmb_custom_WorkNo);
-            groupBox9.Controls.Add(btn_fest_custom_save);
-            groupBox9.Controls.Add(cmb_custom_AccClose24Amnt1);
-            groupBox9.Controls.Add(cmb_custom_AccClose12Amnt1);
-            groupBox9.Controls.Add(cmb_custom_AccClose6Amnt1);
-            groupBox9.Controls.Add(cmb_custom_AccClose24Amnt2);
-            groupBox9.Controls.Add(cmb_custom_AccClose12Amnt2);
-            groupBox9.Controls.Add(cmb_custom_AccClose6Amnt2);
-            groupBox9.Controls.Add(cmb_custom_AccCloseAmnt1);
-            groupBox9.Controls.Add(cmb_custom_AccCloseAmnt2);
-            groupBox9.Controls.Add(cmb_custom_AccClose24Amnt3);
-            groupBox9.Controls.Add(cmb_custom_AccClose12Amnt3);
-            groupBox9.Controls.Add(cmb_custom_AccClose6Amnt3);
-            groupBox9.Controls.Add(cmb_custom_CardNo1);
-            groupBox9.Controls.Add(cmb_custom_AccCloseAmnt3);
-            groupBox9.Controls.Add(cmb_custom_AccClose24Amnt4);
-            groupBox9.Controls.Add(cmb_custom_AccClose12Amnt4);
-            groupBox9.Controls.Add(cmb_custom_AccClose6Amnt4);
-            groupBox9.Controls.Add(cmb_custom_CardNo2);
-            groupBox9.Controls.Add(cmb_custom_AccCloseAmnt4);
-            groupBox9.Controls.Add(cmb_custom_AccClose24Amnt5);
-            groupBox9.Controls.Add(cmb_custom_AccClose12Amnt5);
-            groupBox9.Controls.Add(cmb_custom_AccClose6Amnt5);
-            groupBox9.Controls.Add(cmb_custom_CardNo3);
-            groupBox9.Controls.Add(cmb_custom_AccCloseAmnt5);
-            groupBox9.Controls.Add(cmb_custom_AccClose24Amnt6);
-            groupBox9.Controls.Add(cmb_custom_AccClose12Amnt6);
-            groupBox9.Controls.Add(cmb_custom_AccClose6Amnt6);
-            groupBox9.Controls.Add(cmb_custom_CardNo4);
-            groupBox9.Controls.Add(cmb_custom_AccCloseAmnt6);
-            groupBox9.Controls.Add(cmb_custom_CardNo5);
-            groupBox9.Controls.Add(cmb_custom_CardNo6);
-            groupBox9.Controls.Add(label33);
-            groupBox9.Controls.Add(label34);
-            groupBox9.Controls.Add(label38);
-            groupBox9.Controls.Add(label39);
-            groupBox9.Controls.Add(label40);
-            groupBox9.Controls.Add(label41);
-            groupBox9.Controls.Add(label47);
-            groupBox9.Controls.Add(label46);
-            groupBox9.Controls.Add(label45);
-            groupBox9.Controls.Add(label42);
-            groupBox9.Controls.Add(label44);
-            groupBox9.Controls.Add(label43);
-            groupBox9.Controls.Add(label36);
-            groupBox9.Controls.Add(cmb_custom_CustomerID);
-            groupBox9.Controls.Add(cmb_custom_CustomerName);
-            groupBox9.Controls.Add(label35);
-            groupBox9.Location = new Point(79, 113);
-            groupBox9.Name = "groupBox9";
-            groupBox9.Size = new Size(861, 351);
-            groupBox9.TabIndex = 7;
-            groupBox9.TabStop = false;
-            // 
-            // cmb_custom_LegalExecRemark
-            // 
-            cmb_custom_LegalExecRemark.FormattingEnabled = true;
-            cmb_custom_LegalExecRemark.Location = new Point(547, 48);
-            cmb_custom_LegalExecRemark.Name = "cmb_custom_LegalExecRemark";
-            cmb_custom_LegalExecRemark.Size = new Size(125, 25);
-            cmb_custom_LegalExecRemark.TabIndex = 24;
-            // 
-            // label51
-            // 
-            label51.AutoSize = true;
-            label51.Location = new Point(547, 28);
-            label51.Name = "label51";
-            label51.Size = new Size(94, 17);
-            label51.TabIndex = 25;
-            label51.Text = "หมายเหตุบังคับคดี";
-            // 
-            // label48
-            // 
-            label48.AutoSize = true;
-            label48.Location = new Point(418, 28);
-            label48.Name = "label48";
-            label48.Size = new Size(55, 17);
-            label48.TabIndex = 22;
-            label48.Text = "ลำดับกรม";
-            // 
-            // label49
-            // 
-            label49.AutoSize = true;
-            label49.Location = new Point(291, 28);
-            label49.Name = "label49";
-            label49.Size = new Size(60, 17);
-            label49.TabIndex = 23;
-            label49.Text = "เลขชุดงาน";
-            // 
-            // cmb_custom_LedNumber
-            // 
-            cmb_custom_LedNumber.FormattingEnabled = true;
-            cmb_custom_LedNumber.Location = new Point(418, 48);
-            cmb_custom_LedNumber.Name = "cmb_custom_LedNumber";
-            cmb_custom_LedNumber.Size = new Size(121, 25);
-            cmb_custom_LedNumber.TabIndex = 20;
-            // 
-            // cmb_custom_WorkNo
-            // 
-            cmb_custom_WorkNo.FormattingEnabled = true;
-            cmb_custom_WorkNo.Location = new Point(291, 48);
-            cmb_custom_WorkNo.Name = "cmb_custom_WorkNo";
-            cmb_custom_WorkNo.Size = new Size(121, 25);
-            cmb_custom_WorkNo.TabIndex = 21;
-            // 
-            // btn_fest_custom_save
-            // 
-            btn_fest_custom_save.Image = (Image)resources.GetObject("btn_fest_custom_save.Image");
-            btn_fest_custom_save.Location = new Point(741, 24);
-            btn_fest_custom_save.Name = "btn_fest_custom_save";
-            btn_fest_custom_save.Size = new Size(75, 32);
-            btn_fest_custom_save.TabIndex = 3;
-            btn_fest_custom_save.Text = "บันทึก";
-            btn_fest_custom_save.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btn_fest_custom_save.UseVisualStyleBackColor = true;
-            btn_fest_custom_save.Click += btn_fest_custom_save_Click;
-            // 
-            // cmb_custom_AccClose24Amnt1
-            // 
-            cmb_custom_AccClose24Amnt1.FormattingEnabled = true;
-            cmb_custom_AccClose24Amnt1.Location = new Point(610, 114);
-            cmb_custom_AccClose24Amnt1.Name = "cmb_custom_AccClose24Amnt1";
-            cmb_custom_AccClose24Amnt1.Size = new Size(125, 25);
-            cmb_custom_AccClose24Amnt1.TabIndex = 14;
-            // 
-            // cmb_custom_AccClose12Amnt1
-            // 
-            cmb_custom_AccClose12Amnt1.FormattingEnabled = true;
-            cmb_custom_AccClose12Amnt1.Location = new Point(479, 114);
-            cmb_custom_AccClose12Amnt1.Name = "cmb_custom_AccClose12Amnt1";
-            cmb_custom_AccClose12Amnt1.Size = new Size(125, 25);
-            cmb_custom_AccClose12Amnt1.TabIndex = 14;
-            // 
-            // cmb_custom_AccClose6Amnt1
-            // 
-            cmb_custom_AccClose6Amnt1.FormattingEnabled = true;
-            cmb_custom_AccClose6Amnt1.Location = new Point(348, 114);
-            cmb_custom_AccClose6Amnt1.Name = "cmb_custom_AccClose6Amnt1";
-            cmb_custom_AccClose6Amnt1.Size = new Size(125, 25);
-            cmb_custom_AccClose6Amnt1.TabIndex = 14;
-            // 
-            // cmb_custom_AccClose24Amnt2
-            // 
-            cmb_custom_AccClose24Amnt2.FormattingEnabled = true;
-            cmb_custom_AccClose24Amnt2.Location = new Point(610, 145);
-            cmb_custom_AccClose24Amnt2.Name = "cmb_custom_AccClose24Amnt2";
-            cmb_custom_AccClose24Amnt2.Size = new Size(125, 25);
-            cmb_custom_AccClose24Amnt2.TabIndex = 15;
-            // 
-            // cmb_custom_AccClose12Amnt2
-            // 
-            cmb_custom_AccClose12Amnt2.FormattingEnabled = true;
-            cmb_custom_AccClose12Amnt2.Location = new Point(479, 145);
-            cmb_custom_AccClose12Amnt2.Name = "cmb_custom_AccClose12Amnt2";
-            cmb_custom_AccClose12Amnt2.Size = new Size(125, 25);
-            cmb_custom_AccClose12Amnt2.TabIndex = 15;
-            // 
-            // cmb_custom_AccClose6Amnt2
-            // 
-            cmb_custom_AccClose6Amnt2.FormattingEnabled = true;
-            cmb_custom_AccClose6Amnt2.Location = new Point(348, 145);
-            cmb_custom_AccClose6Amnt2.Name = "cmb_custom_AccClose6Amnt2";
-            cmb_custom_AccClose6Amnt2.Size = new Size(125, 25);
-            cmb_custom_AccClose6Amnt2.TabIndex = 15;
-            // 
-            // cmb_custom_AccCloseAmnt1
-            // 
-            cmb_custom_AccCloseAmnt1.FormattingEnabled = true;
-            cmb_custom_AccCloseAmnt1.Location = new Point(217, 114);
-            cmb_custom_AccCloseAmnt1.Name = "cmb_custom_AccCloseAmnt1";
-            cmb_custom_AccCloseAmnt1.Size = new Size(125, 25);
-            cmb_custom_AccCloseAmnt1.TabIndex = 14;
-            // 
-            // cmb_custom_AccCloseAmnt2
-            // 
-            cmb_custom_AccCloseAmnt2.FormattingEnabled = true;
-            cmb_custom_AccCloseAmnt2.Location = new Point(217, 145);
-            cmb_custom_AccCloseAmnt2.Name = "cmb_custom_AccCloseAmnt2";
-            cmb_custom_AccCloseAmnt2.Size = new Size(125, 25);
-            cmb_custom_AccCloseAmnt2.TabIndex = 15;
-            // 
-            // cmb_custom_AccClose24Amnt3
-            // 
-            cmb_custom_AccClose24Amnt3.FormattingEnabled = true;
-            cmb_custom_AccClose24Amnt3.Location = new Point(610, 176);
-            cmb_custom_AccClose24Amnt3.Name = "cmb_custom_AccClose24Amnt3";
-            cmb_custom_AccClose24Amnt3.Size = new Size(125, 25);
-            cmb_custom_AccClose24Amnt3.TabIndex = 16;
-            // 
-            // cmb_custom_AccClose12Amnt3
-            // 
-            cmb_custom_AccClose12Amnt3.FormattingEnabled = true;
-            cmb_custom_AccClose12Amnt3.Location = new Point(479, 176);
-            cmb_custom_AccClose12Amnt3.Name = "cmb_custom_AccClose12Amnt3";
-            cmb_custom_AccClose12Amnt3.Size = new Size(125, 25);
-            cmb_custom_AccClose12Amnt3.TabIndex = 16;
-            // 
-            // cmb_custom_AccClose6Amnt3
-            // 
-            cmb_custom_AccClose6Amnt3.FormattingEnabled = true;
-            cmb_custom_AccClose6Amnt3.Location = new Point(348, 176);
-            cmb_custom_AccClose6Amnt3.Name = "cmb_custom_AccClose6Amnt3";
-            cmb_custom_AccClose6Amnt3.Size = new Size(125, 25);
-            cmb_custom_AccClose6Amnt3.TabIndex = 16;
-            // 
-            // cmb_custom_CardNo1
-            // 
-            cmb_custom_CardNo1.FormattingEnabled = true;
-            cmb_custom_CardNo1.Location = new Point(86, 114);
-            cmb_custom_CardNo1.Name = "cmb_custom_CardNo1";
-            cmb_custom_CardNo1.Size = new Size(125, 25);
-            cmb_custom_CardNo1.TabIndex = 14;
-            // 
-            // cmb_custom_AccCloseAmnt3
-            // 
-            cmb_custom_AccCloseAmnt3.FormattingEnabled = true;
-            cmb_custom_AccCloseAmnt3.Location = new Point(217, 176);
-            cmb_custom_AccCloseAmnt3.Name = "cmb_custom_AccCloseAmnt3";
-            cmb_custom_AccCloseAmnt3.Size = new Size(125, 25);
-            cmb_custom_AccCloseAmnt3.TabIndex = 16;
-            // 
-            // cmb_custom_AccClose24Amnt4
-            // 
-            cmb_custom_AccClose24Amnt4.FormattingEnabled = true;
-            cmb_custom_AccClose24Amnt4.Location = new Point(610, 207);
-            cmb_custom_AccClose24Amnt4.Name = "cmb_custom_AccClose24Amnt4";
-            cmb_custom_AccClose24Amnt4.Size = new Size(125, 25);
-            cmb_custom_AccClose24Amnt4.TabIndex = 17;
-            // 
-            // cmb_custom_AccClose12Amnt4
-            // 
-            cmb_custom_AccClose12Amnt4.FormattingEnabled = true;
-            cmb_custom_AccClose12Amnt4.Location = new Point(479, 207);
-            cmb_custom_AccClose12Amnt4.Name = "cmb_custom_AccClose12Amnt4";
-            cmb_custom_AccClose12Amnt4.Size = new Size(125, 25);
-            cmb_custom_AccClose12Amnt4.TabIndex = 17;
-            // 
-            // cmb_custom_AccClose6Amnt4
-            // 
-            cmb_custom_AccClose6Amnt4.FormattingEnabled = true;
-            cmb_custom_AccClose6Amnt4.Location = new Point(348, 207);
-            cmb_custom_AccClose6Amnt4.Name = "cmb_custom_AccClose6Amnt4";
-            cmb_custom_AccClose6Amnt4.Size = new Size(125, 25);
-            cmb_custom_AccClose6Amnt4.TabIndex = 17;
-            // 
-            // cmb_custom_CardNo2
-            // 
-            cmb_custom_CardNo2.FormattingEnabled = true;
-            cmb_custom_CardNo2.Location = new Point(86, 145);
-            cmb_custom_CardNo2.Name = "cmb_custom_CardNo2";
-            cmb_custom_CardNo2.Size = new Size(125, 25);
-            cmb_custom_CardNo2.TabIndex = 15;
-            // 
-            // cmb_custom_AccCloseAmnt4
-            // 
-            cmb_custom_AccCloseAmnt4.FormattingEnabled = true;
-            cmb_custom_AccCloseAmnt4.Location = new Point(217, 207);
-            cmb_custom_AccCloseAmnt4.Name = "cmb_custom_AccCloseAmnt4";
-            cmb_custom_AccCloseAmnt4.Size = new Size(125, 25);
-            cmb_custom_AccCloseAmnt4.TabIndex = 17;
-            // 
-            // cmb_custom_AccClose24Amnt5
-            // 
-            cmb_custom_AccClose24Amnt5.FormattingEnabled = true;
-            cmb_custom_AccClose24Amnt5.Location = new Point(610, 238);
-            cmb_custom_AccClose24Amnt5.Name = "cmb_custom_AccClose24Amnt5";
-            cmb_custom_AccClose24Amnt5.Size = new Size(125, 25);
-            cmb_custom_AccClose24Amnt5.TabIndex = 18;
-            // 
-            // cmb_custom_AccClose12Amnt5
-            // 
-            cmb_custom_AccClose12Amnt5.FormattingEnabled = true;
-            cmb_custom_AccClose12Amnt5.Location = new Point(479, 238);
-            cmb_custom_AccClose12Amnt5.Name = "cmb_custom_AccClose12Amnt5";
-            cmb_custom_AccClose12Amnt5.Size = new Size(125, 25);
-            cmb_custom_AccClose12Amnt5.TabIndex = 18;
-            // 
-            // cmb_custom_AccClose6Amnt5
-            // 
-            cmb_custom_AccClose6Amnt5.FormattingEnabled = true;
-            cmb_custom_AccClose6Amnt5.Location = new Point(348, 238);
-            cmb_custom_AccClose6Amnt5.Name = "cmb_custom_AccClose6Amnt5";
-            cmb_custom_AccClose6Amnt5.Size = new Size(125, 25);
-            cmb_custom_AccClose6Amnt5.TabIndex = 18;
-            // 
-            // cmb_custom_CardNo3
-            // 
-            cmb_custom_CardNo3.FormattingEnabled = true;
-            cmb_custom_CardNo3.Location = new Point(86, 176);
-            cmb_custom_CardNo3.Name = "cmb_custom_CardNo3";
-            cmb_custom_CardNo3.Size = new Size(125, 25);
-            cmb_custom_CardNo3.TabIndex = 16;
-            // 
-            // cmb_custom_AccCloseAmnt5
-            // 
-            cmb_custom_AccCloseAmnt5.FormattingEnabled = true;
-            cmb_custom_AccCloseAmnt5.Location = new Point(217, 238);
-            cmb_custom_AccCloseAmnt5.Name = "cmb_custom_AccCloseAmnt5";
-            cmb_custom_AccCloseAmnt5.Size = new Size(125, 25);
-            cmb_custom_AccCloseAmnt5.TabIndex = 18;
-            // 
-            // cmb_custom_AccClose24Amnt6
-            // 
-            cmb_custom_AccClose24Amnt6.FormattingEnabled = true;
-            cmb_custom_AccClose24Amnt6.Location = new Point(610, 269);
-            cmb_custom_AccClose24Amnt6.Name = "cmb_custom_AccClose24Amnt6";
-            cmb_custom_AccClose24Amnt6.Size = new Size(125, 25);
-            cmb_custom_AccClose24Amnt6.TabIndex = 19;
-            // 
-            // cmb_custom_AccClose12Amnt6
-            // 
-            cmb_custom_AccClose12Amnt6.FormattingEnabled = true;
-            cmb_custom_AccClose12Amnt6.Location = new Point(479, 269);
-            cmb_custom_AccClose12Amnt6.Name = "cmb_custom_AccClose12Amnt6";
-            cmb_custom_AccClose12Amnt6.Size = new Size(125, 25);
-            cmb_custom_AccClose12Amnt6.TabIndex = 19;
-            // 
-            // cmb_custom_AccClose6Amnt6
-            // 
-            cmb_custom_AccClose6Amnt6.FormattingEnabled = true;
-            cmb_custom_AccClose6Amnt6.Location = new Point(348, 269);
-            cmb_custom_AccClose6Amnt6.Name = "cmb_custom_AccClose6Amnt6";
-            cmb_custom_AccClose6Amnt6.Size = new Size(125, 25);
-            cmb_custom_AccClose6Amnt6.TabIndex = 19;
-            // 
-            // cmb_custom_CardNo4
-            // 
-            cmb_custom_CardNo4.FormattingEnabled = true;
-            cmb_custom_CardNo4.Location = new Point(86, 207);
-            cmb_custom_CardNo4.Name = "cmb_custom_CardNo4";
-            cmb_custom_CardNo4.Size = new Size(125, 25);
-            cmb_custom_CardNo4.TabIndex = 17;
-            // 
-            // cmb_custom_AccCloseAmnt6
-            // 
-            cmb_custom_AccCloseAmnt6.FormattingEnabled = true;
-            cmb_custom_AccCloseAmnt6.Location = new Point(217, 269);
-            cmb_custom_AccCloseAmnt6.Name = "cmb_custom_AccCloseAmnt6";
-            cmb_custom_AccCloseAmnt6.Size = new Size(125, 25);
-            cmb_custom_AccCloseAmnt6.TabIndex = 19;
-            // 
-            // cmb_custom_CardNo5
-            // 
-            cmb_custom_CardNo5.FormattingEnabled = true;
-            cmb_custom_CardNo5.Location = new Point(86, 238);
-            cmb_custom_CardNo5.Name = "cmb_custom_CardNo5";
-            cmb_custom_CardNo5.Size = new Size(125, 25);
-            cmb_custom_CardNo5.TabIndex = 18;
-            // 
-            // cmb_custom_CardNo6
-            // 
-            cmb_custom_CardNo6.FormattingEnabled = true;
-            cmb_custom_CardNo6.Location = new Point(86, 269);
-            cmb_custom_CardNo6.Name = "cmb_custom_CardNo6";
-            cmb_custom_CardNo6.Size = new Size(125, 25);
-            cmb_custom_CardNo6.TabIndex = 19;
-            // 
-            // label33
-            // 
-            label33.AutoSize = true;
-            label33.BorderStyle = BorderStyle.FixedSingle;
-            label33.Location = new Point(46, 272);
-            label33.Name = "label33";
-            label33.Size = new Size(17, 19);
-            label33.TabIndex = 6;
-            label33.Text = "6";
-            label33.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // label34
-            // 
-            label34.AutoSize = true;
-            label34.BorderStyle = BorderStyle.FixedSingle;
-            label34.Location = new Point(46, 241);
-            label34.Name = "label34";
-            label34.Size = new Size(17, 19);
-            label34.TabIndex = 7;
-            label34.Text = "5";
-            label34.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // label38
-            // 
-            label38.AutoSize = true;
-            label38.BorderStyle = BorderStyle.FixedSingle;
-            label38.Location = new Point(46, 210);
-            label38.Name = "label38";
-            label38.Size = new Size(17, 19);
-            label38.TabIndex = 8;
-            label38.Text = "4";
-            label38.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // label39
-            // 
-            label39.AutoSize = true;
-            label39.BorderStyle = BorderStyle.FixedSingle;
-            label39.Location = new Point(46, 179);
-            label39.Name = "label39";
-            label39.Size = new Size(17, 19);
-            label39.TabIndex = 9;
-            label39.Text = "3";
-            label39.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // label40
-            // 
-            label40.AutoSize = true;
-            label40.BorderStyle = BorderStyle.FixedSingle;
-            label40.Location = new Point(46, 148);
-            label40.Name = "label40";
-            label40.Size = new Size(17, 19);
-            label40.TabIndex = 10;
-            label40.Text = "2";
-            label40.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // label41
-            // 
-            label41.AutoSize = true;
-            label41.BorderStyle = BorderStyle.FixedSingle;
-            label41.Location = new Point(46, 117);
-            label41.Name = "label41";
-            label41.Size = new Size(17, 19);
-            label41.TabIndex = 11;
-            label41.Text = "1";
-            label41.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // label47
-            // 
-            label47.AutoSize = true;
-            label47.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
-            label47.Location = new Point(610, 91);
-            label47.Name = "label47";
-            label47.Size = new Size(71, 17);
-            label47.TabIndex = 13;
-            label47.Text = "ผ่อน 24 งวด";
-            // 
-            // label46
-            // 
-            label46.AutoSize = true;
-            label46.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
-            label46.Location = new Point(479, 91);
-            label46.Name = "label46";
-            label46.Size = new Size(71, 17);
-            label46.TabIndex = 13;
-            label46.Text = "ผ่อน 12 งวด";
-            // 
-            // label45
-            // 
-            label45.AutoSize = true;
-            label45.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
-            label45.Location = new Point(348, 91);
-            label45.Name = "label45";
-            label45.Size = new Size(64, 17);
-            label45.TabIndex = 13;
-            label45.Text = "ผ่อน 6 งวด";
-            // 
-            // label42
-            // 
-            label42.AutoSize = true;
-            label42.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
-            label42.Location = new Point(37, 91);
-            label42.Name = "label42";
-            label42.Size = new Size(36, 17);
-            label42.TabIndex = 12;
-            label42.Text = "บัตรที่";
-            // 
-            // label44
-            // 
-            label44.AutoSize = true;
-            label44.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
-            label44.Location = new Point(217, 91);
-            label44.Name = "label44";
-            label44.Size = new Size(63, 17);
-            label44.TabIndex = 13;
-            label44.Text = "ปิดงวดเดียว";
-            // 
-            // label43
-            // 
-            label43.AutoSize = true;
-            label43.Font = new Font("Leelawadee UI", 9.75F, FontStyle.Underline);
-            label43.Location = new Point(82, 91);
-            label43.Name = "label43";
-            label43.Size = new Size(74, 17);
-            label43.TabIndex = 13;
-            label43.Text = "หมายเลขบัตร";
-            // 
-            // label36
-            // 
-            label36.AutoSize = true;
-            label36.Location = new Point(37, 28);
-            label36.Name = "label36";
-            label36.Size = new Size(101, 17);
-            label36.TabIndex = 4;
-            label36.Text = "เลขที่บัตรประชาชน";
-            // 
-            // cmb_custom_CustomerID
-            // 
-            cmb_custom_CustomerID.FormattingEnabled = true;
-            cmb_custom_CustomerID.Location = new Point(37, 48);
-            cmb_custom_CustomerID.Name = "cmb_custom_CustomerID";
-            cmb_custom_CustomerID.Size = new Size(121, 25);
-            cmb_custom_CustomerID.TabIndex = 3;
-            // 
-            // cmb_custom_CustomerName
-            // 
-            cmb_custom_CustomerName.FormattingEnabled = true;
-            cmb_custom_CustomerName.Location = new Point(164, 48);
-            cmb_custom_CustomerName.Name = "cmb_custom_CustomerName";
-            cmb_custom_CustomerName.Size = new Size(121, 25);
-            cmb_custom_CustomerName.TabIndex = 3;
-            // 
-            // label35
-            // 
-            label35.AutoSize = true;
-            label35.Location = new Point(164, 28);
-            label35.Name = "label35";
-            label35.Size = new Size(49, 17);
-            label35.TabIndex = 5;
-            label35.Text = "ชื่อ-สกุล";
-            // 
             // groupBox8
             // 
             groupBox8.Controls.Add(label37);
             groupBox8.Controls.Add(btn_festcustom_path);
             groupBox8.Controls.Add(txt_festcustom_path);
-            groupBox8.Location = new Point(79, 6);
+            groupBox8.Location = new Point(22, 6);
             groupBox8.Name = "groupBox8";
-            groupBox8.Size = new Size(861, 101);
+            groupBox8.Size = new Size(957, 101);
             groupBox8.TabIndex = 2;
             groupBox8.TabStop = false;
             // 
@@ -1661,7 +1881,7 @@
             // 
             // btn_festcustom_path
             // 
-            btn_festcustom_path.Location = new Point(741, 44);
+            btn_festcustom_path.Location = new Point(895, 44);
             btn_festcustom_path.Name = "btn_festcustom_path";
             btn_festcustom_path.Size = new Size(37, 25);
             btn_festcustom_path.TabIndex = 1;
@@ -1676,13 +1896,13 @@
             txt_festcustom_path.Location = new Point(37, 44);
             txt_festcustom_path.Name = "txt_festcustom_path";
             txt_festcustom_path.ReadOnly = true;
-            txt_festcustom_path.Size = new Size(698, 25);
+            txt_festcustom_path.Size = new Size(852, 25);
             txt_festcustom_path.TabIndex = 0;
             // 
             // btn_fest_custom_process
             // 
             btn_fest_custom_process.Image = (Image)resources.GetObject("btn_fest_custom_process.Image");
-            btn_fest_custom_process.Location = new Point(820, 470);
+            btn_fest_custom_process.Location = new Point(883, 512);
             btn_fest_custom_process.Name = "btn_fest_custom_process";
             btn_fest_custom_process.Size = new Size(96, 31);
             btn_fest_custom_process.TabIndex = 6;
@@ -1690,6 +1910,23 @@
             btn_fest_custom_process.TextImageRelation = TextImageRelation.ImageBeforeText;
             btn_fest_custom_process.UseVisualStyleBackColor = true;
             btn_fest_custom_process.Click += btn_fest_custom_process_Click;
+            // 
+            // cmb_custom_CaseID
+            // 
+            cmb_custom_CaseID.FormattingEnabled = true;
+            cmb_custom_CaseID.Location = new Point(31, 48);
+            cmb_custom_CaseID.Name = "cmb_custom_CaseID";
+            cmb_custom_CaseID.Size = new Size(121, 25);
+            cmb_custom_CaseID.TabIndex = 3;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(31, 28);
+            label14.Name = "label14";
+            label14.Size = new Size(52, 17);
+            label14.TabIndex = 4;
+            label14.Text = "Case ID";
             // 
             // frmImportMasterData
             // 
@@ -1793,64 +2030,12 @@
         private DataGridView datagridfest;
         private GroupBox groupBox8;
         private Button btn_fest_custom_process;
-        private Label label35;
-        private Label label36;
-        private ComboBox cmb_custom_CustomerName;
-        private ComboBox cmb_custom_CustomerID;
         private Label label37;
         private Button btn_festcustom_path;
         private TextBox txt_festcustom_path;
-        private GroupBox groupBox9;
-        private ComboBox cmb_custom_CardNo1;
-        private ComboBox cmb_custom_CardNo2;
-        private ComboBox cmb_custom_CardNo3;
-        private ComboBox cmb_custom_CardNo4;
-        private ComboBox cmb_custom_CardNo5;
-        private ComboBox cmb_custom_CardNo6;
-        private Label label33;
-        private Label label34;
-        private Label label38;
-        private Label label39;
-        private Label label40;
-        private Label label41;
-        private Label label42;
-        private Label label43;
-        private ComboBox cmb_custom_AccClose24Amnt1;
-        private ComboBox cmb_custom_AccClose12Amnt1;
-        private ComboBox cmb_custom_AccClose6Amnt1;
-        private ComboBox cmb_custom_AccClose24Amnt2;
-        private ComboBox cmb_custom_AccClose12Amnt2;
-        private ComboBox cmb_custom_AccClose6Amnt2;
-        private ComboBox cmb_custom_AccCloseAmnt1;
-        private ComboBox cmb_custom_AccCloseAmnt2;
-        private ComboBox cmb_custom_AccClose24Amnt3;
-        private ComboBox cmb_custom_AccClose12Amnt3;
-        private ComboBox cmb_custom_AccClose6Amnt3;
-        private ComboBox cmb_custom_AccCloseAmnt3;
-        private ComboBox cmb_custom_AccClose24Amnt4;
-        private ComboBox cmb_custom_AccClose12Amnt4;
-        private ComboBox cmb_custom_AccClose6Amnt4;
-        private ComboBox cmb_custom_AccCloseAmnt4;
-        private ComboBox cmb_custom_AccClose24Amnt5;
-        private ComboBox cmb_custom_AccClose12Amnt5;
-        private ComboBox cmb_custom_AccClose6Amnt5;
-        private ComboBox cmb_custom_AccCloseAmnt5;
-        private ComboBox cmb_custom_AccClose24Amnt6;
-        private ComboBox cmb_custom_AccClose12Amnt6;
-        private ComboBox cmb_custom_AccClose6Amnt6;
-        private ComboBox cmb_custom_AccCloseAmnt6;
-        private Label label47;
-        private Label label46;
-        private Label label45;
-        private Label label44;
-        private Button btn_fest_custom_save;
         private Button btn_fest_save;
         private Button btn_fest_template;
         private Button btn_fest_csutomtemplate;
-        private Label label48;
-        private Label label49;
-        private ComboBox cmb_custom_LedNumber;
-        private ComboBox cmb_custom_WorkNo;
         private CheckBox chk_clear_master;
         private ProgressBar progressBarMaster;
         private ProgressBar progressBarFest;
@@ -1858,8 +2043,6 @@
         private Button btn_savefaestto_db;
         private ComboBox cmb_fest_LegalExecRemark;
         private Label label50;
-        private ComboBox cmb_custom_LegalExecRemark;
-        private Label label51;
         private Button btn_check_datadup;
         private Button btn_load_default;
         private Button btn_custom_loaddefault;
@@ -1874,5 +2057,82 @@
         private Label label53;
         private Label label52;
         private Button btn_header_get;
+        private GroupBox groupBox9;
+        private ComboBox cmb_custom_LegalExecRemark;
+        private Label label51;
+        private Label label48;
+        private Label label49;
+        private ComboBox cmb_custom_LedNumber;
+        private ComboBox cmb_custom_WorkNo;
+        private Button btn_fest_custom_save;
+        private ComboBox cmb_custom_Installment24Amnt1;
+        private ComboBox cmb_custom_AccClose24Amnt1;
+        private ComboBox cmb_custom_Installment12Amnt1;
+        private ComboBox cmb_custom_AccClose12Amnt1;
+        private ComboBox cmb_custom_Installment6Amnt1;
+        private ComboBox cmb_custom_AccClose6Amnt1;
+        private ComboBox cmb_custom_Installment24Amnt2;
+        private ComboBox cmb_custom_AccClose24Amnt2;
+        private ComboBox cmb_custom_Installment12Amnt2;
+        private ComboBox cmb_custom_AccClose12Amnt2;
+        private ComboBox cmb_custom_Installment6Amnt2;
+        private ComboBox cmb_custom_AccClose6Amnt2;
+        private ComboBox cmb_custom_AccCloseAmnt1;
+        private ComboBox cmb_custom_AccCloseAmnt2;
+        private ComboBox cmb_custom_Installment24Amnt3;
+        private ComboBox cmb_custom_AccClose24Amnt3;
+        private ComboBox cmb_custom_Installment12Amnt3;
+        private ComboBox cmb_custom_AccClose12Amnt3;
+        private ComboBox cmb_custom_Installment6Amnt3;
+        private ComboBox cmb_custom_AccClose6Amnt3;
+        private ComboBox cmb_custom_CardNo1;
+        private ComboBox cmb_custom_AccCloseAmnt3;
+        private ComboBox cmb_custom_Installment24Amnt4;
+        private ComboBox cmb_custom_AccClose24Amnt4;
+        private ComboBox cmb_custom_Installment12Amnt4;
+        private ComboBox cmb_custom_AccClose12Amnt4;
+        private ComboBox cmb_custom_Installment6Amnt4;
+        private ComboBox cmb_custom_AccClose6Amnt4;
+        private ComboBox cmb_custom_CardNo2;
+        private ComboBox cmb_custom_AccCloseAmnt4;
+        private ComboBox cmb_custom_Installment24Amnt5;
+        private ComboBox cmb_custom_AccClose24Amnt5;
+        private ComboBox cmb_custom_Installment12Amnt5;
+        private ComboBox cmb_custom_AccClose12Amnt5;
+        private ComboBox cmb_custom_Installment6Amnt5;
+        private ComboBox cmb_custom_AccClose6Amnt5;
+        private ComboBox cmb_custom_CardNo3;
+        private ComboBox cmb_custom_AccCloseAmnt5;
+        private ComboBox cmb_custom_Installment24Amnt6;
+        private ComboBox cmb_custom_AccClose24Amnt6;
+        private ComboBox cmb_custom_Installment12Amnt6;
+        private ComboBox cmb_custom_AccClose12Amnt6;
+        private ComboBox cmb_custom_Installment6Amnt6;
+        private ComboBox cmb_custom_AccClose6Amnt6;
+        private ComboBox cmb_custom_CardNo4;
+        private ComboBox cmb_custom_AccCloseAmnt6;
+        private ComboBox cmb_custom_CardNo5;
+        private ComboBox cmb_custom_CardNo6;
+        private Label label33;
+        private Label label34;
+        private Label label38;
+        private Label label39;
+        private Label label40;
+        private Label label41;
+        private Label label56;
+        private Label label47;
+        private Label label55;
+        private Label label46;
+        private Label label54;
+        private Label label45;
+        private Label label42;
+        private Label label44;
+        private Label label43;
+        private Label label36;
+        private ComboBox cmb_custom_CustomerID;
+        private ComboBox cmb_custom_CustomerName;
+        private Label label35;
+        private Label label14;
+        private ComboBox cmb_custom_CaseID;
     }
 }
