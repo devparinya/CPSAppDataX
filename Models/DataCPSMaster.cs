@@ -13,7 +13,7 @@ namespace CPSAppData.Models
         public int ListNo { get; set; } //เลขชุดงาน
         //DATA 
         public string? LedNumber { get; set; }// ลำดับกรม
-        public string? WorkNo { get; set; } //เลขชุดงาน
+        public int WorkNo { get; set; } //เลขชุดงาน
 
         public string? CardNo { get; set; }
         public double JudgmentAmnt { get; set; } //ยอดพิพากษา

@@ -15,8 +15,7 @@ namespace QueueAppManager.Service
         public string TablePathFile = string.Empty;
         dateTimeHelper datehelper = new dateTimeHelper();
         string documentno = string.Empty;
-        string workno = string.Empty;
-        //ติดต่อพนักงานผู้รับผิดชอบ บริษัท วินเพอร์ฟอร์มานซ์ จำกัด   โทร. 02-123-6399 
+        int workno = 0;
 
         #region Print PDF
         public bool doCreateC2PDFReport(List<DataCPSCard> dataCPS, SettingData setdata)
@@ -30,8 +29,8 @@ namespace QueueAppManager.Service
             for (int i = 0; i < dataCPS.Count; i++)
             {
                 lednumber = dataCPS[i].LedNumber??string.Empty;
-                workno = dataCPS[0].WorkNo ?? "";
-                documentno = string.Format("ที่ RC_บค {1}_{0}", string.IsNullOrEmpty(workno) ? lednumber: workno,setdata.FestNo);
+                workno = dataCPS[0].WorkNo;
+                documentno = string.Format("ที่ RC_บค {1}_{0}",workno==0 ?lednumber: workno,setdata.FestNo);
                 PdfPage page = doc.AddPage();
                 page.Size = PdfSharp.PageSize.A4;
                 page.Orientation = PdfSharp.PageOrientation.Portrait;                
@@ -314,8 +313,9 @@ namespace QueueAppManager.Service
             gfx.DrawString(string.Format("{0}",setdata.FestName), font_title_bold, XBrushes.Black, new XRect(0, 2.4, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
             gfx.DrawString(string.Format("วันที่ {0}", datehelper.doGetDateThaiFromDBToPDF(setdata.FestDate??"")), font_title_bold, XBrushes.Black, new XRect(0, 3.1, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
 
+            int workno = dataCPS[0].WorkNo;
             gfx.DrawString("ลำดับที่", font_normalbold, XBrushes.Black, new XRect(1.2, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
-            gfx.DrawString(string.Format("{0}", string.IsNullOrEmpty(dataCPS[0].WorkNo)?"-":dataCPS[0].WorkNo), font_normal, XBrushes.Black, new XRect(2.3, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+            gfx.DrawString(string.Format("{0}", workno==0? "-":dataCPS[0].WorkNo), font_normal, XBrushes.Black, new XRect(2.3, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
            
             gfx.DrawString("ลำดับกรม", font_normalbold, XBrushes.Black, new XRect(-1, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
             gfx.DrawString(string.Format("{0}", string.IsNullOrEmpty(dataCPS[0].LedNumber)?"-": dataCPS[0].LedNumber), font_normal, XBrushes.Black, new XRect(0.2, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
@@ -731,14 +731,14 @@ namespace QueueAppManager.Service
                     dataCPS = (List<DataCPSCard>)cpscard;
                     if (n == 0) f_lednumber = dataCPS[0].LedNumber ?? string.Empty;
                     if (n == cpscardlist.Count-1) l_lednumber = dataCPS[0].LedNumber ?? string.Empty;
-                    if (n == 0) f_workno = dataCPS[0].WorkNo ?? string.Empty;
-                    if (n == cpscardlist.Count - 1) l_workno = dataCPS[0].WorkNo ?? string.Empty;
+                    if (n == 0) f_workno = dataCPS[0].WorkNo == 0?"0": dataCPS[0].WorkNo.ToString();
+                    if (n == cpscardlist.Count - 1) l_workno = dataCPS[0].WorkNo == 0 ? "0" : dataCPS[0].WorkNo.ToString();
                     doc.Info.Title = "C2 CPS DATA";
                     for (int i = 0; i < dataCPS.Count; i++)
                     {
                         lednumber = dataCPS[i].LedNumber ?? string.Empty;
-                        workno = dataCPS[0].WorkNo ?? "";
-                        documentno = string.Format("ที่ RC_บค {1}_{0}", string.IsNullOrEmpty(workno) ? lednumber : workno, setdata.FestNo);
+                        workno = dataCPS[0].WorkNo;
+                        documentno = string.Format("ที่ RC_บค {1}_{0}",workno==0 ? lednumber : workno, setdata.FestNo);
                         PdfPage page = doc.AddPage();
                         page.Size = PdfSharp.PageSize.A4;
                         page.Orientation = PdfSharp.PageOrientation.Portrait;
@@ -1005,8 +1005,8 @@ namespace QueueAppManager.Service
                     dataCPS = (List<DataCPSCard>)cpscard;
                     if (n == 0) f_lednumber = dataCPS[0].LedNumber ?? string.Empty;
                     if (n == cpscardlist.Count - 1) l_lednumber = dataCPS[0].LedNumber ?? string.Empty;
-                    if (n == 0) f_workno = dataCPS[0].WorkNo ?? string.Empty;
-                    if (n == cpscardlist.Count - 1) l_workno = dataCPS[0].WorkNo ?? string.Empty;
+                    if (n == 0) f_workno = dataCPS[0].WorkNo == 0 ? "0" : dataCPS[0].WorkNo.ToString();
+                    if (n == cpscardlist.Count - 1) l_workno = dataCPS[0].WorkNo == 0 ? "0" : dataCPS[0].WorkNo.ToString();
 
                     doc.Info.Title = "CPS Table";
                     PdfPage page = doc.AddPage();
@@ -1035,8 +1035,9 @@ namespace QueueAppManager.Service
                     gfx.DrawString(string.Format("{0}", setdata.FestName), font_title_bold, XBrushes.Black, new XRect(0, 2.4, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
                     gfx.DrawString(string.Format("วันที่ {0}", datehelper.doGetDateThaiFromDBToPDF(setdata.FestDate ?? "")), font_title_bold, XBrushes.Black, new XRect(0, 3.1, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
 
+                    int workno = dataCPS[0].WorkNo;
                     gfx.DrawString("ลำดับที่", font_normalbold, XBrushes.Black, new XRect(1.2, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
-                    gfx.DrawString(string.Format("{0}", string.IsNullOrEmpty(dataCPS[0].WorkNo) ? "-" : dataCPS[0].WorkNo), font_normal, XBrushes.Black, new XRect(2.3, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+                    gfx.DrawString(string.Format("{0}", workno==0 ? "-" : dataCPS[0].WorkNo), font_normal, XBrushes.Black, new XRect(2.3, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
 
                     gfx.DrawString("ลำดับกรม", font_normalbold, XBrushes.Black, new XRect(-1, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
                     gfx.DrawString(string.Format("{0}", string.IsNullOrEmpty(dataCPS[0].LedNumber) ? "-" : dataCPS[0].LedNumber), font_normal, XBrushes.Black, new XRect(0.2, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
@@ -1445,8 +1446,8 @@ namespace QueueAppManager.Service
                 for (int dup = 0; dup < 2; dup++)
                 {
                     lednumber = dataCPS[i].LedNumber ?? string.Empty;
-                    workno = dataCPS[0].WorkNo ?? "";
-                    documentno = string.Format("ที่ RC_บค {1}_{0}", string.IsNullOrEmpty(workno) ? lednumber : workno, setdata.FestNo);
+                    workno = dataCPS[0].WorkNo;
+                    documentno = string.Format("ที่ RC_บค {1}_{0}",workno == 0 ? lednumber : workno, setdata.FestNo);
                     PdfPage page = doc.AddPage();
                     page.Size = PdfSharp.PageSize.A4;
                     page.Orientation = PdfSharp.PageOrientation.Portrait;
@@ -1729,8 +1730,9 @@ namespace QueueAppManager.Service
             gfx.DrawString(string.Format("{0}", setdata.FestName), font_title_bold, XBrushes.Black, new XRect(0, 2.4, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
             gfx.DrawString(string.Format("วันที่ {0}", datehelper.doGetDateThaiFromDBToPDF(setdata.FestDate ?? "")), font_title_bold, XBrushes.Black, new XRect(0, 3.1, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
 
+            int workno = dataCPS[0].WorkNo;
             gfx.DrawString("ลำดับที่", font_normalbold, XBrushes.Black, new XRect(1.2, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
-            gfx.DrawString(string.Format("{0}", string.IsNullOrEmpty(dataCPS[0].WorkNo) ? "-" : dataCPS[0].WorkNo), font_normal, XBrushes.Black, new XRect(2.3, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+            gfx.DrawString(string.Format("{0}", workno == 0 ? "-" : dataCPS[0].WorkNo), font_normal, XBrushes.Black, new XRect(2.3, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
 
             gfx.DrawString("ลำดับกรม", font_normalbold, XBrushes.Black, new XRect(-1, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
             gfx.DrawString(string.Format("{0}", string.IsNullOrEmpty(dataCPS[0].LedNumber) ? "-" : dataCPS[0].LedNumber), font_normal, XBrushes.Black, new XRect(0.2, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
@@ -2137,8 +2139,8 @@ namespace QueueAppManager.Service
                 for (int c2 = 0; c2 < c2count; c2++)
                 {
                     lednumber = dataCPS[i].LedNumber ?? string.Empty;
-                    workno = dataCPS[0].WorkNo ?? "";
-                    documentno = string.Format("ที่ RC_บค {1}_{0}", string.IsNullOrEmpty(workno) ? lednumber : workno, setdata.FestNo);
+                    workno = dataCPS[0].WorkNo;
+                    documentno = string.Format("ที่ RC_บค {1}_{0}", workno == 0                    ? lednumber : workno, setdata.FestNo);
 
                     PdfPage page = doc.AddPage();
                     page.Size = PdfSharp.PageSize.A4;
@@ -2410,8 +2412,9 @@ namespace QueueAppManager.Service
             gfx.DrawString(string.Format("{0}", setdata.FestName), font_title_bold, XBrushes.Black, new XRect(0, 2.4, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
             gfx.DrawString(string.Format("วันที่ {0}", datehelper.doGetDateThaiFromDBToPDF(setdata.FestDate ?? "")), font_title_bold, XBrushes.Black, new XRect(0, 3.1, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
 
+            int workno = dataCPS[0].WorkNo;
             gfx.DrawString("ลำดับที่", font_normalbold, XBrushes.Black, new XRect(1.2, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
-            gfx.DrawString(string.Format("{0}", string.IsNullOrEmpty(dataCPS[0].WorkNo) ? "-" : dataCPS[0].WorkNo), font_normal, XBrushes.Black, new XRect(2.3, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
+            gfx.DrawString(string.Format("{0}", workno== 0? "-" : dataCPS[0].WorkNo), font_normal, XBrushes.Black, new XRect(2.3, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopLeft);
 
             gfx.DrawString("ลำดับกรม", font_normalbold, XBrushes.Black, new XRect(-1, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);
             gfx.DrawString(string.Format("{0}", string.IsNullOrEmpty(dataCPS[0].LedNumber) ? "-" : dataCPS[0].LedNumber), font_normal, XBrushes.Black, new XRect(0.2, 4.5, page.Width.Centimeter, page.Height.Centimeter), XStringFormats.TopCenter);

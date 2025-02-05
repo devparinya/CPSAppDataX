@@ -13,7 +13,7 @@ namespace CpsDataApp.Models
         public string? CardStatus { get; set; }
         //DATA 
         public string? LedNumber { get; set; }// ลำดับกรม
-        public string? WorkNo { get; set; } //เลขชุดงาน
+        public int WorkNo { get; set; } //เลขชุดงาน
         int Maxmonth { get; set; } //จำนวนสูงสุดให้ผ่อน 
         //CARD 1
         public string? CardNo1 { get; set; }

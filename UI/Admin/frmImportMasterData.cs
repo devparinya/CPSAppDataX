@@ -426,7 +426,12 @@ namespace CPSAppData.UI.Setting
                     Cursor = Cursors.WaitCursor;
                     datatablecustom = excelService.excelToDataTable(pathfile);
                     sqlitesrv.doInsertCustomData(datatablecustom, CPSCustomCtrl, this.progressBarCustom, chk_clear_custom.Checked);
-                    excelService.ExportExcelResult(sqlitesrv.getResultData(), Path.GetDirectoryName(pathfile) ?? "", "ExecuteCPS");
+                    DataTable dataresult = sqlitesrv.getResultData();
+                    if (dataresult != null) 
+                    {
+                        if(dataresult.Rows.Count > 0) excelService.ExportExcelResult(dataresult, Path.GetDirectoryName(pathfile) ?? "", "ExecuteCPS");
+                    }
+                   
                     MessageBox.Show("นำเข้าข้อมูลเรียบร้อย", "นำเข้าข้อมูล", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Cursor = Cursors.Default;
                 }

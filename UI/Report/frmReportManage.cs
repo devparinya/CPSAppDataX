@@ -575,7 +575,9 @@ namespace CPSAppData.UI.Report
                     dataperson = doConvertDataMasterToCPSPerson(datamasterled);
                     break;
                 case "WORKNO":
-                    List<DataCPSMaster> datamasterwno = sqlitedsrv.doGetDataCPSWithRangeWorkNo(startdata, enddata);
+                    int i_startdata = Convert.ToInt32(startdata);
+                    int i_enddata = Convert.ToInt32(enddata);
+                    List<DataCPSMaster> datamasterwno = sqlitedsrv.doGetDataCPSWithRangeWorkNo(i_startdata, i_enddata);
                     dataperson = doConvertDataMasterToCPSPerson(datamasterwno);
                     break;
             }

@@ -55,7 +55,7 @@ namespace CPSAppData.Services
                 ,CaseID TEXT
                 ,CardStatus TEXT
                 ,LedNumber TEXT
-                ,WorkNo TEXT
+                ,WorkNo INTEGER
                 ,Maxmonth INTEGER
                 ,CardNo1 TEXT
                 ,JudgmentAmnt1 REAL
@@ -124,7 +124,7 @@ namespace CPSAppData.Services
                 ,CardStatus TEXT
                 ,ListNo INTEGER
                 ,LedNumber TEXT
-                ,WorkNo TEXT
+                ,WorkNo INTEGER
                 ,CardNo TEXT
                 ,JudgmentAmnt REAL
                 ,PrincipleAmnt REAL
@@ -171,7 +171,7 @@ namespace CPSAppData.Services
                             CustomerID  TEXT,
                             CustomerName  TEXT,
                             LedNumber  TEXT,
-                            WorkNo    TEXT,
+                            WorkNo    INTEGER,
                             LegalExecRemark TEXT,
                             PRIMARY KEY(Id AUTOINCREMENT));";
 
@@ -184,7 +184,7 @@ namespace CPSAppData.Services
                             CustomerID  TEXT,
                             CaseID  TEXT,
                             CustomerName  TEXT,
-                            WorkNo  TEXT,
+                            WorkNo  INTEGER,
                             LedNumber  TEXT,
                             CardNo1  TEXT,
                             AccCloseAmnt1 REAL,  
@@ -446,7 +446,7 @@ namespace CPSAppData.Services
             {
                 connection.Open();
                 var sqlcmd = @" SELECT
-                                ifnull(WorkNo,'') as WorkNo
+                                ifnull(WorkNo,0) as WorkNo
                                 ,ifnull(LedNumber,'') as LedNumber
                                 ,ifnull(CustomerID,'') as CustomerID
                                 ,ifnull(CustomerName,'') as CustomerName
@@ -463,7 +463,7 @@ namespace CPSAppData.Services
                         DataCPSPerson customdata = new DataCPSPerson();
                         customdata.CustomerID = security_.DecryptString(reader.GetString("CustomerID") ?? "");
                         customdata.CustomerName = security_.DecryptString(reader.GetString("CustomerName") ?? "");
-                        customdata.WorkNo = reader.GetString("WorkNo") ?? "";
+                        customdata.WorkNo = reader.GetInt32("WorkNo");
                         customdata.LedNumber = reader.GetString("LedNumber") ?? "";
                         customdataall.Add(customdata);
                     }
@@ -809,7 +809,7 @@ namespace CPSAppData.Services
                             string? customername = Convert.ToString(dataraw.Rows[1][cmbcolctrl[0].Text] is null ? string.Empty : dataraw.Rows[i][cmbcolctrl[1].Text]);
 
                             param_LedNumber.Value = Convert.ToString(dataraw.Rows[i][cmbcolctrl[3].Text]);
-                            param_WorkNo.Value = Convert.ToString(dataraw.Rows[i][cmbcolctrl[2].Text]);
+                            param_WorkNo.Value = Convert.ToInt32(dataraw.Rows[i][cmbcolctrl[2].Text]);
                             param_CustomerID.Value = security_.EncryptString(customerid);
                             param_CustomerName.Value = security_.EncryptString(customername);
                             param_LegalExecRemark.Value = dataraw.Rows[i][cmbcolctrl[4].Text];
@@ -870,7 +870,7 @@ namespace CPSAppData.Services
         private void doClearMasterWitCustomClear()//New
         {
             string cmd_update = @"UPDATE DataCPSMaster
-                                SET WorkNo = '',LedNumber = '',CustomFlag = 'N',LegalExecRemark = ''
+                                SET WorkNo = 0,LedNumber = '',CustomFlag = 'N',LegalExecRemark = ''
                                 FROM CPSPayAmnt
                                 WHERE (DataCPSMaster.CustomerID = CPSPayAmnt.CustomerID)";
             if (connection != null)
@@ -1163,7 +1163,7 @@ namespace CPSAppData.Services
                 var sqlcmd = string.Format(@"SELECT 
                                  ifnull(CaseID,'') as CaseID
                                 ,ifnull(CardStatus,'') as CardStatus
-                                ,ifnull(WorkNo,'') as WorkNo
+                                ,ifnull(WorkNo,0) as WorkNo
                                 ,ifnull(LedNumber,'') as LedNumber
                                 ,ifnull(CardNo1,'') as CardNo1
                                 ,ifnull(JudgmentAmnt1,0) as JudgmentAmnt1
@@ -1227,7 +1227,7 @@ namespace CPSAppData.Services
                         DataCPSPerson carddat = new DataCPSPerson();
                         carddat.CaseID = reader.GetString("CaseID") ?? "";
                         carddat.CardStatus = reader.GetString("CardStatus") ?? "";
-                        carddat.WorkNo = reader.GetString("WorkNo") ?? "";
+                        carddat.WorkNo = reader.GetInt32("WorkNo");
                         carddat.LedNumber = reader.GetString("LedNumber") ?? "";
                         carddat.CardNo1 = reader.GetString("CardNo1") ?? "";
                         carddat.JudgmentAmnt1 = reader.GetDouble("JudgmentAmnt1");
@@ -1307,7 +1307,7 @@ namespace CPSAppData.Services
                 var sqlcmd = string.Format(@"SELECT 
                                  ifnull(CaseID,'') as CaseID
                                 ,ifnull(CardStatus,'') as CardStatus
-                                ,ifnull(WorkNo,'') as WorkNo
+                                ,ifnull(WorkNo,0) as WorkNo
                                 ,ifnull(LedNumber,'') as LedNumber
                                 ,ifnull(CardNo1,'') as CardNo1
                                 ,ifnull(JudgmentAmnt1,0) as JudgmentAmnt1
@@ -1371,7 +1371,7 @@ namespace CPSAppData.Services
                         DataCPSPerson carddat = new DataCPSPerson();
                         carddat.CaseID = reader.GetString("CaseID") ?? "";
                         carddat.CardStatus = reader.GetString("CardStatus") ?? "";
-                        carddat.WorkNo = reader.GetString("WorkNo") ?? "";
+                        carddat.WorkNo = reader.GetInt32("WorkNo");
                         carddat.LedNumber = reader.GetString("LedNumber") ?? "";
                         carddat.CardNo1 = reader.GetString("CardNo1") ?? "";
                         carddat.JudgmentAmnt1 = reader.GetDouble("JudgmentAmnt1");
@@ -1584,7 +1584,7 @@ namespace CPSAppData.Services
                 var sqlcmd = string.Format(@"SELECT 
                                  ifnull(CaseID,'') as CaseID
                                 ,ifnull(CardStatus,'') as CardStatus
-                                ,ifnull(WorkNo,'') as WorkNo
+                                ,ifnull(WorkNo,0) as WorkNo
                                 ,ifnull(LedNumber,'') as LedNumber
                                 ,ifnull(CardNo,'') as CardNo
                                 ,ifnull(JudgmentAmnt,0) as JudgmentAmnt
@@ -1618,7 +1618,7 @@ namespace CPSAppData.Services
                         DataCPSMaster carddat = new DataCPSMaster();
                         carddat.CaseID = reader.GetString("CaseID") ?? "";
                         carddat.CardStatus = reader.GetString("CardStatus") ?? "";
-                        carddat.WorkNo = reader.GetString("WorkNo") ?? "";
+                        carddat.WorkNo = reader.GetInt32("WorkNo");
                         carddat.LedNumber = reader.GetString("LedNumber") ?? "";
                         carddat.CardNo = reader.GetString("CardNo") ?? "";
                         carddat.JudgmentAmnt = reader.GetDouble("JudgmentAmnt");
@@ -1662,7 +1662,7 @@ namespace CPSAppData.Services
                 var sqlcmd = string.Format(@"SELECT 
                                  ifnull(CaseID,'') as CaseID
                                 ,ifnull(CardStatus,'') as CardStatus
-                                ,ifnull(WorkNo,'') as WorkNo
+                                ,ifnull(WorkNo,0) as WorkNo
                                 ,ifnull(LedNumber,'') as LedNumber
                                 ,ifnull(CardNo,'') as CardNo
                                 ,ifnull(JudgmentAmnt,0) as JudgmentAmnt
@@ -1696,7 +1696,7 @@ namespace CPSAppData.Services
                         DataCPSMaster carddat = new DataCPSMaster();
                         carddat.CaseID = reader.GetString("CaseID") ?? "";
                         carddat.CardStatus = reader.GetString("CardStatus") ?? "";
-                        carddat.WorkNo = reader.GetString("WorkNo") ?? "";
+                        carddat.WorkNo = reader.GetInt32("WorkNo");
                         carddat.LedNumber = reader.GetString("LedNumber") ?? "";
                         carddat.CardNo = reader.GetString("CardNo") ?? "";
                         carddat.JudgmentAmnt = reader.GetDouble("JudgmentAmnt");
@@ -1739,7 +1739,7 @@ namespace CPSAppData.Services
                 var sqlcmd = string.Format(@"SELECT 
                                  ifnull(CaseID,'') as CaseID
                                 ,ifnull(CardStatus,'') as CardStatus
-                                ,ifnull(WorkNo,'') as WorkNo
+                                ,ifnull(WorkNo,0) as WorkNo
                                 ,ifnull(LedNumber,'') as LedNumber
                                 ,ifnull(CardNo1,'') as CardNo1
                                 ,ifnull(JudgmentAmnt1,0) as JudgmentAmnt1
@@ -1803,7 +1803,7 @@ namespace CPSAppData.Services
                         DataCPSPerson carddat = new DataCPSPerson();
                         carddat.CaseID = reader.GetString("CaseID") ?? "";
                         carddat.CardStatus = reader.GetString("CardStatus") ?? "";
-                        carddat.WorkNo = reader.GetString("WorkNo") ?? "";
+                        carddat.WorkNo = reader.GetInt32("WorkNo");
                         carddat.LedNumber = reader.GetString("LedNumber") ?? "";
                         carddat.CardNo1 = reader.GetString("CardNo1") ?? "";
                         carddat.JudgmentAmnt1 = reader.GetDouble("JudgmentAmnt1");
@@ -1877,7 +1877,7 @@ namespace CPSAppData.Services
             {
                 connection.Open();
                 var sqlcmd = string.Format(@"SELECT 
-                                 ifnull(WorkNo,'') as WorkNo
+                                 ifnull(WorkNo,0) as WorkNo
                                 ,ifnull(CaseID,'') as CaseID
                                 ,ifnull(CardStatus,'') as CardStatus
                                 ,ifnull(LedNumber,'') as LedNumber
@@ -1912,7 +1912,7 @@ namespace CPSAppData.Services
                     {
                         DataCPSMaster masterdat = new DataCPSMaster();
                     
-                        masterdat.WorkNo = reader.GetString("WorkNo") ?? "";
+                        masterdat.WorkNo = reader.GetInt32("WorkNo");
                         masterdat.CaseID = reader.GetString("CaseID") ?? "";
                         masterdat.CardStatus = reader.GetString("CardStatus") ?? "";
                         masterdat.LedNumber = reader.GetString("LedNumber") ?? "";
@@ -1943,14 +1943,14 @@ namespace CPSAppData.Services
             }
             return datamasterList;
         }
-        public List<DataCPSMaster> doGetDataCPSWithRangeWorkNo(string startworkno, string endworkno)//New
+        public List<DataCPSMaster> doGetDataCPSWithRangeWorkNo(Int32 startworkno, Int32 endworkno)//New
         {
             List<DataCPSMaster> datamasterList = new List<DataCPSMaster>();
             if (connection != null)
             {
                 connection.Open();
                 var sqlcmd = string.Format(@"SELECT 
-                                ifnull(WorkNo,'') as WorkNo
+                                ifnull(WorkNo,0) as WorkNo
                                 ,ifnull(CaseID,'') as CaseID
                                 ,ifnull(CardStatus,'') as CardStatus
                                 ,ifnull(LedNumber,'') as LedNumber
@@ -1975,7 +1975,7 @@ namespace CPSAppData.Services
                                 ,ifnull(LegalExecRemark,'') as LegalExecRemark
                                 ,ifnull(CustomFlag,'N') as CustomFlag
                                FROM DataCPSMaster
-                               WHERE WorkNo BETWEEN '{0}' AND '{1}';", startworkno, endworkno);
+                               WHERE WorkNo BETWEEN {0} AND {1};", startworkno, endworkno);
 
                 using var command = new SQLiteCommand(sqlcmd, connection);
                 using var reader = command.ExecuteReader();
@@ -1986,7 +1986,7 @@ namespace CPSAppData.Services
                     {
                         DataCPSMaster masterdat = new DataCPSMaster();
 
-                        masterdat.WorkNo = reader.GetString("WorkNo") ?? "";
+                        masterdat.WorkNo = reader.GetInt32("WorkNo");
                         masterdat.CaseID = reader.GetString("CaseID") ?? "";
                         masterdat.CardStatus = reader.GetString("CardStatus") ?? "";
                         masterdat.LedNumber = reader.GetString("LedNumber") ?? "";
@@ -2063,7 +2063,7 @@ namespace CPSAppData.Services
         private void doClearMasterWithFestDataClear() //New
         {
             string cmd_update = @"UPDATE DataCPSMaster
-                                SET WorkNo = '',LedNumber = '',LegalExecRemark = ''
+                                SET WorkNo = 0,LedNumber = '',LegalExecRemark = ''
                                 FROM CPSFestData
                                 WHERE (DataCPSMaster.CustomerID = CPSFestData.CustomerID)";
             if (connection != null)
@@ -2291,7 +2291,7 @@ namespace CPSAppData.Services
                                  ifnull(CaseID,'') as CaseID
                                 ,ifnull(CardStatus,'') as CardStatus
                                 ,ifnull(ListNo,0) as ListNo
-                                ,ifnull(WorkNo,'') as WorkNo
+                                ,ifnull(WorkNo,0) as WorkNo
                                 ,ifnull(LedNumber,'') as LedNumber
                                 ,ifnull(CardNo,'') as CardNo
                                 ,ifnull(JudgmentAmnt,0) as JudgmentAmnt
@@ -2330,7 +2330,7 @@ namespace CPSAppData.Services
                         {
                             carddat.CaseID =reader.GetString("CaseID") ?? "";
                             carddat.CardStatus =reader.GetString("CardStatus") ?? "";
-                            carddat.WorkNo = reader.GetString("WorkNo") ?? "";
+                            carddat.WorkNo = reader.GetInt32("WorkNo");
                             carddat.LedNumber = reader.GetString("LedNumber") ?? "";
                             carddat.CustomerName = security_.DecryptString(reader.GetString("CustomerName") ?? "");
                             carddat.CustomerID = security_.DecryptString(reader.GetString("CustomerID") ?? "");
@@ -2390,7 +2390,7 @@ namespace CPSAppData.Services
                                  ifnull(CaseID,'') as CaseID
                                 ,ifnull(CardStatus,'') as CardStatus
                                 ,ifnull(ListNo,0) as ListNo
-                                ,ifnull(WorkNo,'') as WorkNo
+                                ,ifnull(WorkNo,0) as WorkNo
                                 ,ifnull(LedNumber,'') as LedNumber
                                 ,ifnull(CardNo,'') as CardNo
                                 ,ifnull(JudgmentAmnt,0) as JudgmentAmnt
@@ -2424,7 +2424,7 @@ namespace CPSAppData.Services
                         DataCPSMaster carddat = new DataCPSMaster();
                         carddat.CaseID = reader.GetString("CaseID") ?? "";
                         carddat.CardStatus = reader.GetString("CardStatus") ?? "";
-                        carddat.WorkNo = reader.GetString("WorkNo") ?? "";
+                        carddat.WorkNo = reader.GetInt32("WorkNo");
                         carddat.LedNumber = reader.GetString("LedNumber") ?? "";
                         carddat.CardNo = reader.GetString("CardNo") ?? "";
                         carddat.JudgmentAmnt = reader.GetDouble("JudgmentAmnt");
@@ -2778,7 +2778,7 @@ namespace CPSAppData.Services
                             param_CustomerName.Value = security_.EncryptString(customertel);
                             param_CaseID.Value = Convert.ToString(dataraw.Rows[i][cmbcolctrl[53].Text]); 
                             param_LedNumber.Value = Convert.ToString(dataraw.Rows[i][cmbcolctrl[2].Text]);
-                            param_WorkNo.Value = Convert.ToString(dataraw.Rows[i][cmbcolctrl[3].Text]);                           
+                            param_WorkNo.Value = Convert.ToInt32(dataraw.Rows[i][cmbcolctrl[3].Text]);                           
 
                             param_CardNo1.Value = dataraw.Rows[i][cmbcolctrl[4].Text];
                             param_CardNo2.Value = dataraw.Rows[i][cmbcolctrl[5].Text];
@@ -2869,7 +2869,7 @@ namespace CPSAppData.Services
                 string customerwhere = security_.EncryptString(customerid);
                 connection.Open();
                 var sqlcmd = string.Format(@" SELECT
-                                             ifnull(WorkNo,'') as WorkNo
+                                             ifnull(WorkNo,0) as WorkNo
                                             ,ifnull(LedNumber,'') as LedNumber
                                             ,ifnull(CustomerID,'') as CustomerID
                                             ,ifnull(CaseID,'') as CaseID
@@ -2934,7 +2934,7 @@ namespace CPSAppData.Services
                         customdata.CustomerID = security_.DecryptString(reader.GetString("CustomerID") ?? "");
                         customdata.CustomerName = security_.DecryptString(reader.GetString("CustomerName") ?? "");
                         customdata.CaseID = reader.GetString("CaseID") ?? "";
-                        customdata.WorkNo = reader.GetString("WorkNo") ?? "";
+                        customdata.WorkNo = reader.GetInt32("WorkNo");
                         customdata.LedNumber = reader.GetString("LedNumber") ?? "";
                         customdata.CardNo1 = reader.GetString("CardNo1") ?? "";
                         customdata.AccCloseAmnt1 = reader.GetDouble("AccCloseAmnt1");
@@ -2998,7 +2998,7 @@ namespace CPSAppData.Services
             {
                 connection.Open();
                 var sqlcmd = @" SELECT
-                                ifnull(WorkNo,'') as WorkNo
+                                ifnull(WorkNo,0) as WorkNo
                                 ,ifnull(LedNumber,'') as LedNumber
                                 ,ifnull(CustomerID,'') as CustomerID
                                 ,ifnull(CustomerName,'') as CustomerName
@@ -3015,7 +3015,7 @@ namespace CPSAppData.Services
                         DataCPSPerson customdata = new DataCPSPerson();
                         customdata.CustomerID = security_.DecryptString(reader.GetString("CustomerID") ?? "");
                         customdata.CustomerName = security_.DecryptString(reader.GetString("CustomerName") ?? "");
-                        customdata.WorkNo = reader.GetString("WorkNo") ?? "";
+                        customdata.WorkNo = reader.GetInt32("WorkNo");
                         customdata.LedNumber = reader.GetString("LedNumber") ?? "";
                         customdataall.Add(customdata);
                     }
@@ -3031,7 +3031,7 @@ namespace CPSAppData.Services
             {
                 connection.Open();
                 var sqlcmd = string.Format(@" SELECT
-                                               ifnull(WorkNo,'') as WorkNo
+                                               ifnull(WorkNo,0) as WorkNo
                                               ,ifnull(LedNumber,'') as LedNumber
                                               ,ifnull(CustomerID,'') as CustomerID
                                               ,ifnull(CustomerName,'') as CustomerName
@@ -3081,7 +3081,7 @@ namespace CPSAppData.Services
                         customdata.CustomerID = security_.DecryptString(reader.GetString("CustomerID") ?? "");
                         customdata.CustomerName = security_.DecryptString(reader.GetString("CustomerName") ?? "");
 
-                        customdata.WorkNo = reader.GetString("WorkNo") ?? "";
+                        customdata.WorkNo = reader.GetInt32("WorkNo");
                         customdata.LedNumber = reader.GetString("LedNumber") ?? "";
                         customdata.CardNo1 = reader.GetString("CardNo1") ?? "";
                         customdata.AccCloseAmnt1 = reader.GetDouble("AccCloseAmnt1");
@@ -3127,7 +3127,7 @@ namespace CPSAppData.Services
             {
                 connection.Open();
                 var sqlcmd = string.Format(@" SELECT
-                                               ifnull(WorkNo,'') as WorkNo
+                                               ifnull(WorkNo,0) as WorkNo
                                               ,ifnull(LedNumber,'') as LedNumber
                                               ,ifnull(CustomerID,'') as CustomerID
                                               ,ifnull(CustomerName,'') as CustomerName
@@ -3147,7 +3147,7 @@ namespace CPSAppData.Services
                         DataCPSPerson customdata = new DataCPSPerson();
                         customdata.CustomerID = security_.DecryptString(reader.GetString("CustomerID") ?? "");
                         customdata.CustomerName = security_.DecryptString(reader.GetString("CustomerName") ?? "");
-                        customdata.WorkNo = reader.GetString("WorkNo") ?? "";
+                        customdata.WorkNo = reader.GetInt32("WorkNo");
                         customdata.LedNumber = reader.GetString("LedNumber") ?? "";
                         customdata.LegalExecRemark = reader.GetString("LegalExecRemark") ?? "";
                         customdataall.Add(customdata);

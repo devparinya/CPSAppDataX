@@ -11,7 +11,7 @@ namespace CPSAppData.Models
         public string? CaseID { get; set; }
         public string?  CustomerID   { get; set; }
         public string? CustomerName { get; set; }
-        public string? WorkNo { get; set; }
+        public int WorkNo { get; set; }
         public string? LedNumber { get; set; }
         public string?  CardNo1      { get; set; }
         public double   AccCloseAmnt1   { get; set; }
