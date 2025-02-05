@@ -7,7 +7,7 @@ namespace QueueAppManager.Service
     public class calculateDataService
     {
         dateTimeHelper dateHelper =  new dateTimeHelper();        
-        public void CaluLateData6Card(ref DataCPSCard cardCPS,SettingData setdata)
+        public void CaluLateData6CardOld(ref DataCPSCard cardCPS,SettingData setdata)
         {
             int decamnt = 2;
             int maxmonth = 24;
@@ -114,46 +114,42 @@ namespace QueueAppManager.Service
             cardCPS.Installment24Amnt = Installment24Amnt;
             cardCPS.Maxmonth = maxmonth;
         }
-        public void CaluLateData6CardNew(ref DataCPSCard cardCPS, SettingData setdata)
+        public void CaluLateData6Card(ref DataCPSCard cardCPS, SettingData setdata)
         {
             int decamnt = 2;
             int maxmonth = 24;
-            double PrincipleAmnt = cardCPS.PrincipleAmnt; //ต้นเงิน
-            double PayAfterJudgeAmnt = cardCPS.PayAfterJudgAmt; //จ่ายหลังพิพากษา
-            double DeptAmnt = cardCPS.DeptAmnt; //ภาระหนี้ปัจจุบัน
+            double PrincipleAmnt = cardCPS.PrincipleAmnt; //AA ==
+            double PayAfterJudgeAmnt = cardCPS.PayAfterJudgAmt; //AB ==
+            double DeptAmnt = cardCPS.DeptAmnt; //AD ภาระหนี้ปัจจุบัน ==
 
             if (!string.IsNullOrEmpty(cardCPS.JudgeDate))
             {
                 maxmonth = CaculateMaxmonth(setdata.MaxMonth, cardCPS.JudgeDate, setdata.FistDateInstall ?? string.Empty);
             }
-            double PrincipleAmntBalance = 0;// ต้นเงินปัจจุบัน - จ่ายหลังพิพากษา
-            PrincipleAmntBalance = Round(PrincipleAmnt - PayAfterJudgeAmnt, decamnt);
-            if (PrincipleAmntBalance < 0) PrincipleAmntBalance = 0; 
+            double CapitalAmntBalance = 0;//*ต้นเงินปัจจุบัน 1  =IF((AA2-AB2)<0,0,(AA2-AB2))  **AC**
+            CapitalAmntBalance = Round(PrincipleAmnt - PayAfterJudgeAmnt, decamnt);
+            if (CapitalAmntBalance < 0) CapitalAmntBalance = 0;
 
             double AccCloseAmnt = 0; //*ปิดบัญชีงวดเดียว IF(AND(AC2=0, AD2=0), 0, IF(AC2<1000, MAX(AD2*10%, 1000), AC2)) **AE**
-            if ((PrincipleAmntBalance == 0) && (DeptAmnt == 0))
+            if ((CapitalAmntBalance == 0) && (DeptAmnt == 0))
             {
                 AccCloseAmnt = 0;
             }
-            else if((PrincipleAmntBalance == 0)&&(DeptAmnt>0)) //จ่ายเกินเงินต้น
-            {
-                AccCloseAmnt = Round(DeptAmnt * 0.10, decamnt); // 10% ของภาระหนี้
-            }
             else
             {
-                double DeptAmnt0Per = Round(DeptAmnt * 0.10, decamnt); // 10% ของภาระหนี้ 
-                if (PrincipleAmntBalance < 1000) //
+                double DeptAmnt0Per = Round(DeptAmnt * 0.10, decamnt); //AD*10%
+                if (CapitalAmntBalance < 1000)
                 {
+                    double capitalbal10Per = Round(CapitalAmntBalance + DeptAmnt0Per,2);
                     AccCloseAmnt = 1000;
-                    if (DeptAmnt0Per > AccCloseAmnt) AccCloseAmnt = PrincipleAmntBalance + DeptAmnt0Per;
+                    if (capitalbal10Per > AccCloseAmnt) AccCloseAmnt = capitalbal10Per;
                 }
                 else
                 {
-
-                    AccCloseAmnt = PrincipleAmntBalance;
+                    AccCloseAmnt = CapitalAmntBalance;
                 }
             }
-            cardCPS.CapitalAmnt = PrincipleAmntBalance;
+            cardCPS.CapitalAmnt = CapitalAmntBalance;
             cardCPS.AccCloseAmnt = AccCloseAmnt;
 
 
@@ -164,7 +160,7 @@ namespace QueueAppManager.Service
             }
             else
             {
-                double CheckValue = Round(((DeptAmnt - PrincipleAmntBalance) * 0.2) + PrincipleAmntBalance, decamnt);
+                double CheckValue = Round(((DeptAmnt - CapitalAmntBalance) * 0.2) + CapitalAmntBalance, decamnt);
                 if (CheckValue < AccCloseAmnt)
                 {
                     AccClose6Amnt = Round(DeptAmnt * 0.2, decamnt);
@@ -186,10 +182,10 @@ namespace QueueAppManager.Service
             }
             else
             {
-                double CheckValue = Round(((DeptAmnt - PrincipleAmntBalance) * 0.3) + PrincipleAmntBalance, decamnt);
+                double CheckValue = Round(((DeptAmnt - CapitalAmntBalance) * 0.4) + CapitalAmntBalance, decamnt);
                 if (CheckValue < AccCloseAmnt)
                 {
-                    AccClose12Amnt = Round(DeptAmnt * 0.3, decamnt);
+                    AccClose12Amnt = Round(DeptAmnt * 0.4, decamnt);
                 }
                 else
                 {
@@ -210,10 +206,10 @@ namespace QueueAppManager.Service
             }
             else
             {
-                double CheckValue = Round(((DeptAmnt - PrincipleAmntBalance) * 0.4) + PrincipleAmntBalance, decamnt);
+                double CheckValue = Round(((DeptAmnt - CapitalAmntBalance) * 0.6) + CapitalAmntBalance, decamnt);
                 if (CheckValue < AccCloseAmnt)
                 {
-                    AccClose24Amnt = Round(DeptAmnt * 0.4, decamnt);
+                    AccClose24Amnt = Round(DeptAmnt * 0.6, decamnt);
                 }
                 else
                 {
@@ -225,7 +221,7 @@ namespace QueueAppManager.Service
             cardCPS.AccClose24Amnt = AccClose24Amnt;
             cardCPS.Installment24Amnt = Installment24Amnt;
             cardCPS.Maxmonth = maxmonth;
-        }
+        }        
         public void CaluLateData6CardAddValue(ref List<DataCPSCard> cardlist)
         {
             double sumCapitalAmnt = 0;
@@ -233,13 +229,13 @@ namespace QueueAppManager.Service
             double avg25per = 0;
 
             sumCapitalAmnt = cardlist.Sum(item => (item.DeptAmnt));
-            sumCapitalAmnt25per = Round((2.5/100)* sumCapitalAmnt, 0);
+            sumCapitalAmnt25per = Round((2.5/100)* sumCapitalAmnt, 2);
             if (sumCapitalAmnt25per < 2500) sumCapitalAmnt25per = 2500;
             int countcard = cardlist.Count;
-            avg25per = Round(sumCapitalAmnt25per / countcard,0);
+            avg25per = Round(sumCapitalAmnt25per / countcard,2);
             foreach (DataCPSCard card in cardlist) 
             {
-                card.AccCloseAmnt = Round(card.AccCloseAmnt+avg25per,0);
+                card.AccCloseAmnt = Round(card.AccCloseAmnt+avg25per,2);
                 card.Maxmonth = 1;
             }
             
@@ -377,8 +373,6 @@ namespace QueueAppManager.Service
                 if(rema_expire6month >0) return 6;
             }
             return 0;
-        }
-
-        
+        }        
     }
 }
