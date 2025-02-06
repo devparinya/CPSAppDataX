@@ -259,7 +259,7 @@ namespace QueueAppManager.Service
             }
             if (dataCPS.Count > 0)
             {
-                string file_name = string.Format("C2_{0}.pdf", dataCPS[0].CustomerID);
+                string file_name = string.Format("C2_{1}_{0}.pdf", dataCPS[0].CustomerID, workno);
                 file_name = file_name.Replace("\n", "").Replace("\r", "").Replace("/", "").Replace(" ", "");
                 string fullfilename = Path.Combine(C2PathFile, file_name);
                 if (Path.Exists(C2PathFile))
@@ -700,7 +700,7 @@ namespace QueueAppManager.Service
 
             if (dataCPS.Count > 0)
             {
-                string file_name = string.Format("Table_{0}.pdf", dataCPS[0].CustomerID);
+                string file_name = string.Format("Table_{1}_{0}.pdf", dataCPS[0].CustomerID,workno);
                 file_name = file_name.Replace("\n", "").Replace("\r", "").Replace("/", "").Replace(" ", "");
                 string fullfilename = Path.Combine(TablePathFile, file_name);
                 if (Path.Exists(TablePathFile))
@@ -982,23 +982,24 @@ namespace QueueAppManager.Service
         {
             GlobalFontSettings.FontResolver = new FileFontResolver();
             PdfDocument doc = new PdfDocument();
-            List<DataCPSCard> dataCPS = new List<DataCPSCard>();
-            double sumjudgmentAmnt = 0;
-            double sumcapitalAmnt = 0;
-            double sumdeptAmnt = 0;
-            double sumaccCloseAmnt = 0;
-            double sumaccClose6Amnt = 0;
-            double suminstallment6Amnt = 0;
-            double sumaccClose12Amnt = 0;
-            double suminstallment12Amnt = 0;
-            double sumaccClose24Amnt = 0;
-            double suminstallment24Amnt = 0;
+            List<DataCPSCard> dataCPS = new List<DataCPSCard>();            
             string f_lednumber = string.Empty;
             string l_lednumber = string.Empty;
             string f_workno = string.Empty;
             string l_workno = string.Empty;
             for (int n = 0; n < cpscardlist.Count; n++)
             {
+                double sumjudgmentAmnt = 0;
+                double sumcapitalAmnt = 0;
+                double sumdeptAmnt = 0;
+                double sumaccCloseAmnt = 0;
+                double sumaccClose6Amnt = 0;
+                double suminstallment6Amnt = 0;
+                double sumaccClose12Amnt = 0;
+                double suminstallment12Amnt = 0;
+                double sumaccClose24Amnt = 0;
+                double suminstallment24Amnt = 0;
+
                 var cpscard = cpscardlist[n];
                 if (cpscard != null)
                 {
