@@ -95,7 +95,7 @@ namespace CPSAppData.UI.Report
                 if (dataperson.CustomFlag == "Y")
                 {
                     string customid = dataperson.CustomerID ?? "";
-                    string caseid = dataperson.CustomerID ?? "";
+                    string caseid = dataperson.CaseID ?? "";
                     if (!string.IsNullOrEmpty(customid))
                     {
                         List<FestCustom> datacustom = sqlitedsrv.doGetDataCustomWithID(customid, caseid);
@@ -647,8 +647,8 @@ namespace CPSAppData.UI.Report
                             DataCPSCard cardCPS = cpscarddatalist[n];
                             if (cpscarddatalist[n].CustomFlag == "Y")
                             {
-                                if (i == 0) customData = sqlitedsrv.doGetDataCustomWithID(cardCPS.CustomerID ?? "", cardCPS.CaseID ?? "");
-                                if (customData.Count > 0) calcsrv.CaluLateData6CardCustom(ref cardCPS, customData, i);
+                                if (n == 0) customData = sqlitedsrv.doGetDataCustomWithID(cardCPS.CustomerID ?? "", cardCPS.CaseID ?? "");
+                                if (customData.Count > 0) calcsrv.CaluLateData6CardCustom(ref cardCPS, customData, n);
                             }
                             else
                             {
@@ -718,8 +718,8 @@ namespace CPSAppData.UI.Report
         private ArrayList doConvertDataForReportMerge(DataRow[] dataselected)
         {
             if(ARRdataForPrint.Count > 0) return ARRdataForPrint;
-            ArrayList datacardarrlist = new ArrayList();
-            if (dataselected == null) return datacardarrlist;            
+            ARRdataForPrint = new ArrayList();
+            if (dataselected == null) return ARRdataForPrint;            
             for (int i = 0; i < dataselected.Length; i++)
             {
                 List<DataCPSCard> datacardlist = new List<DataCPSCard>();
@@ -732,11 +732,10 @@ namespace CPSAppData.UI.Report
                     {
                         List<DataCPSPerson> datapersonlist = doConvertDataMasterToCPSPerson(datamasterlist);
                         datacardlist = doConvertToCardDataCPS(datapersonlist[0]);
-                        datacardarrlist.Add(datacardlist);
+                        ARRdataForPrint.Add(datacardlist);
                     }
                 }
             }
-            ARRdataForPrint = datacardarrlist;
             return ARRdataForPrint;
         }
         #endregion

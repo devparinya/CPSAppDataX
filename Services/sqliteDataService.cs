@@ -2926,7 +2926,7 @@ namespace CPSAppData.Services
                                             ,ifnull(Installment24Amnt5,0) as Installment24Amnt5
                                             ,ifnull(Installment24Amnt6,0) as Installment24Amnt6
                                             FROM CPSPayAmnt
-                                            WHERE CustomerID = '{0}' ", customerwhere);
+                                            WHERE CustomerID = '{0}' and CaseID = '{1}' ", customerwhere,caseid);
                 using var command = new SQLiteCommand(sqlcmd, connection);
                 using var reader = command.ExecuteReader();
                 if (reader.HasRows)
