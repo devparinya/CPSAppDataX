@@ -1902,7 +1902,8 @@ namespace CPSAppData.Services
                                 ,ifnull(LegalExecRemark,'') as LegalExecRemark
                                 ,ifnull(CustomFlag,'N') as CustomFlag
                                FROM DataCPSMaster
-                               WHERE LedNumber BETWEEN '{0}' AND '{1}';", startled, endled);
+                               WHERE LedNumber BETWEEN '{0}' AND '{1}'
+                               Order By LedNumber;", startled, endled);
 
                 using var command = new SQLiteCommand(sqlcmd, connection);
                 using var reader = command.ExecuteReader();                
@@ -1975,7 +1976,9 @@ namespace CPSAppData.Services
                                 ,ifnull(LegalExecRemark,'') as LegalExecRemark
                                 ,ifnull(CustomFlag,'N') as CustomFlag
                                FROM DataCPSMaster
-                               WHERE WorkNo BETWEEN {0} AND {1};", startworkno, endworkno);
+                               WHERE WorkNo BETWEEN {0} AND {1}
+                               Order by WorkNo;", startworkno, endworkno);
+
 
                 using var command = new SQLiteCommand(sqlcmd, connection);
                 using var reader = command.ExecuteReader();

@@ -117,7 +117,7 @@ namespace CpsDataApp.Services
             dataTemplate.Columns.Add("JudgeDate", typeof(string));//วันพิพากษา        
             dataTemplate.Columns.Add("CourtName", typeof(string));
             dataTemplate.Columns.Add("LedNumber", typeof(string));// ลำดับกรม
-            dataTemplate.Columns.Add("WorkNo", typeof(string)); //เลขชุดงาน 
+            dataTemplate.Columns.Add("WorkNo", typeof(int)); //เลขชุดงาน 
             //CARD 1
             dataTemplate.Columns.Add("CardNo1", typeof(string));
             dataTemplate.Columns.Add("JudgmentAmnt1", typeof(double)); //ยอดพิพากษา
@@ -266,7 +266,7 @@ namespace CpsDataApp.Services
             dataTemplate.Columns.Add("CustomerID", typeof(string));
             dataTemplate.Columns.Add("CustomerName", typeof(string));
             dataTemplate.Columns.Add("LedNumber", typeof(string));
-            dataTemplate.Columns.Add("WorkNo", typeof(string)); 
+            dataTemplate.Columns.Add("WorkNo", typeof(int)); 
             dataTemplate.Columns.Add("CardNo1", typeof(string));
             dataTemplate.Columns.Add("AccCloseAmnt1", typeof(double));
             dataTemplate.Columns.Add("AccClose6Amnt1", typeof(double));
@@ -321,7 +321,7 @@ namespace CpsDataApp.Services
         public DataTable doCreateFestDataTemplate()
         {
             DataTable dataTemplate = new DataTable();
-            dataTemplate.Columns.Add("WorkNo", typeof(string)); //เลขชุดงาน
+            dataTemplate.Columns.Add("WorkNo", typeof(int)); //เลขชุดงาน
             dataTemplate.Columns.Add("LedNumber", typeof(string));// ลำดับกรม
             dataTemplate.Columns.Add("CustomerID", typeof(string));//รหัสบัตรประชาชน
             dataTemplate.Columns.Add("CustomerName", typeof(string)); //ชื่อ สกุล
@@ -332,7 +332,7 @@ namespace CpsDataApp.Services
         {
             DataTable dtDataShow = new DataTable();
             dtDataShow.Columns.Add("IsSelect", typeof(bool));
-            dtDataShow.Columns.Add("WorkNo", typeof(string));
+            dtDataShow.Columns.Add("WorkNo", typeof(int));
             dtDataShow.Columns.Add("LedNumber", typeof(string)); 
             dtDataShow.Columns.Add("CustomerID", typeof(string)); 
             dtDataShow.Columns.Add("CustomerName", typeof(string));

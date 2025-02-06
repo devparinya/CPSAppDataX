@@ -39,17 +39,25 @@ namespace CPSAppData.UI.Setting
         #region Initial control
         private void doSettingGridData()
         {
-            datagridfest.Columns[CPSFestCtrl[2].Text.Replace("cmb_fest_", "")].HeaderText = "ลำดับที่";
-            datagridfest.Columns[CPSFestCtrl[3].Text.Replace("cmb_fest_", "")].HeaderText = "ลำดับกรม";
-            datagridfest.Columns[CPSFestCtrl[0].Text.Replace("cmb_fest_", "")].HeaderText = "เลขที่บัตรประชาชน";
-            datagridfest.Columns[CPSFestCtrl[1].Text.Replace("cmb_fest_", "")].HeaderText = "ชื่อ-นามสกุล";
-            datagridfest.Columns[CPSFestCtrl[4].Text.Replace("cmb_fest_", "")].HeaderText = "หมาเหตุบังคับคดี";
 
-            datagridfest.Columns[CPSFestCtrl[2].Text.Replace("cmb_fest_", "")].Width = 120;
-            datagridfest.Columns[CPSFestCtrl[3].Text.Replace("cmb_fest_", "")].Width = 120;
-            datagridfest.Columns[CPSFestCtrl[0].Text.Replace("cmb_fest_", "")].Width = 180;
-            datagridfest.Columns[CPSFestCtrl[1].Text.Replace("cmb_fest_", "")].Width = 200;
-            datagridfest.Columns[CPSFestCtrl[4].Text.Replace("cmb_fest_", "")].Width = 250;
+            string w_name=  string.IsNullOrEmpty(CPSFestCtrl[2].Text.Replace("cmb_fest_", ""))?"WorkNo":CPSFestCtrl[2].Text.Replace("cmb_fest_", "");
+            string l_name=  string.IsNullOrEmpty(CPSFestCtrl[3].Text.Replace("cmb_fest_", ""))?"LedNumber":CPSFestCtrl[3].Text.Replace("cmb_fest_", "");
+            string i_name=  string.IsNullOrEmpty(CPSFestCtrl[0].Text.Replace("cmb_fest_", ""))?"CustomerID":CPSFestCtrl[0].Text.Replace("cmb_fest_", "");
+            string n_name=  string.IsNullOrEmpty(CPSFestCtrl[1].Text.Replace("cmb_fest_", ""))?"CustomerName":CPSFestCtrl[1].Text.Replace("cmb_fest_", "");
+            string r_name=  string.IsNullOrEmpty(CPSFestCtrl[4].Text.Replace("cmb_fest_", ""))? "LegalExecRemark" : CPSFestCtrl[4].Text.Replace("cmb_fest_", "");
+
+
+            datagridfest.Columns[w_name].HeaderText = "ลำดับที่";
+            datagridfest.Columns[l_name].HeaderText = "ลำดับกรม";
+            datagridfest.Columns[i_name].HeaderText = "เลขที่บัตรประชาชน";
+            datagridfest.Columns[n_name].HeaderText = "ชื่อ-นามสกุล";
+            datagridfest.Columns[r_name].HeaderText = "หมาเหตุบังคับคดี";
+
+            datagridfest.Columns[w_name].Width = 120;
+            datagridfest.Columns[l_name].Width = 120;
+            datagridfest.Columns[i_name].Width = 180;
+            datagridfest.Columns[n_name].Width = 200;
+            datagridfest.Columns[r_name].Width = 250;
             datagridfest.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
         private void doInitCtrlDataMasterCPS()
