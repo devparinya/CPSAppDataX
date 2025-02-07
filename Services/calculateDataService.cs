@@ -360,7 +360,7 @@ namespace QueueAppManager.Service
 
             if (rema_expire6month >= 0) { rema_expire6month = rema_expire6month - beforexpire; }
             if (rema_expire12month >= 0) { rema_expire12month = rema_expire12month - beforexpire; }
-            if (rema_expire24month >= 0) { rema_expire24month = rema_expire12month - beforexpire; }
+            if (rema_expire24month >= 0) { rema_expire24month = rema_expire24month - beforexpire; }
 
             if (rema_expiremonth <= 0)
             {
