@@ -122,7 +122,6 @@ namespace QueueAppManager.Service
             double PayAfterJudgeAmnt = cardCPS.PayAfterJudgAmt; //AB ==
             double DeptAmnt = cardCPS.DeptAmnt; //AD ภาระหนี้ปัจจุบัน ==
 
-
             string leagelremark = cardCPS.LegalExecRemark ?? "";
             if (leagelremark.Contains("[max24]"))
             {
