@@ -22,6 +22,7 @@ namespace CPSAppData.UI.Report
         sqliteDataService sqlitedsrv = new sqliteDataService();
         dateTimeHelper dateHelper = new dateTimeHelper();
         DataTable datatabledetailshow;
+        bool is_kzas;
 
         string typerange = string.Empty;
         #endregion
@@ -688,6 +689,7 @@ namespace CPSAppData.UI.Report
         private void doSearhCPSDataWithCusomerID()
         {
             string customer_id = string.Empty;
+           
             datatabledetailshow.Clear();
             List<DataCPSMaster> dataMasterIDList = new List<DataCPSMaster>();
             string search_text_id = txt_search_custid_shdt.Text.Replace(" ", "");
@@ -695,6 +697,7 @@ namespace CPSAppData.UI.Report
             if (!string.IsNullOrEmpty(search_text_id))
             {
                 doClearControl(false);
+                is_kzas =false;
                 dataMasterIDList = sqlitedsrv.doGetDataCPSMasterByCustomerID(search_text_id);
                 doGetDataMasterCPSByCaseID(ref dataMasterIDList);
                 if (dataMasterIDList.Count > 0)
@@ -703,6 +706,8 @@ namespace CPSAppData.UI.Report
                     {
                         for (int i = 0; i < dataMasterIDList.Count; i++)
                         {
+                            string legalstatus = dataMasterIDList[i].LegalStatus??string.Empty;
+                            if (legalstatus.Contains("KZAS")){ is_kzas = true; }
                             DataRow datadt = datatabledetailshow.NewRow();
                             datadt["IsSelect"] = true;
                             datadt["CustomerID"] = dataMasterIDList[i].CustomerID;
@@ -714,6 +719,7 @@ namespace CPSAppData.UI.Report
                             datadt["CaseID"] = dataMasterIDList[i].CaseID;
                             datatabledetailshow.Rows.Add(datadt);
                         }
+                        if(is_kzas) chk_calculate_add.Checked = true;
                     }
                 }
             }
@@ -859,7 +865,7 @@ namespace CPSAppData.UI.Report
             txt_payafterjudgamtshdt_6.Text = string.Empty;
             txt_deptamntshdt_6.Text = string.Empty;
             txt_lastpaydateshdt_6.Text = string.Empty;
-
+            chk_calculate_add.Checked = false;
             txt_queueno_shdt.Text = string.Empty;
             linkfileopen.Text = string.Empty;
             linkfileopen.Visible = false;
@@ -963,7 +969,11 @@ namespace CPSAppData.UI.Report
             Cursor = Cursors.WaitCursor;
             if (!string.IsNullOrEmpty(txt_queueno_shdt.Text))
             {
-                doPrintC2TableMeargeFile();
+                if (isCheckKZASStatus())
+                {
+                    doPrintC2TableMeargeFile();
+                }
+                
             }
             else
             {
@@ -972,6 +982,44 @@ namespace CPSAppData.UI.Report
             }
 
             Cursor = Cursors.Default;
+        }
+
+        private bool isCheckKZASStatus()
+        {
+                if (is_kzas)
+                {
+                    if (!chk_calculate_add.Checked)
+                    {
+                        DialogResult result = MessageBox.Show("สถานะทางคดี KZAS \r\n ต้องการ คำนวนยอดเพิ่มหรือไม่ ?", "คำเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (result == DialogResult.Yes)
+                        {
+                            chk_calculate_add.Checked = true;
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (chk_calculate_add.Checked)
+                    {
+                        DialogResult result = MessageBox.Show("สถานะทางคดี ไม่ใช่ KZAS \r\n ต้องการ ยกเลิก การคำนวนยอดเพิ่ม หรือไม่ ?", "คำเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        if (result == DialogResult.Yes)
+                        {
+                            chk_calculate_add.Checked = false;
+                            return false;
+                        }
+                        else
+                        {
+                           return true;
+                        }
+                    }
+                }
+                return true;
         }
         private void linkfileopen_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {

@@ -122,9 +122,18 @@ namespace QueueAppManager.Service
             double PayAfterJudgeAmnt = cardCPS.PayAfterJudgAmt; //AB ==
             double DeptAmnt = cardCPS.DeptAmnt; //AD ภาระหนี้ปัจจุบัน ==
 
-            if (!string.IsNullOrEmpty(cardCPS.JudgeDate))
+
+            string leagelremark = cardCPS.LegalExecRemark ?? "";
+            if (leagelremark.Contains("[max24]"))
             {
-                maxmonth = CaculateMaxmonth(setdata.MaxMonth, cardCPS.JudgeDate, setdata.FistDateInstall ?? string.Empty);
+                maxmonth = 24;
+            }
+            else 
+            { 
+                if (!string.IsNullOrEmpty(cardCPS.JudgeDate))
+                {
+                   maxmonth = CaculateMaxmonth(setdata.MaxMonth, cardCPS.JudgeDate, setdata.FistDateInstall ?? string.Empty);
+                }
             }
             double CapitalAmntBalance = 0;//*ต้นเงินปัจจุบัน 1  =IF((AA2-AB2)<0,0,(AA2-AB2))  **AC**
             CapitalAmntBalance = Round(PrincipleAmnt - PayAfterJudgeAmnt, decamnt);
@@ -169,8 +178,14 @@ namespace QueueAppManager.Service
                 {
                     AccClose6Amnt = CheckValue;
                 }
+               
             }
             double Installment6Amnt = Round(AccClose6Amnt / 6, decamnt); //ผ่อนชำระ 6 งวด งวดละ **AG**
+            if (AccClose6Amnt < 500) 
+            { 
+                AccClose6Amnt = 0;
+                Installment6Amnt = 0;
+            }
 
             cardCPS.AccClose6Amnt = AccClose6Amnt;
             cardCPS.Installment6Amnt = Installment6Amnt;
@@ -194,6 +209,11 @@ namespace QueueAppManager.Service
             }
             double Installment12Amnt = Round(AccClose12Amnt / 12, decamnt); //ผ่อนชำระ 12 งวด งวดละ **AI**
 
+            if (AccClose12Amnt < 500)
+            {
+                AccClose12Amnt = 0;
+                Installment12Amnt = 0;
+            }
             cardCPS.AccClose12Amnt = AccClose12Amnt;
             cardCPS.Installment12Amnt = Installment12Amnt;
 
@@ -217,6 +237,11 @@ namespace QueueAppManager.Service
                 }
             }
             double Installment24Amnt = Round(AccClose24Amnt / 24, decamnt); //ผ่อนชำระ 24 งวด งวดละ **AK**
+            if (AccClose24Amnt < 500)
+            {
+                AccClose24Amnt = 0;
+                Installment24Amnt = 0;
+            }
 
             cardCPS.AccClose24Amnt = AccClose24Amnt;
             cardCPS.Installment24Amnt = Installment24Amnt;
