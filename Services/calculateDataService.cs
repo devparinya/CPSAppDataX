@@ -180,7 +180,7 @@ namespace QueueAppManager.Service
                
             }
             double Installment6Amnt = Round(AccClose6Amnt / 6, decamnt); //ผ่อนชำระ 6 งวด งวดละ **AG**
-            if (AccClose6Amnt < 500) 
+            if (Installment6Amnt < 500) 
             { 
                 AccClose6Amnt = 0;
                 Installment6Amnt = 0;
@@ -208,7 +208,7 @@ namespace QueueAppManager.Service
             }
             double Installment12Amnt = Round(AccClose12Amnt / 12, decamnt); //ผ่อนชำระ 12 งวด งวดละ **AI**
 
-            if (AccClose12Amnt < 500)
+            if (Installment12Amnt < 500)
             {
                 AccClose12Amnt = 0;
                 Installment12Amnt = 0;
@@ -236,7 +236,7 @@ namespace QueueAppManager.Service
                 }
             }
             double Installment24Amnt = Round(AccClose24Amnt / 24, decamnt); //ผ่อนชำระ 24 งวด งวดละ **AK**
-            if (AccClose24Amnt < 500)
+            if (Installment24Amnt < 500)
             {
                 AccClose24Amnt = 0;
                 Installment24Amnt = 0;
