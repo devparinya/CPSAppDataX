@@ -721,12 +721,20 @@ namespace CPSAppData.UI.Report
                         }
                         if(is_kzas) chk_calculate_add.Checked = true;
                     }
+                    doSortDataTable(ref datatabledetailshow, "CustomerID ASC, CaseID ASC");
                 }
             }
             else
             {
                 doClearControl(false);
             }
+        }
+        private void doSortDataTable(ref DataTable datasoure, string sort_str)
+        {
+            DataView view = datasoure.DefaultView;
+            view.Sort = sort_str;
+
+            datasoure = view.ToTable();
         }
         private void doGetDataMasterCPSByCaseID(ref List<DataCPSMaster> datamasterlist)
         {
@@ -743,80 +751,7 @@ namespace CPSAppData.UI.Report
                     }
                 }
             }
-        }
-        private void doGetCustomerIDByCase(ref DataTable dtshow)
-        {
-            if (dtshow.Rows.Count > 0)
-            {
-                int dtcount = dtshow.Rows.Count;
-                for (int i = 0; i < dtcount; i++)
-                {
-                    string? cus_id = Convert.ToString(dtshow.Rows[i]["CustomerID"] is DBNull ? string.Empty : dtshow.Rows[i]["CustomerID"]);
-                    string? case_id = Convert.ToString(dtshow.Rows[i]["CaseID"] is DBNull ? string.Empty : dtshow.Rows[i]["CaseID"]);
-                    if (!string.IsNullOrEmpty(case_id))
-                    {
-                        List<DataCPSPerson> customerCaseList = sqlitedsrv.doGetDataCPSWithCaseID(case_id);
-                        for(int j = 0; j < customerCaseList.Count; j++)
-                        {
-                            string customerid_bycase = customerCaseList[j].CustomerID ?? string.Empty;
-                            if (!string.IsNullOrEmpty(customerid_bycase))
-                            {
-                                DataRow[] datafind = dtshow.Select(string.Format("CustomerID = '{0}' and CaseID = '{1}'", customerid_bycase, case_id));
-                                if(datafind.Length < 1)
-                                {
-                                    DataRow datadt = dtshow.NewRow();
-                                    datadt["IsSelect"] = true;
-                                    datadt["CustomerID"] = Convert.ToString(customerCaseList[j].CustomerID);
-                                    datadt["CustomerName"] = Convert.ToString(customerCaseList[j].CustomerName);
-                                    datadt["CardStatus"] = Convert.ToString(customerCaseList[j].CardStatus);
-                                    datadt["LegalExecDate"] = Convert.ToString(customerCaseList[j].LegalExecDate);
-                                    datadt["LegalExecRemark"] = Convert.ToString(customerCaseList[j].LegalExecRemark);
-                                    datadt["CaseID"] = Convert.ToString(customerCaseList[j].CaseID);
-                                    dtshow.Rows.Add(datadt);
-                                }
-                            }                            
-                        }
-                    }
-                }
-            }
-        }
-
-        private void doGetCaseByCustomerID(ref DataTable dtshow)
-        {
-            if (dtshow.Rows.Count > 0) 
-            {
-                int dtcount = dtshow.Rows.Count;
-                for (int i = 0; i < dtcount; i++)
-                {
-                    string? cus_id = Convert.ToString(dtshow.Rows[i]["CustomerID"] is DBNull ? string.Empty : dtshow.Rows[i]["CustomerID"]);
-                    string? case_id = Convert.ToString(dtshow.Rows[i]["CaseID"] is DBNull ? string.Empty : dtshow.Rows[i]["CaseID"]);
-                    if (!string.IsNullOrEmpty(cus_id))
-                    {
-                        DataRow[] datafind = dtshow.Select(string.Format("CustomerID = '{0}' and CaseID = ''", cus_id));
-                        if (datafind.Length < 1)
-                        {
-                            List<DataCPSPerson> customerList = sqlitedsrv.doGetDataCPSWithCustomerID(cus_id);
-                           // customerList = doMergeDataMultiRow(customerList);
-                            for (int m = 0; m < customerList.Count; m++)
-                            {
-                                if (case_id != customerList[m].CaseID)
-                                {
-                                    DataRow datadt = dtshow.NewRow();
-                                    datadt["IsSelect"] = true;
-                                    datadt["CustomerID"] = Convert.ToString(customerList[m].CustomerID);
-                                    datadt["CustomerName"] = Convert.ToString(customerList[m].CustomerName);
-                                    datadt["CardStatus"] = Convert.ToString(customerList[m].CardStatus);
-                                    datadt["LegalExecDate"] = Convert.ToString(customerList[m].LegalExecDate);
-                                    datadt["LegalExecRemark"] = Convert.ToString(customerList[m].LegalExecRemark);
-                                    datadt["CaseID"] = Convert.ToString(customerList[m].CaseID);
-                                    dtshow.Rows.Add(datadt); 
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        }  
 
         private void doClearControl(bool isclearsearch)
         {
