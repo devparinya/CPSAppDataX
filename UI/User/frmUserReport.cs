@@ -691,6 +691,7 @@ namespace CPSAppData.UI.Report
             string customer_id = string.Empty;
            
             datatabledetailshow.Clear();
+            dataGridDetailCard.DataSource = datatabledetailshow;
             List<DataCPSMaster> dataMasterIDList = new List<DataCPSMaster>();
             string search_text_id = txt_search_custid_shdt.Text.Replace(" ", "");
             string search_text_lednumber = txt_queueno_shdt.Text.Replace(" ", "");
