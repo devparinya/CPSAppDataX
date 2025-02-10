@@ -706,8 +706,8 @@ namespace CPSAppData.UI.Report
                     {
                         for (int i = 0; i < dataMasterIDList.Count; i++)
                         {
-                            string legalstatus = dataMasterIDList[i].LegalStatus??string.Empty;
-                            if (legalstatus.Contains("KZAS")){ is_kzas = true; }
+                            string legalstatus = dataMasterIDList[i].LegalStatus ?? string.Empty;
+                            if (legalstatus.Contains("KZAS")) { is_kzas = true; }
                             DataRow datadt = datatabledetailshow.NewRow();
                             datadt["IsSelect"] = true;
                             datadt["CustomerID"] = dataMasterIDList[i].CustomerID;
@@ -719,14 +719,21 @@ namespace CPSAppData.UI.Report
                             datadt["CaseID"] = dataMasterIDList[i].CaseID;
                             datatabledetailshow.Rows.Add(datadt);
                         }
-                        if(is_kzas) chk_calculate_add.Checked = true;
+                        if (is_kzas) chk_calculate_add.Checked = true;
                     }
                     doSortDataTable(ref datatabledetailshow, "CustomerID ASC, CaseID ASC");
+                }
+                else
+                {
+                    MessageBox.Show("ไม่พบข้อมูลลูกค้า ในระบบ","ไม่พบข้อมูล",MessageBoxButtons.OK,MessageBoxIcon.Warning);                  
+                    doClearControl(false);
+                    dataGridDetailCard.DataSource = datatabledetailshow;
                 }
             }
             else
             {
                 doClearControl(false);
+                dataGridDetailCard.DataSource = datatabledetailshow;
             }
         }
         private void doSortDataTable(ref DataTable datasoure, string sort_str)
@@ -968,6 +975,8 @@ namespace CPSAppData.UI.Report
         private void btn_cleardata_Click(object sender, EventArgs e)
         {
             doClearControl(true);
+            datatabledetailshow.Clear();
+            dataGridDetailCard.DataSource = datatabledetailshow;
         }
         #endregion
         #region Other Method
