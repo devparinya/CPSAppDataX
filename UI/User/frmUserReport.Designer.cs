@@ -920,6 +920,7 @@
             dataGridDetailCard.RowHeadersVisible = false;
             dataGridDetailCard.Size = new Size(862, 189);
             dataGridDetailCard.TabIndex = 72;
+            dataGridDetailCard.CellClick += dataGridDetailCard_CellClick;
             // 
             // tabPage3
             // 

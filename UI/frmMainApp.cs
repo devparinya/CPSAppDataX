@@ -47,9 +47,25 @@ namespace CPSAppData
 
         private void btn_user_report_Click(object sender, EventArgs e)
         {
+            if (ModifierKeys == Keys.Control)
+            {
+                brn_advuser.Visible = true;
+            }
+            else
+            {
+                this.Hide();
+                frmUserReport frmuserreoirt = new frmUserReport();
+                frmuserreoirt.ShowDialog();
+                this.Show();
+            }
+
+        }
+
+        private void brn_advuser_Click(object sender, EventArgs e)
+        {
             this.Hide();
-            frmUserReport frmuserreoirt = new frmUserReport();
-            frmuserreoirt.ShowDialog();
+            frmAdvUserReport frmadvuserreoirt = new frmAdvUserReport();
+            frmadvuserreoirt.ShowDialog();
             this.Show();
         }
     }

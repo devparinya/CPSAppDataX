@@ -10,10 +10,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Windows.Forms;
 namespace CPSAppData.UI.Report
 {
-    public partial class frmUserReport : frmBaseWindow
+    public partial class frmAdvUserReport : frmBaseWindow
     {
         #region Member
         SettingData setdata = new SettingData();
@@ -23,12 +22,13 @@ namespace CPSAppData.UI.Report
         sqliteDataService sqlitedsrv = new sqliteDataService();
         dateTimeHelper dateHelper = new dateTimeHelper();
         DataTable datatabledetailshow;
+        List<DataCPSCard> CARDPRINT = new List<DataCPSCard>();
         bool is_kzas;
 
         string typerange = string.Empty;
         #endregion
         #region Constructor
-        public frmUserReport()
+        public frmAdvUserReport()
         {
             InitializeComponent();
             doLoadSettingData();
@@ -64,37 +64,8 @@ namespace CPSAppData.UI.Report
             dataGridDetailCard.Columns["LegalExecDate"].ReadOnly = true;
             dataGridDetailCard.Columns["LegalExecRemark"].ReadOnly = true;
             dataGridDetailCard.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
-            dataGridDetailCard.CellClick += new DataGridViewCellEventHandler(DataGridView_CellClick);
         }
-        private void DataGridView_CellClick(object? sender, DataGridViewCellEventArgs e)
-        {
-            int rowindex = e.RowIndex;
-            if (rowindex >= 0) // Ensure that the click is on a valid row
-            {
-                if (sender != null)
-                {
-                    if (rowindex >= 0)
-                    {
-                        DataGridView dataGridView = (DataGridView)sender;
-                        DataGridViewRow selectedRow = dataGridView.Rows[rowindex];
-                        string? customerid = selectedRow.Cells["CustomerID"].Value is null ? "" : selectedRow.Cells["CustomerID"].Value.ToString();
-                        string? caseid = selectedRow.Cells["CaseID"].Value is null ? "" : selectedRow.Cells["CaseID"].Value.ToString();
-                        if (!(string.IsNullOrEmpty(customerid) || string.IsNullOrEmpty(caseid)))
-                        {
-                            List<DataCPSMaster> datamasterlist = sqlitedsrv.doGetDataCPSMasterAllByCustomerID(customerid, caseid);
-                            if (datamasterlist != null)
-                            {
-                                List<DataCPSPerson> datacpsperson = doConvertDataMasterToCPSPerson(datamasterlist);
-                                doSetdataCPSShow(datacpsperson);
-                            }
-                        }
-
-                    }
-                }
-
-            }
-        }
+        
         private void doLoadSettingData()
         {
             setdata = sqlitedsrv.doLoadSettingData();
@@ -338,7 +309,6 @@ namespace CPSAppData.UI.Report
             }
             return dataCPSCardList;
         }
-
         private void doSetDataHederCard(ref DataCPSCard datacard, DataCPSPerson dataperson)
         {
             datacard.WorkNo = dataperson.WorkNo;
@@ -368,177 +338,7 @@ namespace CPSAppData.UI.Report
             datacard.Installment12Amnt = 0;
             datacard.AccClose24Amnt = 0;
             datacard.Installment24Amnt = 0;
-        }
-        private void doSetdataCPSShow(List<DataCPSPerson> data6CardList)
-        {
-            string? customstatus = Convert.ToString(data6CardList[0].CustomFlag is null ? "N" : data6CardList[0].CustomFlag);
-            if (customstatus == "Y")
-            {
-                #region Set Data 1 Account
-                string customerid = data6CardList[0].CustomerID ?? "";
-                string caseid = data6CardList[0].CaseID ?? "";
-
-                doSetDispalyCustom(customstatus);
-                txt_custid_shdt.Text = data6CardList[0].CustomerID;
-                txt_custname_shdt.Text = data6CardList[0].CustomerName;
-
-                string? lednumber = Convert.ToString(data6CardList[0].LedNumber is null ? "" : data6CardList[0].LedNumber);
-
-                List<FestCustom> data6CardListCustom = sqlitedsrv.doGetDataCustomWithID(customerid, caseid);
-                if (data6CardListCustom == null) return;
-                if (data6CardListCustom.Count > 0)
-                {
-                    string cardno1 = data6CardListCustom[0].CardNo1 ?? "";
-                    if (!string.IsNullOrEmpty(cardno1))
-                    {
-                        int indexcard1 = findindexCardNo(data6CardList[0], cardno1);
-                        if (indexcard1 >= 0)
-                        {
-                            DataCPSPerson datartn = doGetDataCardWithIndex(indexcard1, data6CardList[0]);
-                            txt_cardnoshdt_1.Text = cardno1;
-                            txt_judgmentamntshdt_1.Text = datartn.JudgmentAmnt1.ToString("N");
-                            txt_principleamntshdt_1.Text = datartn.PrincipleAmnt1 == 0 ? "-" : datartn.PrincipleAmnt1.ToString("N");
-                            txt_payafterjudgamtshdt_1.Text = datartn.PayAfterJudgAmt1 == 0 ? "-" : datartn.PayAfterJudgAmt1.ToString("N");
-                            txt_deptamntshdt_1.Text = datartn.DeptAmnt1 == 0 ? "-" : datartn.DeptAmnt1.ToString("N");
-                            txt_lastpaydateshdt_1.Text = dateHelper.doGetShortDateTHFromDBToPDF(datartn.LastPayDate1 ?? "-");
-                        }
-                    }
-
-                    string cardno2 = data6CardListCustom[0].CardNo2 ?? "";
-                    if (!string.IsNullOrEmpty(cardno2))
-                    {
-                        int indexcard2 = findindexCardNo(data6CardList[0], cardno2);
-                        if (indexcard2 >= 0)
-                        {
-                            DataCPSPerson datartn = doGetDataCardWithIndex(indexcard2, data6CardList[0]);
-                            txt_cardnoshdt_2.Text = cardno2;
-                            txt_judgmentamntshdt_2.Text = datartn.JudgmentAmnt1.ToString("N");
-                            txt_principleamntshdt_2.Text = datartn.PrincipleAmnt1 == 0 ? "-" : datartn.PrincipleAmnt1.ToString("N");
-                            txt_payafterjudgamtshdt_2.Text = datartn.PayAfterJudgAmt1 == 0 ? "-" : datartn.PayAfterJudgAmt1.ToString("N");
-                            txt_deptamntshdt_2.Text = datartn.DeptAmnt1 == 0 ? "-" : datartn.DeptAmnt1.ToString("N");
-                            txt_lastpaydateshdt_2.Text = dateHelper.doGetShortDateTHFromDBToPDF(datartn.LastPayDate1 ?? "-");
-                        }
-                    }
-
-                    string cardno3 = data6CardListCustom[0].CardNo3 ?? "";
-                    if (!string.IsNullOrEmpty(cardno3))
-                    {
-                        int indexcard3 = findindexCardNo(data6CardList[0], cardno3);
-                        if (indexcard3 >= 0)
-                        {
-                            DataCPSPerson datartn = doGetDataCardWithIndex(indexcard3, data6CardList[0]);
-                            txt_cardnoshdt_3.Text = cardno3;
-                            txt_judgmentamntshdt_3.Text = datartn.JudgmentAmnt1.ToString("N");
-                            txt_principleamntshdt_3.Text = datartn.PrincipleAmnt1 == 0 ? "-" : datartn.PrincipleAmnt1.ToString("N");
-                            txt_payafterjudgamtshdt_3.Text = datartn.PayAfterJudgAmt1 == 0 ? "-" : datartn.PayAfterJudgAmt1.ToString("N");
-                            txt_deptamntshdt_3.Text = datartn.DeptAmnt1 == 0 ? "-" : datartn.DeptAmnt1.ToString("N");
-                            txt_lastpaydateshdt_3.Text = dateHelper.doGetShortDateTHFromDBToPDF(datartn.LastPayDate1 ?? "-");
-                        }
-                    }
-
-                    string cardno4 = data6CardListCustom[0].CardNo4 ?? "";
-                    if (!string.IsNullOrEmpty(cardno4))
-                    {
-                        int indexcard4 = findindexCardNo(data6CardList[0], cardno4);
-                        if (indexcard4 >= 0)
-                        {
-                            DataCPSPerson datartn = doGetDataCardWithIndex(indexcard4, data6CardList[0]);
-                            txt_cardnoshdt_4.Text = cardno4;
-                            txt_judgmentamntshdt_4.Text = datartn.JudgmentAmnt1.ToString("N");
-                            txt_principleamntshdt_4.Text = datartn.PrincipleAmnt1 == 0 ? "-" : datartn.PrincipleAmnt1.ToString("N");
-                            txt_payafterjudgamtshdt_4.Text = datartn.PayAfterJudgAmt1 == 0 ? "-" : datartn.PayAfterJudgAmt1.ToString("N");
-                            txt_deptamntshdt_4.Text = datartn.DeptAmnt1 == 0 ? "-" : datartn.DeptAmnt1.ToString("N");
-                            txt_lastpaydateshdt_4.Text = dateHelper.doGetShortDateTHFromDBToPDF(datartn.LastPayDate1 ?? "-");
-                        }
-                    }
-
-                    string cardno5 = data6CardListCustom[0].CardNo5 ?? "";
-                    if (!string.IsNullOrEmpty(cardno5))
-                    {
-                        int indexcard5 = findindexCardNo(data6CardList[0], cardno5);
-                        if (indexcard5 >= 0)
-                        {
-                            DataCPSPerson datartn = doGetDataCardWithIndex(indexcard5, data6CardList[0]);
-                            txt_cardnoshdt_5.Text = cardno5;
-                            txt_judgmentamntshdt_5.Text = datartn.JudgmentAmnt1.ToString("N");
-                            txt_principleamntshdt_5.Text = datartn.PrincipleAmnt1 == 0 ? "-" : datartn.PrincipleAmnt1.ToString("N");
-                            txt_payafterjudgamtshdt_5.Text = datartn.PayAfterJudgAmt1 == 0 ? "-" : datartn.PayAfterJudgAmt1.ToString("N");
-                            txt_deptamntshdt_5.Text = datartn.DeptAmnt1 == 0 ? "-" : datartn.DeptAmnt1.ToString("N");
-                            txt_lastpaydateshdt_5.Text = dateHelper.doGetShortDateTHFromDBToPDF(datartn.LastPayDate1 ?? "-");
-                        }
-                    }
-
-                    string cardno6 = data6CardListCustom[0].CardNo6 ?? "";
-                    if (!string.IsNullOrEmpty(cardno6))
-                    {
-                        int indexcard6 = findindexCardNo(data6CardList[0], cardno6);
-                        if (indexcard6 >= 0)
-                        {
-                            DataCPSPerson datartn = doGetDataCardWithIndex(indexcard6, data6CardList[0]);
-                            txt_cardnoshdt_6.Text = cardno6;
-                            txt_judgmentamntshdt_6.Text = datartn.JudgmentAmnt1.ToString("N");
-                            txt_principleamntshdt_6.Text = datartn.PrincipleAmnt1 == 0 ? "-" : datartn.PrincipleAmnt1.ToString("N");
-                            txt_payafterjudgamtshdt_6.Text = datartn.PayAfterJudgAmt1 == 0 ? "-" : datartn.PayAfterJudgAmt1.ToString("N");
-                            txt_deptamntshdt_6.Text = datartn.DeptAmnt1 == 0 ? "-" : datartn.DeptAmnt1.ToString("N");
-                            txt_lastpaydateshdt_6.Text = dateHelper.doGetShortDateTHFromDBToPDF(datartn.LastPayDate1 ?? "-");
-                        }
-                    }
-                    #endregion
-                }
-            }
-            else
-            {
-                #region Set Data 1 Account
-                txt_custid_shdt.Text = data6CardList[0].CustomerID;
-                txt_custname_shdt.Text = data6CardList[0].CustomerName;
-
-                string? lednumber = Convert.ToString(data6CardList[0].LedNumber is null ? "" : data6CardList[0].LedNumber);
-
-                txt_cardnoshdt_1.Text = data6CardList[0].CardNo1;
-                txt_judgmentamntshdt_1.Text = data6CardList[0].JudgmentAmnt1.ToString("N");
-                txt_principleamntshdt_1.Text = data6CardList[0].PrincipleAmnt1 == 0 ? "-" : data6CardList[0].PrincipleAmnt1.ToString("N");
-                txt_payafterjudgamtshdt_1.Text = data6CardList[0].PayAfterJudgAmt1 == 0 ? "-" : data6CardList[0].PayAfterJudgAmt1.ToString("N");
-                txt_deptamntshdt_1.Text = data6CardList[0].DeptAmnt1 == 0 ? "-" : data6CardList[0].DeptAmnt1.ToString("N");
-                txt_lastpaydateshdt_1.Text = dateHelper.doGetShortDateTHFromDBToPDF(data6CardList[0].LastPayDate1 ?? "-");
-
-                txt_cardnoshdt_2.Text = data6CardList[0].CardNo2;
-                txt_judgmentamntshdt_2.Text = data6CardList[0].JudgmentAmnt2.ToString("N");
-                txt_principleamntshdt_2.Text = data6CardList[0].PrincipleAmnt2 == 0 ? "-" : data6CardList[0].PrincipleAmnt2.ToString("N");
-                txt_payafterjudgamtshdt_2.Text = data6CardList[0].PayAfterJudgAmt2 == 0 ? "-" : data6CardList[0].PayAfterJudgAmt2.ToString("N");
-                txt_deptamntshdt_2.Text = data6CardList[0].DeptAmnt2 == 0 ? "-" : data6CardList[0].DeptAmnt2.ToString("N");
-                txt_lastpaydateshdt_2.Text = dateHelper.doGetShortDateTHFromDBToPDF(data6CardList[0].LastPayDate2 ?? "-");
-
-                txt_cardnoshdt_3.Text = data6CardList[0].CardNo3;
-                txt_judgmentamntshdt_3.Text = data6CardList[0].JudgmentAmnt3.ToString("N");
-                txt_principleamntshdt_3.Text = data6CardList[0].PrincipleAmnt3 == 0 ? "-" : data6CardList[0].PrincipleAmnt3.ToString("N");
-                txt_payafterjudgamtshdt_3.Text = data6CardList[0].PayAfterJudgAmt3 == 0 ? "-" : data6CardList[0].PayAfterJudgAmt3.ToString("N");
-                txt_deptamntshdt_3.Text = data6CardList[0].DeptAmnt3 == 0 ? "-" : data6CardList[0].DeptAmnt3.ToString("N");
-                txt_lastpaydateshdt_3.Text = dateHelper.doGetShortDateTHFromDBToPDF(data6CardList[0].LastPayDate3 ?? "-");
-
-
-                txt_cardnoshdt_4.Text = data6CardList[0].CardNo4;
-                txt_judgmentamntshdt_4.Text = data6CardList[0].JudgmentAmnt4.ToString("N");
-                txt_principleamntshdt_4.Text = data6CardList[0].PrincipleAmnt4 == 0 ? "-" : data6CardList[0].PrincipleAmnt4.ToString("N");
-                txt_payafterjudgamtshdt_4.Text = data6CardList[0].PayAfterJudgAmt4 == 0 ? "-" : data6CardList[0].PayAfterJudgAmt4.ToString("N");
-                txt_deptamntshdt_4.Text = data6CardList[0].DeptAmnt4 == 0 ? "-" : data6CardList[0].DeptAmnt4.ToString("N");
-                txt_lastpaydateshdt_4.Text = dateHelper.doGetShortDateTHFromDBToPDF(data6CardList[0].LastPayDate4 ?? "-");
-
-                txt_cardnoshdt_5.Text = data6CardList[0].CardNo5;
-                txt_judgmentamntshdt_5.Text = data6CardList[0].JudgmentAmnt5.ToString("N");
-                txt_principleamntshdt_5.Text = data6CardList[0].PrincipleAmnt5 == 0 ? "-" : data6CardList[0].PrincipleAmnt5.ToString("N");
-                txt_payafterjudgamtshdt_5.Text = data6CardList[0].PayAfterJudgAmt5 == 0 ? "-" : data6CardList[0].PayAfterJudgAmt5.ToString("N");
-                txt_deptamntshdt_5.Text = data6CardList[0].DeptAmnt5 == 0 ? "-" : data6CardList[0].DeptAmnt5.ToString("N");
-                txt_lastpaydateshdt_5.Text = dateHelper.doGetShortDateTHFromDBToPDF(data6CardList[0].LastPayDate5 ?? "-");
-
-                txt_cardnoshdt_6.Text = data6CardList[0].CardNo6;
-                txt_judgmentamntshdt_6.Text = data6CardList[0].JudgmentAmnt6.ToString("N");
-                txt_principleamntshdt_6.Text = data6CardList[0].PrincipleAmnt6 == 0 ? "-" : data6CardList[0].PrincipleAmnt6.ToString("N");
-                txt_payafterjudgamtshdt_6.Text = data6CardList[0].PayAfterJudgAmt6 == 0 ? "-" : data6CardList[0].PayAfterJudgAmt6.ToString("N");
-                txt_deptamntshdt_6.Text = data6CardList[0].DeptAmnt6 == 0 ? "-" : data6CardList[0].DeptAmnt6.ToString("N");
-                txt_lastpaydateshdt_6.Text = dateHelper.doGetShortDateTHFromDBToPDF(data6CardList[0].LastPayDate6 ?? "-");
-                #endregion
-            }
-        }
+        }      
 
         private List<DataCPSPerson> doConvertDataMasterToCPSPerson(List<DataCPSMaster> datamasterlist)
         {
@@ -711,7 +511,7 @@ namespace CPSAppData.UI.Report
                             string legalstatus = dataMasterIDList[i].LegalStatus ?? string.Empty;
                             if (legalstatus.Contains("KZAS")) { is_kzas = true; }
                             DataRow datadt = datatabledetailshow.NewRow();
-                            datadt["IsSelect"] = true;
+                            datadt["IsSelect"] = false;
                             datadt["CustomerID"] = dataMasterIDList[i].CustomerID;
                             datadt["CustomerName"] = dataMasterIDList[i].CustomerName;
                             datadt["CardStatus"] = dataMasterIDList[i].CardStatus;
@@ -721,7 +521,7 @@ namespace CPSAppData.UI.Report
                             datadt["CaseID"] = dataMasterIDList[i].CaseID;
                             datatabledetailshow.Rows.Add(datadt);
                         }
-                        if (is_kzas) chk_calculate_add.Checked = true;
+                     
                     }
                     doSortDataTable(ref datatabledetailshow, "CustomerID ASC, CaseID ASC");
                 }
@@ -761,7 +561,6 @@ namespace CPSAppData.UI.Report
                 }
             }
         }
-
         private void doClearControl(bool isclearsearch)
         {
             txt_custid_shdt.Text = string.Empty;
@@ -774,6 +573,14 @@ namespace CPSAppData.UI.Report
             txt_payafterjudgamtshdt_1.Text = string.Empty;
             txt_deptamntshdt_1.Text = string.Empty;
             txt_lastpaydateshdt_1.Text = string.Empty;
+            txt_closeamntshdt_1.Text = string.Empty;
+            txt_close6amntshdt_1.Text = string.Empty;
+            txt_install6amntshdt_1.Text = string.Empty;
+            txt_close12amntshdt_1.Text = string.Empty;
+            txt_install12amntshdt_1.Text = string.Empty;
+            txt_close24amntshdt_1.Text = string.Empty;
+            txt_install24amntshdt_1.Text = string.Empty;
+
 
             txt_cardnoshdt_2.Text = string.Empty;
             txt_judgmentamntshdt_2.Text = string.Empty;
@@ -781,6 +588,13 @@ namespace CPSAppData.UI.Report
             txt_payafterjudgamtshdt_2.Text = string.Empty;
             txt_deptamntshdt_2.Text = string.Empty;
             txt_lastpaydateshdt_2.Text = string.Empty;
+            txt_closeamntshdt_2.Text = string.Empty;
+            txt_close6amntshdt_2.Text = string.Empty;
+            txt_install6amntshdt_2.Text = string.Empty;
+            txt_close12amntshdt_2.Text = string.Empty;
+            txt_install12amntshdt_2.Text = string.Empty;
+            txt_close24amntshdt_2.Text = string.Empty;
+            txt_install24amntshdt_2.Text = string.Empty;
 
             txt_cardnoshdt_3.Text = string.Empty;
             txt_judgmentamntshdt_3.Text = string.Empty;
@@ -788,6 +602,14 @@ namespace CPSAppData.UI.Report
             txt_payafterjudgamtshdt_3.Text = string.Empty;
             txt_deptamntshdt_3.Text = string.Empty;
             txt_lastpaydateshdt_3.Text = string.Empty;
+            txt_closeamntshdt_3.Text = string.Empty;
+            txt_close6amntshdt_3.Text = string.Empty;
+            txt_install6amntshdt_3.Text = string.Empty;
+            txt_close12amntshdt_3.Text = string.Empty;
+            txt_install12amntshdt_3.Text = string.Empty;
+            txt_close24amntshdt_3.Text = string.Empty;
+            txt_install24amntshdt_3.Text = string.Empty;
+
 
             txt_cardnoshdt_4.Text = string.Empty;
             txt_judgmentamntshdt_4.Text = string.Empty;
@@ -795,6 +617,14 @@ namespace CPSAppData.UI.Report
             txt_payafterjudgamtshdt_4.Text = string.Empty;
             txt_deptamntshdt_4.Text = string.Empty;
             txt_lastpaydateshdt_4.Text = string.Empty;
+            txt_closeamntshdt_4.Text = string.Empty;
+            txt_close6amntshdt_4.Text = string.Empty;
+            txt_install6amntshdt_4.Text = string.Empty;
+            txt_close12amntshdt_4.Text = string.Empty;
+            txt_install12amntshdt_4.Text = string.Empty;
+            txt_close24amntshdt_4.Text = string.Empty;
+            txt_install24amntshdt_4.Text = string.Empty;
+
 
             txt_cardnoshdt_5.Text = string.Empty;
             txt_judgmentamntshdt_5.Text = string.Empty;
@@ -803,18 +633,35 @@ namespace CPSAppData.UI.Report
             txt_deptamntshdt_5.Text = string.Empty;
             txt_lastpaydateshdt_5.Text = string.Empty;
 
+            txt_closeamntshdt_5.Text = string.Empty;
+            txt_close6amntshdt_5.Text = string.Empty;
+            txt_install6amntshdt_5.Text = string.Empty;
+            txt_close12amntshdt_5.Text = string.Empty;
+            txt_install12amntshdt_5.Text = string.Empty;
+            txt_close24amntshdt_5.Text =
+            txt_install24amntshdt_5.Text = string.Empty;
+
+
+
             txt_cardnoshdt_6.Text = string.Empty;
             txt_judgmentamntshdt_6.Text = string.Empty;
             txt_principleamntshdt_6.Text = string.Empty;
             txt_payafterjudgamtshdt_6.Text = string.Empty;
             txt_deptamntshdt_6.Text = string.Empty;
             txt_lastpaydateshdt_6.Text = string.Empty;
-            chk_calculate_add.Checked = false;
+            txt_closeamntshdt_6.Text =
+            txt_close6amntshdt_6.Text =
+            txt_install6amntshdt_6.Text =
+            txt_close12amntshdt_6.Text =
+            txt_install12amntshdt_6.Text =
+            txt_close24amntshdt_6.Text =
+            txt_install24amntshdt_6.Text =
+
+
             txt_queueno_shdt.Text = string.Empty;
             linkfileopen.Text = string.Empty;
             linkfileopen.Visible = false;
 
-            datatabledetailshow.Clear();
             if (isclearsearch) txt_search_custid_shdt.Text = string.Empty;
         }
         #endregion
@@ -859,7 +706,6 @@ namespace CPSAppData.UI.Report
                                     }
                                     cardDataList[m] = CPSCall;
                                 }
-                                if (chk_calculate_add.Checked) calcsrv.CaluLateData6CardAddValue(ref cardDataList);
                                 if (Path.Exists(txt_path_c2.Text))
                                 {
                                     reportsrv.doCreteC2TableReport1File(ref doc, cardDataList, setdata, 2);
@@ -913,10 +759,7 @@ namespace CPSAppData.UI.Report
             Cursor = Cursors.WaitCursor;
             if (!string.IsNullOrEmpty(txt_queueno_shdt.Text))
             {
-                if (isCheckKZASStatus())
-                {
-                    doPrintC2TableMeargeFile();
-                }
+               doPrintC2TableMeargeFile();
 
             }
             else
@@ -928,43 +771,7 @@ namespace CPSAppData.UI.Report
             Cursor = Cursors.Default;
         }
 
-        private bool isCheckKZASStatus()
-        {
-            if (is_kzas)
-            {
-                if (!chk_calculate_add.Checked)
-                {
-                    DialogResult result = MessageBox.Show("สถานะทางคดี KZAS \r\n ต้องการ คำนวนยอดเพิ่มหรือไม่ ?", "คำเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (result == DialogResult.Yes)
-                    {
-                        chk_calculate_add.Checked = true;
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-
-                }
-            }
-            else
-            {
-                if (chk_calculate_add.Checked)
-                {
-                    DialogResult result = MessageBox.Show("สถานะทางคดี ไม่ใช่ KZAS \r\n ต้องการ ยกเลิก การคำนวนยอดเพิ่ม หรือไม่ ?", "คำเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                    if (result == DialogResult.Yes)
-                    {
-                        chk_calculate_add.Checked = false;
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-            }
-            return true;
-        }
+        
         private void linkfileopen_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (!string.IsNullOrEmpty(linkfileopen.Text))
@@ -995,13 +802,6 @@ namespace CPSAppData.UI.Report
                 ls_path = Fld.SelectedPath;
             }
             return ls_path;
-        }
-        private void doSetDispalyCustom(string? iscustomstr)
-        {
-            bool iscustom = false;
-            if (iscustomstr == "Y") iscustom = true;
-            lbl_customstatus_shdt.Visible = iscustom;
-            lbl_customstatus_shdt.Text = "** ยอดตามทีมบังคับคดี ไม่คำนวนยอดปิด **";
         }
         private void doSaveDataSetting()
         {
@@ -1036,14 +836,270 @@ namespace CPSAppData.UI.Report
         }
         #endregion
 
+        private void btn_caculate_Click(object sender, EventArgs e)
+        {
+            doClearControl(false);
+            DataRow[] dataselect = datatabledetailshow.Select("IsSelect = 1");
+            
+            if (dataselect.Length == 1)
+            {
+                int indexrow = datatabledetailshow.Rows.IndexOf(dataselect[0]);
+                if (indexrow >= 0)
+                {
+                    doCalculateDataShowCalTab(indexrow);
+                    tabControl1.SelectedIndex = 1;
+                }
+            }
+            else
+            {
+                MessageBox.Show("กรูณาเลือกครั้งละ 1 ราย", "เลือก 1 ราย", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+        private void doCalculateDataShowCalTab(int indexrow)
+        {
+            CARDPRINT = new List<DataCPSCard>();
+            string? customerid = Convert.ToString(datatabledetailshow.Rows[indexrow]["CustomerID"] is DBNull ? "" : datatabledetailshow.Rows[indexrow]["CustomerID"]);
+            string? caseid = Convert.ToString(datatabledetailshow.Rows[indexrow]["CaseID"] is DBNull ? "" : datatabledetailshow.Rows[indexrow]["CaseID"]);
+            if (!(string.IsNullOrEmpty(customerid) || string.IsNullOrEmpty(caseid)))
+            {
+                List<DataCPSMaster> datamasterlist = sqlitedsrv.doGetDataCPSMasterAllByCustomerID(customerid, caseid);
+                List<DataCPSPerson> dataPerson = doConvertDataMasterToCPSPerson(datamasterlist);
+                List<FestCustom> customDataList = new List<FestCustom>();
+                if (dataPerson.Count > 0)
+                {
+                    List<DataCPSCard> cardDataList = doConvertToCardDataCPS(dataPerson[0]);
+                    for (int m = 0; m < cardDataList.Count; m++)
+                    {
+                        DataCPSCard CPSCall = cardDataList[m];
+                        if (string.IsNullOrEmpty(CPSCall.LedNumber)) CPSCall.LedNumber = txt_queueno_shdt.Text;
+                        if (CPSCall.CustomFlag == "Y")
+                        {
+                            if (m == 0) customDataList = sqlitedsrv.doGetDataCustomWithID(CPSCall.CustomerID ?? "", CPSCall.CaseID ?? "");
+                            if (customDataList.Count > 0) calcsrv.CaluLateData6CardCustom(ref CPSCall, customDataList, m);
+                        }
+                        else
+                        {
+                            calcsrv.CaluLateData6Card(ref CPSCall, setdata);
+                        }
+                        cardDataList[m] = CPSCall;
+                    }
+                    doSetDataShowText(cardDataList);
+                    CARDPRINT = cardDataList;
+                }
+            }
+        }
+        private void doSetDataShowText(List<DataCPSCard> cardDataList)
+        {
+            for (int i = 0; i < cardDataList.Count; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        txt_custid_shdt.Text = cardDataList[i].CustomerID;
+                        txt_custname_shdt.Text = cardDataList[i].CustomerName;
 
+                        txt_cardnoshdt_1.Text = cardDataList[i].CardNo;
+                        txt_judgmentamntshdt_1.Text = cardDataList[i].JudgmentAmnt.ToString("N");
+                        txt_principleamntshdt_1.Text = cardDataList[i].PrincipleAmnt == 0 ? "-" : cardDataList[i].PrincipleAmnt.ToString("N");
+                        txt_payafterjudgamtshdt_1.Text = cardDataList[i].PayAfterJudgAmt == 0 ? "-" : cardDataList[i].PayAfterJudgAmt.ToString("N");
+                        txt_deptamntshdt_1.Text = cardDataList[i].DeptAmnt == 0 ? "-" : cardDataList[i].DeptAmnt.ToString("N");
+                        txt_lastpaydateshdt_1.Text = dateHelper.doGetShortDateTHFromDBToPDF(cardDataList[i].LastPayDate ?? "-");
+                        txt_closeamntshdt_1.Text = cardDataList[i].AccCloseAmnt == 0 ? "-" : cardDataList[i].AccCloseAmnt.ToString("N");
+                        txt_close6amntshdt_1.Text = cardDataList[i].AccClose6Amnt == 0 ? "-" : cardDataList[i].AccClose6Amnt.ToString("N");
+                        txt_install6amntshdt_1.Text = cardDataList[i].Installment6Amnt == 0 ? "-" : cardDataList[i].Installment6Amnt.ToString("N");
+                        txt_close12amntshdt_1.Text = cardDataList[i].AccClose12Amnt == 0 ? "-" : cardDataList[i].AccClose12Amnt.ToString("N");
+                        txt_install12amntshdt_1.Text = cardDataList[i].Installment12Amnt == 0 ? "-" : cardDataList[i].Installment12Amnt.ToString("N");
+                        txt_close24amntshdt_1.Text = cardDataList[i].AccClose24Amnt == 0 ? "-" : cardDataList[i].AccClose24Amnt.ToString("N");
+                        txt_install24amntshdt_1.Text = cardDataList[i].Installment24Amnt == 0 ? "-" : cardDataList[i].Installment24Amnt.ToString("N");
+                        break;
+                    case 1:
+                        txt_cardnoshdt_2.Text = cardDataList[i].CardNo;
+                        txt_judgmentamntshdt_2.Text = cardDataList[i].JudgmentAmnt.ToString("N");
+                        txt_principleamntshdt_2.Text = cardDataList[i].PrincipleAmnt == 0 ? "-" : cardDataList[i].PrincipleAmnt.ToString("N");
+                        txt_payafterjudgamtshdt_2.Text = cardDataList[i].PayAfterJudgAmt == 0 ? "-" : cardDataList[i].PayAfterJudgAmt.ToString("N");
+                        txt_deptamntshdt_2.Text = cardDataList[i].DeptAmnt == 0 ? "-" : cardDataList[i].DeptAmnt.ToString("N");
+                        txt_lastpaydateshdt_2.Text = dateHelper.doGetShortDateTHFromDBToPDF(cardDataList[i].LastPayDate ?? "-");
+                        txt_closeamntshdt_2.Text = cardDataList[i].AccCloseAmnt == 0 ? "-" : cardDataList[i].AccCloseAmnt.ToString("N");
+                        txt_close6amntshdt_2.Text = cardDataList[i].AccClose6Amnt == 0 ? "-" : cardDataList[i].AccClose6Amnt.ToString("N");
+                        txt_install6amntshdt_2.Text = cardDataList[i].Installment6Amnt == 0 ? "-" : cardDataList[i].Installment6Amnt.ToString("N");
+                        txt_close12amntshdt_2.Text = cardDataList[i].AccClose12Amnt == 0 ? "-" : cardDataList[i].AccClose12Amnt.ToString("N");
+                        txt_install12amntshdt_2.Text = cardDataList[i].Installment12Amnt == 0 ? "-" : cardDataList[i].Installment12Amnt.ToString("N");
+                        txt_close24amntshdt_2.Text = cardDataList[i].AccClose24Amnt == 0 ? "-" : cardDataList[i].AccClose24Amnt.ToString("N");
+                        txt_install24amntshdt_2.Text = cardDataList[i].Installment24Amnt == 0 ? "-" : cardDataList[i].Installment24Amnt.ToString("N");
+                        break;
+                    case 2:
+                        txt_cardnoshdt_3.Text = cardDataList[i].CardNo;
+                        txt_judgmentamntshdt_3.Text = cardDataList[i].JudgmentAmnt.ToString("N");
+                        txt_principleamntshdt_3.Text = cardDataList[i].PrincipleAmnt == 0 ? "-" : cardDataList[i].PrincipleAmnt.ToString("N");
+                        txt_payafterjudgamtshdt_3.Text = cardDataList[i].PayAfterJudgAmt == 0 ? "-" : cardDataList[i].PayAfterJudgAmt.ToString("N");
+                        txt_deptamntshdt_3.Text = cardDataList[i].DeptAmnt == 0 ? "-" : cardDataList[i].DeptAmnt.ToString("N");
+                        txt_lastpaydateshdt_3.Text = dateHelper.doGetShortDateTHFromDBToPDF(cardDataList[i].LastPayDate ?? "-");
+                        txt_closeamntshdt_3.Text = cardDataList[i].AccCloseAmnt == 0 ? "-" : cardDataList[i].AccCloseAmnt.ToString("N");
+                        txt_close6amntshdt_3.Text = cardDataList[i].AccClose6Amnt == 0 ? "-" : cardDataList[i].AccClose6Amnt.ToString("N");
+                        txt_install6amntshdt_3.Text = cardDataList[i].Installment6Amnt == 0 ? "-" : cardDataList[i].Installment6Amnt.ToString("N");
+                        txt_close12amntshdt_3.Text = cardDataList[i].AccClose12Amnt == 0 ? "-" : cardDataList[i].AccClose12Amnt.ToString("N");
+                        txt_install12amntshdt_3.Text = cardDataList[i].Installment12Amnt == 0 ? "-" : cardDataList[i].Installment12Amnt.ToString("N");
+                        txt_close24amntshdt_3.Text = cardDataList[i].AccClose24Amnt == 0 ? "-" : cardDataList[i].AccClose24Amnt.ToString("N");
+                        txt_install24amntshdt_3.Text = cardDataList[i].Installment24Amnt == 0 ? "-" : cardDataList[i].Installment24Amnt.ToString("N");
+                        break;
+                    case 3:
+                        txt_cardnoshdt_4.Text = cardDataList[i].CardNo;
+                        txt_judgmentamntshdt_4.Text = cardDataList[i].JudgmentAmnt.ToString("N");
+                        txt_principleamntshdt_4.Text = cardDataList[i].PrincipleAmnt == 0 ? "-" : cardDataList[i].PrincipleAmnt.ToString("N");
+                        txt_payafterjudgamtshdt_4.Text = cardDataList[i].PayAfterJudgAmt == 0 ? "-" : cardDataList[i].PayAfterJudgAmt.ToString("N");
+                        txt_deptamntshdt_4.Text = cardDataList[i].DeptAmnt == 0 ? "-" : cardDataList[i].DeptAmnt.ToString("N");
+                        txt_lastpaydateshdt_4.Text = dateHelper.doGetShortDateTHFromDBToPDF(cardDataList[i].LastPayDate ?? "-");
+                        txt_closeamntshdt_4.Text = cardDataList[i].AccCloseAmnt == 0 ? "-" : cardDataList[i].AccCloseAmnt.ToString("N");
+                        txt_close6amntshdt_4.Text = cardDataList[i].AccClose6Amnt == 0 ? "-" : cardDataList[i].AccClose6Amnt.ToString("N");
+                        txt_install6amntshdt_4.Text = cardDataList[i].Installment6Amnt == 0 ? "-" : cardDataList[i].Installment6Amnt.ToString("N");
+                        txt_close12amntshdt_4.Text = cardDataList[i].AccClose12Amnt == 0 ? "-" : cardDataList[i].AccClose12Amnt.ToString("N");
+                        txt_install12amntshdt_4.Text = cardDataList[i].Installment12Amnt == 0 ? "-" : cardDataList[i].Installment12Amnt.ToString("N");
+                        txt_close24amntshdt_4.Text = cardDataList[i].AccClose24Amnt == 0 ? "-" : cardDataList[i].AccClose24Amnt.ToString("N");
+                        txt_install24amntshdt_4.Text = cardDataList[i].Installment24Amnt == 0 ? "-" : cardDataList[i].Installment24Amnt.ToString("N");
+                        break;
+                    case 4:
+                        txt_cardnoshdt_5.Text = cardDataList[i].CardNo;
+                        txt_judgmentamntshdt_5.Text = cardDataList[i].JudgmentAmnt.ToString("N");
+                        txt_principleamntshdt_5.Text = cardDataList[i].PrincipleAmnt == 0 ? "-" : cardDataList[i].PrincipleAmnt.ToString("N");
+                        txt_payafterjudgamtshdt_5.Text = cardDataList[i].PayAfterJudgAmt == 0 ? "-" : cardDataList[i].PayAfterJudgAmt.ToString("N");
+                        txt_deptamntshdt_5.Text = cardDataList[i].DeptAmnt == 0 ? "-" : cardDataList[i].DeptAmnt.ToString("N");
+                        txt_lastpaydateshdt_5.Text = dateHelper.doGetShortDateTHFromDBToPDF(cardDataList[i].LastPayDate ?? "-");
+                        txt_closeamntshdt_5.Text = cardDataList[i].AccCloseAmnt == 0 ? "-" : cardDataList[i].AccCloseAmnt.ToString("N");
+                        txt_close6amntshdt_5.Text = cardDataList[i].AccClose6Amnt == 0 ? "-" : cardDataList[i].AccClose6Amnt.ToString("N");
+                        txt_install6amntshdt_5.Text = cardDataList[i].Installment6Amnt == 0 ? "-" : cardDataList[i].Installment6Amnt.ToString("N");
+                        txt_close12amntshdt_5.Text = cardDataList[i].AccClose12Amnt == 0 ? "-" : cardDataList[i].AccClose12Amnt.ToString("N");
+                        txt_install12amntshdt_5.Text = cardDataList[i].Installment12Amnt == 0 ? "-" : cardDataList[i].Installment12Amnt.ToString("N");
+                        txt_close24amntshdt_5.Text = cardDataList[i].AccClose24Amnt == 0 ? "-" : cardDataList[i].AccClose24Amnt.ToString("N");
+                        txt_install24amntshdt_5.Text = cardDataList[i].Installment24Amnt == 0 ? "-" : cardDataList[i].Installment24Amnt.ToString("N");
+                        break;
+                    case 5:
+                        txt_cardnoshdt_6.Text = cardDataList[i].CardNo;
+                        txt_judgmentamntshdt_6.Text = cardDataList[i].JudgmentAmnt.ToString("N");
+                        txt_principleamntshdt_6.Text = cardDataList[i].PrincipleAmnt == 0 ? "-" : cardDataList[i].PrincipleAmnt.ToString("N");
+                        txt_payafterjudgamtshdt_6.Text = cardDataList[i].PayAfterJudgAmt == 0 ? "-" : cardDataList[i].PayAfterJudgAmt.ToString("N");
+                        txt_deptamntshdt_6.Text = cardDataList[i].DeptAmnt == 0 ? "-" : cardDataList[i].DeptAmnt.ToString("N");
+                        txt_lastpaydateshdt_6.Text = dateHelper.doGetShortDateTHFromDBToPDF(cardDataList[i].LastPayDate ?? "-");
+                        txt_closeamntshdt_6.Text = cardDataList[i].AccCloseAmnt == 0 ? "-" : cardDataList[i].AccCloseAmnt.ToString("N");
+                        txt_close6amntshdt_6.Text = cardDataList[i].AccClose6Amnt == 0 ? "-" : cardDataList[i].AccClose6Amnt.ToString("N");
+                        txt_install6amntshdt_6.Text = cardDataList[i].Installment6Amnt == 0 ? "-" : cardDataList[i].Installment6Amnt.ToString("N");
+                        txt_close12amntshdt_6.Text = cardDataList[i].AccClose12Amnt == 0 ? "-" : cardDataList[i].AccClose12Amnt.ToString("N");
+                        txt_install12amntshdt_6.Text = cardDataList[i].Installment12Amnt == 0 ? "-" : cardDataList[i].Installment12Amnt.ToString("N");
+                        txt_close24amntshdt_6.Text = cardDataList[i].AccClose24Amnt == 0 ? "-" : cardDataList[i].AccClose24Amnt.ToString("N");
+                        txt_install24amntshdt_6.Text = cardDataList[i].Installment24Amnt == 0 ? "-" : cardDataList[i].Installment24Amnt.ToString("N");
+                        break;
+
+                }
+
+            }
+        }
+        private void btn_print_c2table_Click_1(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            if (!string.IsNullOrEmpty(txt_queueno_shdt.Text))
+            {
+                string customeridfilename = CARDPRINT[0].CustomerID ?? "";
+                GlobalFontSettings.FontResolver = new FileFontResolver();
+                PdfDocument doc = new PdfDocument();
+                if (Path.Exists(txt_path_c2.Text))
+                {
+                    doCreatePrintDataCard();
+                    reportsrv.doCreteC2TableReport1File(ref doc, CARDPRINT, setdata, 2);
+                }
+                string file_name = string.Format("C2Table_{0}_{1}.pdf", txt_queueno_shdt.Text, customeridfilename);
+                file_name = file_name.Replace("\n", "").Replace("\r", "").Replace("/", "").Replace(" ", "");
+                string fullfilename = Path.Combine(txt_path_c2.Text, file_name);
+                if (Path.Exists(txt_path_c2.Text))
+                {
+                    doc.Save(fullfilename);
+                    if (openaftersave.Checked) doOpenPdfFile(fullfilename);
+                    linkfileopen.Text = file_name;
+                    linkfileopen.Visible = true;
+                }
+                doClearControl(false);
+                tabControl1.SelectedIndex = 0;
+            }
+            else
+            {
+                MessageBox.Show("หมายเลขคิวห้ามว่าง", "ผิดพลาด", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txt_queueno_shdt.Focus();
+            }
+
+            Cursor = Cursors.Default;
+            
+        }
+        private void doCreatePrintDataCard()
+        {
+            for (int i = 0; i < CARDPRINT.Count; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        CARDPRINT[i].LedNumber = string.IsNullOrEmpty(CARDPRINT[i].LedNumber) ? txt_queueno_shdt.Text: CARDPRINT[i].LedNumber;
+                        CARDPRINT[i].AccCloseAmnt = Convert.ToDouble(txt_closeamntshdt_1.Text == "_" || string.IsNullOrEmpty(txt_closeamntshdt_1.Text) ? "0.0" : txt_closeamntshdt_1.Text);
+                        CARDPRINT[i].AccClose6Amnt = Convert.ToDouble(txt_close6amntshdt_1.Text == "_" || string.IsNullOrEmpty(txt_close6amntshdt_1.Text) ? "0.0" : txt_close6amntshdt_1.Text);
+                        CARDPRINT[i].Installment6Amnt = Convert.ToDouble(txt_install6amntshdt_1.Text == "_" || string.IsNullOrEmpty(txt_install6amntshdt_1.Text) ? "0.0" : txt_install6amntshdt_1.Text);
+                        CARDPRINT[i].AccClose12Amnt = Convert.ToDouble(txt_close12amntshdt_1.Text == "_" || string.IsNullOrEmpty(txt_close12amntshdt_1.Text) ? "0.0" : txt_close12amntshdt_1.Text);
+                        CARDPRINT[i].Installment12Amnt = Convert.ToDouble(txt_install12amntshdt_1.Text == "_" || string.IsNullOrEmpty(txt_install12amntshdt_1.Text) ? "0.0" : txt_install12amntshdt_1.Text);
+                        CARDPRINT[i].AccClose24Amnt = Convert.ToDouble(txt_close24amntshdt_1.Text == "_" || string.IsNullOrEmpty(txt_close24amntshdt_1.Text) ? "0.0" : txt_close24amntshdt_1.Text);
+                        CARDPRINT[i].Installment24Amnt = Convert.ToDouble(txt_install24amntshdt_1.Text == "_" || string.IsNullOrEmpty(txt_install24amntshdt_1.Text) ? "0.0" : txt_install24amntshdt_1.Text);
+                        break;
+                    case 1:
+                        CARDPRINT[i].AccCloseAmnt = Convert.ToDouble(txt_closeamntshdt_2.Text == "_" || string.IsNullOrEmpty(txt_closeamntshdt_2.Text) ? "0.0" : txt_closeamntshdt_2.Text);
+                        CARDPRINT[i].AccClose6Amnt = Convert.ToDouble(txt_close6amntshdt_2.Text == "_" || string.IsNullOrEmpty(txt_close6amntshdt_2.Text) ? "0.0" : txt_close6amntshdt_2.Text);
+                        CARDPRINT[i].Installment6Amnt = Convert.ToDouble(txt_install6amntshdt_2.Text == "_" || string.IsNullOrEmpty(txt_install6amntshdt_2.Text) ? "0.0" : txt_install6amntshdt_2.Text);
+                        CARDPRINT[i].AccClose12Amnt = Convert.ToDouble(txt_close12amntshdt_2.Text == "_" || string.IsNullOrEmpty(txt_close12amntshdt_2.Text) ? "0.0" : txt_close12amntshdt_2.Text);
+                        CARDPRINT[i].Installment12Amnt = Convert.ToDouble(txt_install12amntshdt_2.Text == "_" || string.IsNullOrEmpty(txt_install12amntshdt_2.Text) ? "0.0" : txt_install12amntshdt_2.Text);
+                        CARDPRINT[i].AccClose24Amnt = Convert.ToDouble(txt_close24amntshdt_2.Text == "_" || string.IsNullOrEmpty(txt_close24amntshdt_2.Text) ? "0.0" : txt_close24amntshdt_2.Text);
+                        CARDPRINT[i].Installment24Amnt = Convert.ToDouble(txt_install24amntshdt_2.Text == "_" || string.IsNullOrEmpty(txt_install24amntshdt_2.Text) ? "0.0" : txt_install24amntshdt_2.Text);
+                        break;
+                    case 2:
+                        CARDPRINT[i].AccCloseAmnt = Convert.ToDouble(txt_closeamntshdt_3.Text == "_" || string.IsNullOrEmpty(txt_closeamntshdt_3.Text) ? "0.0" : txt_closeamntshdt_3.Text);
+                        CARDPRINT[i].AccClose6Amnt = Convert.ToDouble(txt_close6amntshdt_3.Text == "_" || string.IsNullOrEmpty(txt_close6amntshdt_3.Text) ? "0.0" : txt_close6amntshdt_3.Text);
+                        CARDPRINT[i].Installment6Amnt = Convert.ToDouble(txt_install6amntshdt_3.Text == "_" || string.IsNullOrEmpty(txt_install6amntshdt_3.Text) ? "0.0" : txt_install6amntshdt_3.Text);
+                        CARDPRINT[i].AccClose12Amnt = Convert.ToDouble(txt_close12amntshdt_3.Text == "_" || string.IsNullOrEmpty(txt_close12amntshdt_3.Text) ? "0.0" : txt_close12amntshdt_3.Text);
+                        CARDPRINT[i].Installment12Amnt = Convert.ToDouble(txt_install12amntshdt_3.Text == "_" || string.IsNullOrEmpty(txt_install12amntshdt_3.Text) ? "0.0" : txt_install12amntshdt_3.Text);
+                        CARDPRINT[i].AccClose24Amnt = Convert.ToDouble(txt_close24amntshdt_3.Text == "_" || string.IsNullOrEmpty(txt_close24amntshdt_3.Text) ? "0.0" : txt_close24amntshdt_3.Text);
+                        CARDPRINT[i].Installment24Amnt = Convert.ToDouble(txt_install24amntshdt_3.Text == "_" || string.IsNullOrEmpty(txt_install24amntshdt_3.Text) ? "0.0" : txt_install24amntshdt_3.Text);
+                        break;
+                    case 3:
+                        CARDPRINT[i].AccCloseAmnt = Convert.ToDouble(txt_closeamntshdt_4.Text == "_" || string.IsNullOrEmpty(txt_closeamntshdt_4.Text) ? "0.0" : txt_closeamntshdt_4.Text);
+                        CARDPRINT[i].AccClose6Amnt = Convert.ToDouble(txt_close6amntshdt_4.Text == "_" || string.IsNullOrEmpty(txt_close6amntshdt_4.Text) ? "0.0" : txt_close6amntshdt_4.Text);
+                        CARDPRINT[i].Installment6Amnt = Convert.ToDouble(txt_install6amntshdt_4.Text == "_" || string.IsNullOrEmpty(txt_install6amntshdt_4.Text) ? "0.0" : txt_install6amntshdt_4.Text);
+                        CARDPRINT[i].AccClose12Amnt = Convert.ToDouble(txt_close12amntshdt_4.Text == "_" || string.IsNullOrEmpty(txt_close12amntshdt_4.Text) ? "0.0" : txt_close12amntshdt_4.Text);
+                        CARDPRINT[i].Installment12Amnt = Convert.ToDouble(txt_install12amntshdt_4.Text == "_" || string.IsNullOrEmpty(txt_install12amntshdt_4.Text) ? "0.0" : txt_install12amntshdt_4.Text);
+                        CARDPRINT[i].AccClose24Amnt = Convert.ToDouble(txt_close24amntshdt_4.Text == "_" || string.IsNullOrEmpty(txt_close24amntshdt_4.Text) ? "0.0" : txt_close24amntshdt_4.Text);
+                        CARDPRINT[i].Installment24Amnt = Convert.ToDouble(txt_install24amntshdt_4.Text == "_" || string.IsNullOrEmpty(txt_install24amntshdt_4.Text) ? "0.0" : txt_install24amntshdt_4.Text);
+                        break;
+                    case 4:
+                        CARDPRINT[i].AccCloseAmnt = Convert.ToDouble(txt_closeamntshdt_5.Text == "_" || string.IsNullOrEmpty(txt_closeamntshdt_5.Text) ? "0.0" : txt_closeamntshdt_5.Text);
+                        CARDPRINT[i].AccClose6Amnt = Convert.ToDouble(txt_close6amntshdt_5.Text == "_" || string.IsNullOrEmpty(txt_close6amntshdt_5.Text) ? "0.0" : txt_close6amntshdt_5.Text);
+                        CARDPRINT[i].Installment6Amnt = Convert.ToDouble(txt_install6amntshdt_5.Text == "_" || string.IsNullOrEmpty(txt_install6amntshdt_5.Text) ? "0.0" : txt_install6amntshdt_5.Text);
+                        CARDPRINT[i].AccClose12Amnt = Convert.ToDouble(txt_close12amntshdt_5.Text == "_" || string.IsNullOrEmpty(txt_close12amntshdt_5.Text) ? "0.0" : txt_close12amntshdt_5.Text);
+                        CARDPRINT[i].Installment12Amnt = Convert.ToDouble(txt_install12amntshdt_5.Text == "_" || string.IsNullOrEmpty(txt_install12amntshdt_5.Text) ? "0.0" : txt_install12amntshdt_5.Text);
+                        CARDPRINT[i].AccClose24Amnt = Convert.ToDouble(txt_close24amntshdt_5.Text == "_" || string.IsNullOrEmpty(txt_close24amntshdt_5.Text) ? "0.0" : txt_close24amntshdt_5.Text);
+                        CARDPRINT[i].Installment24Amnt = Convert.ToDouble(txt_install24amntshdt_5.Text == "_" || string.IsNullOrEmpty(txt_install24amntshdt_5.Text) ? "0.0" : txt_install24amntshdt_5.Text);
+                        break;
+                    case 5:
+                        CARDPRINT[i].AccCloseAmnt = Convert.ToDouble(txt_closeamntshdt_6.Text == "_" || string.IsNullOrEmpty(txt_closeamntshdt_6.Text) ? "0.0" : txt_closeamntshdt_6.Text);
+                        CARDPRINT[i].AccClose6Amnt = Convert.ToDouble(txt_close6amntshdt_6.Text == "_" || string.IsNullOrEmpty(txt_close6amntshdt_6.Text) ? "0.0" : txt_close6amntshdt_6.Text);
+                        CARDPRINT[i].Installment6Amnt = Convert.ToDouble(txt_install6amntshdt_6.Text == "_" || string.IsNullOrEmpty(txt_install6amntshdt_6.Text) ? "0.0" : txt_install6amntshdt_6.Text);
+                        CARDPRINT[i].AccClose12Amnt = Convert.ToDouble(txt_close12amntshdt_6.Text == "_" || string.IsNullOrEmpty(txt_close12amntshdt_6.Text) ? "0.0" : txt_close12amntshdt_6.Text);
+                        CARDPRINT[i].Installment12Amnt = Convert.ToDouble(txt_install12amntshdt_6.Text == "_" || string.IsNullOrEmpty(txt_install12amntshdt_6.Text) ? "0.0" : txt_install12amntshdt_6.Text);
+                        CARDPRINT[i].AccClose24Amnt = Convert.ToDouble(txt_close24amntshdt_6.Text == "_" || string.IsNullOrEmpty(txt_close24amntshdt_6.Text) ? "0.0" : txt_close24amntshdt_6.Text);
+                        CARDPRINT[i].Installment24Amnt = Convert.ToDouble(txt_install24amntshdt_6.Text == "_" || string.IsNullOrEmpty(txt_install24amntshdt_6.Text) ? "0.0" : txt_install24amntshdt_6.Text);
+                        break;
+
+                }
+
+            }
+        }
         private void dataGridDetailCard_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) { return; }
             string columnName = dataGridDetailCard.Columns[e.ColumnIndex].Name;
-            if(columnName == "IsSelect")
+            if (columnName == "IsSelect")
             {
-                bool isselect = Convert.ToBoolean(datatabledetailshow.Rows[e.RowIndex]["IsSelect"] is DBNull?false: datatabledetailshow.Rows[e.RowIndex]["IsSelect"]);
+                bool isselect = Convert.ToBoolean(datatabledetailshow.Rows[e.RowIndex]["IsSelect"] is DBNull ? false : datatabledetailshow.Rows[e.RowIndex]["IsSelect"]);
                 datatabledetailshow.Rows[e.RowIndex]["IsSelect"] = !isselect;
             }
         }

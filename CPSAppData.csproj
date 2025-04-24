@@ -44,6 +44,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="UI\User\frmAdvUserReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="UI\User\frmUserReport.cs">
       <SubType>Form</SubType>
     </Compile>

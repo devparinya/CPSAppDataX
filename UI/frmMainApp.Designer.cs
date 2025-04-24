@@ -32,6 +32,7 @@
             btn_setting = new Button();
             btn_report = new Button();
             btn_user_report = new Button();
+            brn_advuser = new Button();
             SuspendLayout();
             // 
             // btn_setting
@@ -76,11 +77,27 @@
             btn_user_report.UseVisualStyleBackColor = true;
             btn_user_report.Click += btn_user_report_Click;
             // 
+            // brn_advuser
+            // 
+            brn_advuser.Font = new Font("Leelawadee UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            brn_advuser.Image = (Image)resources.GetObject("brn_advuser.Image");
+            brn_advuser.ImageAlign = ContentAlignment.TopCenter;
+            brn_advuser.Location = new Point(642, 278);
+            brn_advuser.Name = "brn_advuser";
+            brn_advuser.Size = new Size(90, 64);
+            brn_advuser.TabIndex = 1;
+            brn_advuser.Text = "Report (Advanced)";
+            brn_advuser.TextAlign = ContentAlignment.BottomCenter;
+            brn_advuser.UseVisualStyleBackColor = true;
+            brn_advuser.Visible = false;
+            brn_advuser.Click += brn_advuser_Click;
+            // 
             // frmMainApp
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1008, 681);
+            Controls.Add(brn_advuser);
             Controls.Add(btn_user_report);
             Controls.Add(btn_report);
             Controls.Add(btn_setting);
@@ -94,5 +111,6 @@
         private Button btn_setting;
         private Button btn_report;
         private Button btn_user_report;
+        private Button brn_advuser;
     }
 }
