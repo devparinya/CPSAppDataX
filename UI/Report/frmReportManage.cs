@@ -53,7 +53,7 @@ namespace CPSAppData.UI.Report
             dataGridShow.Columns["CustomerID"].Width = 130;
             dataGridShow.Columns["CustomerName"].Width = 180;
             dataGridShow.Columns["LegalStatus"].Width = 110;
-            dataGridShow.Columns["CardStatus"].Width = 110;            
+            dataGridShow.Columns["CardStatus"].Width = 110;
             dataGridShow.Columns["LegalExecRemark"].Width = 230;
             dataGridShow.Columns["CaseID"].Width = 90;
 
@@ -62,13 +62,13 @@ namespace CPSAppData.UI.Report
             dataGridShow.Columns["LedNumber"].ReadOnly = true;
             dataGridShow.Columns["CustomerID"].ReadOnly = true;
             dataGridShow.Columns["CustomerName"].ReadOnly = true;
-            dataGridShow.Columns["LegalStatus"].ReadOnly = true;            
+            dataGridShow.Columns["LegalStatus"].ReadOnly = true;
             dataGridShow.Columns["CardStatus"].ReadOnly = true;
             dataGridShow.Columns["LegalExecRemark"].ReadOnly = true;
             dataGridShow.Columns["CaseID"].ReadOnly = true;
 
             dataGridShow.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-        }     
+        }
         private void doLoadSettingData()
         {
             setdata = sqlitedsrv.doLoadSettingData();
@@ -325,14 +325,14 @@ namespace CPSAppData.UI.Report
         }
         private List<DataCPSPerson> doConvertDataMasterToCPSPerson(List<DataCPSMaster> datamasterlist)
         {
-            List<DataCPSPerson> dataCPSperson = new List<DataCPSPerson>();            
+            List<DataCPSPerson> dataCPSperson = new List<DataCPSPerson>();
             for (int i = 0; i < datamasterlist.Count; i++)
-            {               
-                string customerid = datamasterlist[i].CustomerID??"";
-                string caseid = datamasterlist[i].CaseID ?? "";              
+            {
+                string customerid = datamasterlist[i].CustomerID ?? "";
+                string caseid = datamasterlist[i].CaseID ?? "";
 
-                int rowindex  = dataCPSperson.FindIndex(item => item.CustomerID == customerid && item.CaseID == caseid);
-                if(rowindex < 0)
+                int rowindex = dataCPSperson.FindIndex(item => item.CustomerID == customerid && item.CaseID == caseid);
+                if (rowindex < 0)
                 {
                     DataCPSPerson dataperson = new DataCPSPerson();
                     dataperson.WorkNo = datamasterlist[i].WorkNo;
@@ -438,11 +438,11 @@ namespace CPSAppData.UI.Report
                             dataCPSperson[rowindex].LastPayDate1 = datamasterlist[i].LastPayDate;
                             break;
                         case 1:
-                           dataCPSperson[rowindex].CardNo2 = datamasterlist[i].CardNo;
-                           dataCPSperson[rowindex].JudgmentAmnt2 = datamasterlist[i].JudgmentAmnt;
-                           dataCPSperson[rowindex].PrincipleAmnt2 = datamasterlist[i].PrincipleAmnt;
-                           dataCPSperson[rowindex].PayAfterJudgAmt2 = datamasterlist[i].PayAfterJudgAmt;
-                           dataCPSperson[rowindex].DeptAmnt2 = datamasterlist[i].DeptAmnt;
+                            dataCPSperson[rowindex].CardNo2 = datamasterlist[i].CardNo;
+                            dataCPSperson[rowindex].JudgmentAmnt2 = datamasterlist[i].JudgmentAmnt;
+                            dataCPSperson[rowindex].PrincipleAmnt2 = datamasterlist[i].PrincipleAmnt;
+                            dataCPSperson[rowindex].PayAfterJudgAmt2 = datamasterlist[i].PayAfterJudgAmt;
+                            dataCPSperson[rowindex].DeptAmnt2 = datamasterlist[i].DeptAmnt;
                             dataCPSperson[rowindex].LastPayDate2 = datamasterlist[i].LastPayDate;
                             break;
                         case 2:
@@ -478,9 +478,9 @@ namespace CPSAppData.UI.Report
                             dataCPSperson[rowindex].LastPayDate6 = datamasterlist[i].LastPayDate;
                             break;
                     }
-                }               
+                }
             }
-            
+
             return dataCPSperson;
         }
         private DataCPSPerson doGetDataCardWithIndex(int index, DataCPSPerson sourcedata)
@@ -567,7 +567,7 @@ namespace CPSAppData.UI.Report
         private void doLodeDataWithRange(string typedata, string startdata, string enddata) //New
         {
             Cursor = Cursors.WaitCursor;
-            List<DataCPSPerson> dataperson = new List<DataCPSPerson>();           
+            List<DataCPSPerson> dataperson = new List<DataCPSPerson>();
             switch (typedata)
             {
                 case "LEDNO":
@@ -585,11 +585,13 @@ namespace CPSAppData.UI.Report
             if (dataperson.Count > 0)
             {
                 doSetShowDataTable(dataperson);
+                chk_select.Checked = true;
             }
             else
             {
                 MessageBox.Show("ไม่พบข้อมูล", "ค้นหา", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 datatableshow.Clear();
+                chk_select.Checked = false;
             }
             Cursor = Cursors.Default;
         }
@@ -610,7 +612,7 @@ namespace CPSAppData.UI.Report
                 }
             }
             return result;
-        }      
+        }
         private bool doCreateC2DataReportMerge(ArrayList dataarrcpscard)
         {
             bool result = false;
@@ -670,10 +672,10 @@ namespace CPSAppData.UI.Report
                 }
             }
             return result;
-        }       
+        }
         private bool doCreateDataTablePDF(List<DataCPSCard> datacpscard)
         {
-            
+
             bool result = false;
             if (datacpscard != null)
             {
@@ -706,9 +708,9 @@ namespace CPSAppData.UI.Report
         } // 1 person print       
         private List<DataCPSCard> doConvertDataForReportCustIDCaseID(string customerid, string case_id) //new
         {
-            List<DataCPSCard> dataCardList = new List<DataCPSCard>();   
+            List<DataCPSCard> dataCardList = new List<DataCPSCard>();
             List<DataCPSMaster> datamasterlist = sqlitedsrv.doGetDataCPSMasterAllByCustomerID(customerid, case_id);
-            if(datamasterlist.Count > 0)
+            if (datamasterlist.Count > 0)
             {
                 List<DataCPSPerson> datapersonlist = doConvertDataMasterToCPSPerson(datamasterlist);
                 dataCardList = doConvertToCardDataCPS(datapersonlist[0]);
@@ -717,9 +719,9 @@ namespace CPSAppData.UI.Report
         }
         private ArrayList doConvertDataForReportMerge(DataRow[] dataselected)
         {
-            if(ARRdataForPrint.Count > 0) return ARRdataForPrint;
+            if (ARRdataForPrint.Count > 0) return ARRdataForPrint;
             ARRdataForPrint = new ArrayList();
-            if (dataselected == null) return ARRdataForPrint;            
+            if (dataselected == null) return ARRdataForPrint;
             for (int i = 0; i < dataselected.Length; i++)
             {
                 List<DataCPSCard> datacardlist = new List<DataCPSCard>();
@@ -903,7 +905,7 @@ namespace CPSAppData.UI.Report
             if (dataselected == null) return datacpsarrlist;
             for (int i = 0; i < dataselected.Length; i++)
             {
-               
+
                 List<DataCPSCard> datacardlist = new List<DataCPSCard>();
 
                 string? customerid = Convert.ToString(dataselected[i]["CustomerID"] is DBNull ? "" : dataselected[i]["CustomerID"]);
@@ -934,9 +936,9 @@ namespace CPSAppData.UI.Report
                 {
                     string? customerid = Convert.ToString(datafind[i]["CustomerID"] is DBNull ? "" : datafind[i]["CustomerID"]);
                     string? case_id = Convert.ToString(datafind[i]["CaseID"] is DBNull ? "" : datafind[i]["CaseID"]);
-                    if (!(string.IsNullOrEmpty(customerid)||(string.IsNullOrEmpty(case_id))))
+                    if (!(string.IsNullOrEmpty(customerid) || (string.IsNullOrEmpty(case_id))))
                     {
-                       List<DataCPSCard> dataCardlist = doConvertDataForReportCustIDCaseID(customerid,case_id);
+                        List<DataCPSCard> dataCardlist = doConvertDataForReportCustIDCaseID(customerid, case_id);
                         if (dataCardlist.Count > 0)
                         {
                             result = doCreateC2DataReport(dataCardlist);
@@ -1083,7 +1085,7 @@ namespace CPSAppData.UI.Report
                 path = saveFileDialog.FileName;
             }
             return path;
-        }        
+        }
         private void btn_save_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
@@ -1191,7 +1193,19 @@ namespace CPSAppData.UI.Report
         {
             txt_path_table.Text = browFolder();
         }
-
+        private void chk_select_CheckedChanged(object sender, EventArgs e)
+        {
+            if (datatableshow != null)
+            {
+                if (datatableshow.Rows.Count > 0)
+                {
+                    for (int i = 0; i < datatableshow.Rows.Count; i++)
+                    {
+                        datatableshow.Rows[i]["IsSelect"] = chk_select.Checked;
+                    }
+                }
+            }
+        }
         #endregion
         #region Other Method       
         private string browFolder()
@@ -1207,7 +1221,7 @@ namespace CPSAppData.UI.Report
                 ls_path = Fld.SelectedPath;
             }
             return ls_path;
-        }       
+        }
         private void doSaveDataSetting()
         {
             if (setdata != null)
@@ -1242,5 +1256,7 @@ namespace CPSAppData.UI.Report
             }
         }
         #endregion
+
+       
     }
 }

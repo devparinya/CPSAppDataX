@@ -980,6 +980,23 @@ namespace CPSAppData.UI.Report
             datatabledetailshow.Clear();
             dataGridDetailCard.DataSource = datatabledetailshow;
         }
+        private void dataGridDetailCard_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) { return; }
+            string columnName = dataGridDetailCard.Columns[e.ColumnIndex].Name;
+            if (columnName == "IsSelect")
+            {
+                bool isselect = Convert.ToBoolean(datatabledetailshow.Rows[e.RowIndex]["IsSelect"] is DBNull ? false : datatabledetailshow.Rows[e.RowIndex]["IsSelect"]);
+                datatabledetailshow.Rows[e.RowIndex]["IsSelect"] = !isselect;
+            }
+        }
+        private void txt_search_custid_shdt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                doSearhCPSDataWithCusomerID();
+            }
+        }
         #endregion
         #region Other Method
         private string browFolder()
@@ -1037,15 +1054,6 @@ namespace CPSAppData.UI.Report
         #endregion
 
 
-        private void dataGridDetailCard_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) { return; }
-            string columnName = dataGridDetailCard.Columns[e.ColumnIndex].Name;
-            if(columnName == "IsSelect")
-            {
-                bool isselect = Convert.ToBoolean(datatabledetailshow.Rows[e.RowIndex]["IsSelect"] is DBNull?false: datatabledetailshow.Rows[e.RowIndex]["IsSelect"]);
-                datatabledetailshow.Rows[e.RowIndex]["IsSelect"] = !isselect;
-            }
-        }
+        
     }
 }

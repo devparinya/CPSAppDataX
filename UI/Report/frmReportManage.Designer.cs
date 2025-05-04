@@ -32,6 +32,7 @@
             tabControl1 = new TabControl();
             tabPage2 = new TabPage();
             groupBox6 = new GroupBox();
+            chk_select = new CheckBox();
             chk_merge = new CheckBox();
             btn_C2TableRangePDF = new Button();
             btn_TableRangePDF = new Button();
@@ -108,6 +109,7 @@
             // 
             // groupBox6
             // 
+            groupBox6.Controls.Add(chk_select);
             groupBox6.Controls.Add(chk_merge);
             groupBox6.Controls.Add(btn_C2TableRangePDF);
             groupBox6.Controls.Add(btn_TableRangePDF);
@@ -119,6 +121,17 @@
             groupBox6.Size = new Size(956, 500);
             groupBox6.TabIndex = 1;
             groupBox6.TabStop = false;
+            // 
+            // chk_select
+            // 
+            chk_select.AutoSize = true;
+            chk_select.Location = new Point(21, 17);
+            chk_select.Name = "chk_select";
+            chk_select.Size = new Size(79, 21);
+            chk_select.TabIndex = 6;
+            chk_select.Text = "Select All";
+            chk_select.UseVisualStyleBackColor = true;
+            chk_select.CheckedChanged += chk_select_CheckedChanged;
             // 
             // chk_merge
             // 
@@ -189,13 +202,13 @@
             dataGridShow.AllowUserToResizeRows = false;
             dataGridShow.Anchor = AnchorStyles.None;
             dataGridShow.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridShow.Location = new Point(21, 24);
+            dataGridShow.Location = new Point(21, 44);
             dataGridShow.MultiSelect = false;
             dataGridShow.Name = "dataGridShow";
             dataGridShow.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridShow.RowHeadersVisible = false;
             dataGridShow.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            dataGridShow.Size = new Size(918, 430);
+            dataGridShow.Size = new Size(918, 410);
             dataGridShow.TabIndex = 0;
             // 
             // groupBox5
@@ -639,5 +652,6 @@
         private TextBox txt_maxmonth;
         private Label label31;
         private Button btn_export_Excel;
+        private CheckBox chk_select;
     }
 }

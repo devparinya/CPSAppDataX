@@ -316,6 +316,7 @@
             txt_search_custid_shdt.Size = new Size(339, 33);
             txt_search_custid_shdt.TabIndex = 128;
             txt_search_custid_shdt.TextAlign = HorizontalAlignment.Center;
+            txt_search_custid_shdt.KeyDown += txt_search_custid_shdt_KeyDown;
             // 
             // label47
             // 
