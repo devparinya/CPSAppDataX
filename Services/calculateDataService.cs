@@ -392,9 +392,9 @@ namespace QueueAppManager.Service
             }
             else
             {
-                if(rema_expire24month >0) return 24;
-                if(rema_expire12month >0) return 12;
-                if(rema_expire6month >0) return 6;
+                if(rema_expire24month >=0) return 24;
+                if(rema_expire12month >=0) return 12;
+                if(rema_expire6month >=0) return 6;
             }
             return 0;
         }        
