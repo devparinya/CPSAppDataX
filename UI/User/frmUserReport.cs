@@ -609,7 +609,7 @@ namespace CPSAppData.UI.Report
                         dataperson.DeptAmnt5 = datamasterlist[i].DeptAmnt;
                         dataperson.LastPayDate5 = datamasterlist[i].LastPayDate;
                         break;
-                    case 6:
+                    case 5:
                         dataperson.CardNo6 = datamasterlist[i].CardNo;
                         dataperson.JudgmentAmnt6 = datamasterlist[i].JudgmentAmnt;
                         dataperson.PrincipleAmnt6 = datamasterlist[i].PrincipleAmnt;

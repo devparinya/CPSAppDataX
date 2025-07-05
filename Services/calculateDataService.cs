@@ -249,10 +249,12 @@ namespace QueueAppManager.Service
         public void CaluLateData6CardAddValue(ref List<DataCPSCard> cardlist)
         {
             double sumCapitalAmnt = 0;
+            double sumPayTerm = 0;
             double sumCapitalAmnt25per = 0;
             double avg25per = 0;
 
             sumCapitalAmnt = cardlist.Sum(item => (item.DeptAmnt));
+            sumPayTerm = cardlist.Sum(item => (item.PayAfterJudgAmt)); //
             sumCapitalAmnt25per = Round((2.5/100)* sumCapitalAmnt, 2);
             if (sumCapitalAmnt25per < 2500) sumCapitalAmnt25per = 2500;
             int countcard = cardlist.Count;

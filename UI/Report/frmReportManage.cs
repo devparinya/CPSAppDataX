@@ -395,7 +395,7 @@ namespace CPSAppData.UI.Report
                             dataperson.DeptAmnt5 = datamasterlist[i].DeptAmnt;
                             dataperson.LastPayDate5 = datamasterlist[i].LastPayDate;
                             break;
-                        case 6:
+                        case 5:
                             dataperson.CardNo6 = datamasterlist[i].CardNo;
                             dataperson.JudgmentAmnt6 = datamasterlist[i].JudgmentAmnt;
                             dataperson.PrincipleAmnt6 = datamasterlist[i].PrincipleAmnt;
@@ -469,7 +469,7 @@ namespace CPSAppData.UI.Report
                             dataCPSperson[rowindex].DeptAmnt5 = datamasterlist[i].DeptAmnt;
                             dataCPSperson[rowindex].LastPayDate5 = datamasterlist[i].LastPayDate;
                             break;
-                        case 6:
+                        case 5:
                             dataCPSperson[rowindex].CardNo6 = datamasterlist[i].CardNo;
                             dataCPSperson[rowindex].JudgmentAmnt6 = datamasterlist[i].JudgmentAmnt;
                             dataCPSperson[rowindex].PrincipleAmnt6 = datamasterlist[i].PrincipleAmnt;
